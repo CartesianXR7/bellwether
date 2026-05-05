@@ -1,0 +1,87 @@
+"""Per-provider per-model token pricing.
+
+Pricing is loaded once at run-start and frozen for the run per METHODOLOGY s2.6.
+No provider exposes a public pricing API; the table is populated by hand from
+each provider's pricing page (URL recorded per entry for audit trail).
+
+PRICING_TABLE is intentionally empty in this scaffold. Entries land alongside
+each ProviderAdapter in v0 (one entry per provider/model the bench targets).
+Tests construct Pricing instances inline.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+PRICING_VERSION = "2026-05-05"
+
+
+@dataclass(frozen=True)
+class Pricing:
+    """USD per million tokens. Match the format on each provider's pricing page."""
+
+    provider: str
+    model: str
+    input_per_million_usd: float
+    output_per_million_usd: float
+    as_of: str
+    source_url: str
+
+
+PRICING_TABLE: dict[tuple[str, str], Pricing] = {
+    # ============================================================
+    # PRICING_TABLE entries below are first-pass placeholders. VERIFY each
+    # value against the provider's pricing page (URL noted per entry) before
+    # publishing v0 results. Wrong pricing => wrong effective_TCoT => the
+    # leaderboard misranks. The source_url and as_of fields are the audit trail.
+    # ============================================================
+    ("anthropic", "claude-sonnet-4-6"): Pricing(
+        provider="anthropic",
+        model="claude-sonnet-4-6",
+        input_per_million_usd=3.00,
+        output_per_million_usd=15.00,
+        as_of="2026-05-05",
+        source_url="https://www.anthropic.com/pricing",
+    ),
+    ("openai", "gpt-4o"): Pricing(
+        provider="openai",
+        model="gpt-4o",
+        input_per_million_usd=2.50,
+        output_per_million_usd=10.00,
+        as_of="2026-05-05",
+        source_url="https://openai.com/api/pricing/",
+    ),
+    ("google", "gemini-2.0-flash-001"): Pricing(
+        provider="google",
+        model="gemini-2.0-flash-001",
+        input_per_million_usd=0.10,
+        output_per_million_usd=0.40,
+        as_of="2026-05-05",
+        source_url="https://ai.google.dev/pricing",
+    ),
+}
+
+
+def cost_for(pricing: Pricing, input_tokens: int, output_tokens: int) -> float:
+    """Compute USD cost for one attempt's token counts at the given pricing."""
+    return (
+        input_tokens / 1_000_000 * pricing.input_per_million_usd
+        + output_tokens / 1_000_000 * pricing.output_per_million_usd
+    )
+
+
+def lookup(provider: str, model: str) -> Pricing:
+    """Look up Pricing for (provider, model). Raises KeyError if unknown.
+
+    The error message points at the table entry that needs to be added; this
+    is the surface that catches "we wired up an adapter but forgot to record
+    pricing" before a benchmark run silently records cost=0.
+    """
+    key = (provider, model)
+    if key not in PRICING_TABLE:
+        raise KeyError(
+            f"No pricing entry for ({provider!r}, {model!r}). "
+            f"Add it to PRICING_TABLE in bellwether/pricing.py with verified "
+            f"values from the provider's pricing page."
+        )
+    return PRICING_TABLE[key]
