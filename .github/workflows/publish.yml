@@ -42,7 +42,7 @@ jobs:
           /tmp/verify-venv/bin/pip install --quiet dist/*.whl
           /tmp/verify-venv/bin/python -c "import bellwether; print('OK', bellwether.__version__)"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/
