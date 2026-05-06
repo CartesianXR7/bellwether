@@ -4,8 +4,6 @@ from __future__ import annotations
 
 import json
 
-import pytest
-
 from bellwether.tasks.structured_extraction import StructuredExtractionTask
 from bellwether.taxonomy import FailureMode
 
@@ -16,7 +14,7 @@ def test_dataset_loader_is_deterministic_with_same_seed():
     items1 = list(t1.dataset_loader())
     items2 = list(t2.dataset_loader())
     assert len(items1) == len(items2) == 5
-    for a, b in zip(items1, items2):
+    for a, b in zip(items1, items2, strict=True):
         assert a.instance_id == b.instance_id
         assert a.prompt_inputs == b.prompt_inputs
         assert a.ground_truth == b.ground_truth
@@ -29,7 +27,9 @@ def test_dataset_loader_differs_with_different_seed():
     items2 = list(t2.dataset_loader())
     # Vendors and totals should diverge between seeds; comparing all fields
     # element-wise should produce at least one mismatch.
-    assert any(a.ground_truth != b.ground_truth for a, b in zip(items1, items2))
+    assert any(
+        a.ground_truth != b.ground_truth for a, b in zip(items1, items2, strict=True)
+    )
 
 
 def test_dataset_version_includes_seed_and_n():

@@ -1,6 +1,13 @@
 # bellwether
 
+[![tests](https://github.com/cartesianxr7/bellwether/actions/workflows/test.yml/badge.svg)](https://github.com/cartesianxr7/bellwether/actions/workflows/test.yml)
+[![python](https://img.shields.io/badge/python-3.11%2B-blue.svg)](https://github.com/cartesianxr7/bellwether)
+[![methodology](https://img.shields.io/badge/methodology-v0.1-blueviolet.svg)](https://cartesianxr7.github.io/bellwether/methodology.html)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 The cost-and-failure-mode benchmark for LLM agents. Methodology plus Python package for honest, reproducible cross-provider agent evaluation.
+
+**[Live leaderboard](https://cartesianxr7.github.io/bellwether/)** &middot; **[Methodology](https://cartesianxr7.github.io/bellwether/methodology.html)**
 
 ## What it measures
 

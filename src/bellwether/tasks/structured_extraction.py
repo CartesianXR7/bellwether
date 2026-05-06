@@ -15,8 +15,9 @@ from __future__ import annotations
 
 import json
 import random
+from collections.abc import Iterable
 from dataclasses import dataclass, field
-from typing import Any, Iterable
+from typing import Any
 
 from bellwether.protocols import Example, ValidationResult
 from bellwether.taxonomy import FailureMode
@@ -34,7 +35,8 @@ _VENDORS = (
     "Cyberdyne Systems",
 )
 
-_CANONICAL_PROMPT = """Extract the following fields from the invoice below into a single JSON object.
+_CANONICAL_PROMPT = """\
+Extract the following fields from the invoice below into a single JSON object.
 
 Required fields:
 - invoice_number (string)

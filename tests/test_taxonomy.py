@@ -11,7 +11,6 @@ from bellwether.taxonomy import (
     looks_like_truncation,
 )
 
-
 # ---- looks_like_refusal ----
 
 

@@ -30,6 +30,8 @@ from bellwether.tcot import (
 )
 
 __all__ = [
+    "PRICING_TABLE",
+    "PRICING_VERSION",
     "AggregateMetrics",
     "Attempt",
     "CostExceeded",
@@ -37,8 +39,6 @@ __all__ = [
     "Example",
     "FailureMode",
     "InstanceResult",
-    "PRICING_TABLE",
-    "PRICING_VERSION",
     "Pricing",
     "ProviderAdapter",
     "ProviderResponse",

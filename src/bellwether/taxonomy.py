@@ -11,10 +11,10 @@ them. Classifiers default to CONFABULATION for content failures.
 from __future__ import annotations
 
 import re
-from enum import Enum
+from enum import StrEnum
 
 
-class FailureMode(str, Enum):
+class FailureMode(StrEnum):
     REFUSAL = "refusal"
     CONFABULATION = "confabulation"
     SCHEMA_BREAK = "schema_break"

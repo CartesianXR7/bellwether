@@ -15,7 +15,7 @@ import argparse
 import json
 import logging
 import sys
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -50,7 +50,10 @@ def _build_parser() -> argparse.ArgumentParser:
         version=f"bellwether {__version__} (methodology {__methodology_version__})",
     )
     parser.add_argument(
-        "-q", "--quiet", action="store_true", help="Suppress per-attempt log lines (run subcommand)."
+        "-q",
+        "--quiet",
+        action="store_true",
+        help="Suppress per-attempt log lines (run subcommand).",
     )
     sub = parser.add_subparsers(dest="command", required=False)
 
@@ -180,7 +183,10 @@ def _cmd_run(args: argparse.Namespace) -> int:
         return 2
 
     if args.provider != "all" and args.provider not in _PROVIDER_REGISTRY:
-        print(f"ERROR: unknown provider '{args.provider}'. Run 'bellwether list providers'.", file=sys.stderr)
+        print(
+            f"ERROR: unknown provider '{args.provider}'. Run 'bellwether list providers'.",
+            file=sys.stderr,
+        )
         return 2
     if args.task != "all" and args.task not in _TASK_REGISTRY:
         print(f"ERROR: unknown task '{args.task}'. Run 'bellwether list tasks'.", file=sys.stderr)
@@ -198,7 +204,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
     )
 
     cost_tracker = CostTracker(max_usd=args.max_cost)
-    timestamp = datetime.now(timezone.utc).isoformat()
+    timestamp = datetime.now(UTC).isoformat()
     all_records: list[dict[str, Any]] = []
 
     print(f"Cost guardrail: ${cost_tracker.max_usd:.2f}", file=sys.stderr)

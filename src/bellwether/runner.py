@@ -15,9 +15,10 @@ import logging
 import math
 import subprocess
 import time
-from datetime import datetime, timezone
+from collections.abc import Callable
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any
 
 from bellwether import __methodology_version__, __version__
 from bellwether.guardrail import CostTracker
@@ -103,7 +104,7 @@ def run_task_for_provider(
     output_dir. Shape matches METHODOLOGY s9.
     """
     pricing = lookup(adapter.provider_id, adapter.model_id)
-    started_at = timestamp_iso or datetime.now(timezone.utc).isoformat()
+    started_at = timestamp_iso or datetime.now(UTC).isoformat()
 
     # Per-provider rate limiter: enforces minimum interval between API call
     # starts. Shared across all instances/runs/attempts in this (task, provider).
@@ -159,7 +160,7 @@ def run_task_for_provider(
 
         instance_records.append({"instance_id": example.instance_id, "runs": instance_runs})
 
-    completed_at = datetime.now(timezone.utc).isoformat()
+    completed_at = datetime.now(UTC).isoformat()
     aggregate_metrics = (
         aggregate(instance_results_for_aggregate) if instance_results_for_aggregate else None
     )
@@ -401,13 +402,13 @@ def _write_result(
     task_name: str,
 ) -> Path:
     """Write to output_dir/<date>/<provider>/<task>__<sha7>.json per HANDOFF s8."""
-    date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    date_str = datetime.now(UTC).strftime("%Y-%m-%d")
     sha7 = (git_sha or "UNKNOWN")[:7]
     target_dir = output_dir / date_str / provider_id
     target_dir.mkdir(parents=True, exist_ok=True)
     target_path = target_dir / f"{task_name}__{sha7}.json"
     if target_path.exists():
-        ts = datetime.now(timezone.utc).strftime("%H%M%S")
+        ts = datetime.now(UTC).strftime("%H%M%S")
         target_path = target_dir / f"{task_name}__{sha7}__{ts}.json"
     target_path.write_text(json.dumps(record, indent=2, default=str))
     return target_path
