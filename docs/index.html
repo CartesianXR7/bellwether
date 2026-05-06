@@ -3,33 +3,124 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>bellwether</title>
+<title>bellwether: cost-and-failure-mode benchmark for LLM agents</title>
+<meta name="description" content="Cross-provider LLM agent benchmark. Total Cost of Task, failure-mode taxonomy, machine-checkable ground truth.">
 <style>
-  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #fafafa; --muted: #666; --accent: #0066cc; --border: #ddd; --dirty: #b54708; --dirty-bg: #fff8eb; }
+  :root {
+    color-scheme: light dark;
+    --fg: #1a1a1a; --bg: #fcfcfc; --surface: #ffffff; --muted: #5a5a5a;
+    --accent: #0066cc; --accent-soft: #e6f0ff;
+    --border: #e0e0e0; --border-strong: #c0c0c0;
+    --dirty: #b54708; --dirty-bg: #fff8eb;
+    --good: #117a3c; --good-bg: #e8f7ed;
+    --bar-bg: #ececec; --bar-fill: #5a93d6;
+    --prov-anthropic: #c9764e;
+    --prov-openai: #10a37f;
+    --prov-google: #4285f4;
+  }
   @media (prefers-color-scheme: dark) {
-    :root { --fg: #e8e8e8; --bg: #161616; --muted: #999; --accent: #6db3ff; --border: #333; --dirty: #f7b955; --dirty-bg: #2a1c08; }
+    :root {
+      --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
+      --accent: #6db3ff; --accent-soft: #1a2a3f;
+      --border: #2a2a2a; --border-strong: #3a3a3a;
+      --dirty: #f7b955; --dirty-bg: #2a1c08;
+      --good: #4ec97a; --good-bg: #0f2316;
+      --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
+    }
   }
   * { box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
-  main, header, footer { max-width: 960px; margin-left: auto; margin-right: auto; }
-  header { padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
-  h1 { margin: 0 0 0.25rem 0; font-size: 1.75rem; }
-  h2 { margin-top: 2.5rem; font-size: 1.25rem; }
-  h3 { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); font-weight: 500; }
-  .tagline { color: var(--muted); margin: 0.25rem 0 0.5rem 0; }
-  nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    line-height: 1.5; color: var(--fg); background: var(--bg);
+    margin: 0; padding: 1rem;
+  }
+  main, header, footer { max-width: 1080px; margin-left: auto; margin-right: auto; }
+
+  /* Header */
+  header { padding: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+  h1 { margin: 0; font-size: 1.9rem; letter-spacing: -0.01em; }
+  .tagline { color: var(--muted); margin: 0.25rem 0 0.75rem 0; font-size: 1.05rem; }
+  nav a { color: var(--accent); text-decoration: none; margin-right: 1.25rem; font-weight: 500; }
   nav a:hover { text-decoration: underline; }
-  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; margin-bottom: 0.5rem; }
-  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
-  th { font-weight: 600; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  /* Intro */
+  .intro { padding: 1rem 0 0.5rem 0; max-width: 760px; }
+  .intro p { margin: 0.5rem 0; }
+  .intro code, .intro-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(127,127,127,0.12); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
+
+  /* Section + headings */
+  h2 { margin: 2.5rem 0 0.5rem 0; font-size: 1.3rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  h3 { margin: 1.25rem 0 0.5rem 0; font-size: 1rem; color: var(--muted); font-weight: 600; }
+  h4 { margin: 1rem 0 0.5rem 0; font-size: 0.92rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* Pass meta */
+  .pass-meta {
+    font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+  .pass-meta code { font-size: 0.85em; }
+  .badge { display: inline-block; font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 3px; border: 1px solid currentColor; }
+  .badge-dirty { color: var(--dirty); background: var(--dirty-bg); }
+  .badge-clean { color: var(--good); background: var(--good-bg); }
+
+  /* Tables */
+  .leaderboard-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  th {
+    font-weight: 600; font-size: 0.78rem; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    background: var(--surface); position: sticky; top: 0;
+  }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.rank { font-weight: 600; color: var(--accent); width: 2rem; }
+  tbody tr:hover { background: rgba(127,127,127,0.04); }
   tr.dirty { background: var(--dirty-bg); }
-  tr.dirty td:first-child::before { content: "* "; color: var(--dirty); }
-  .dirty-badge { display: inline-block; font-size: 0.75rem; color: var(--dirty); background: var(--dirty-bg); padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--dirty); margin-left: 0.5rem; }
-  .pass-meta { font-size: 0.85rem; color: var(--muted); }
-  code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; background: rgba(127,127,127,0.12); padding: 0.05rem 0.25rem; border-radius: 3px; font-size: 0.9em; }
-  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
-  .empty { color: var(--muted); font-style: italic; padding: 2rem 0; text-align: center; }
+  tr.dirty:hover { background: var(--dirty-bg); }
+  tr.dirty td.rank { color: var(--dirty); }
+  tr.dirty td.rank::before { content: "*"; }
+
+  /* Provider color hints */
+  .prov { display: inline-flex; align-items: center; gap: 0.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
+  .prov-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
+  .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
+  .prov.provider-google .prov-swatch { background: var(--prov-google); }
+
+  /* Inline cost bar */
+  .cost-cell { min-width: 9rem; }
+  .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
+  .cost-bar { flex: 0 0 60px; height: 6px; background: var(--bar-bg); border-radius: 3px; overflow: hidden; }
+  .cost-bar > div { height: 100%; background: var(--bar-fill); border-radius: 3px; }
+  .cost-value { font-variant-numeric: tabular-nums; }
+
+  /* Failure mode pills */
+  .fm-list { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .fm-pill { display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 10px; background: rgba(127,127,127,0.1); color: var(--muted); white-space: nowrap; }
+  .fm-pill strong { color: var(--fg); margin-right: 0.2rem; }
+
+  /* Repro table */
+  .repro td.delta-up { color: var(--dirty); }
+  .repro td.delta-down { color: var(--good); }
+  .repro td.delta-flat { color: var(--muted); }
+
+  /* Footer */
+  footer { margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+
+  .empty { color: var(--muted); font-style: italic; padding: 2.5rem 0; text-align: center; }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    body { padding: 0.75rem; }
+    h1 { font-size: 1.5rem; }
+    h2 { font-size: 1.15rem; }
+    th, td { padding: 0.4rem 0.5rem; font-size: 0.9rem; }
+    .cost-bar { flex: 0 0 40px; }
+    .pass-meta { gap: 0.4rem; }
+  }
 </style>
 </head>
 <body>
@@ -40,152 +131,352 @@
   <nav>
     <a href="methodology.html">Methodology</a>
     <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
+    <a href="https://github.com/cartesianxr7/bellwether/tree/main/results">Raw results</a>
   </nav>
 </header>
 
 <main>
 
-<p>
-  Headline metric is <code>effective_TCoT</code>: total spend per successful task completion,
-  including the cost of failed attempts amortized across the successes.
-  Lower is better. See the <a href="methodology.html">methodology</a> for the formula and the
-  validator contract.
+<section class="intro">
+  <p>
+    <strong>Headline metric: <span class="intro-code">effective_TCoT</span></strong>
+    is total spend per successful task completion, including the cost of failed
+    retries. Lower is better. The methodology is the contribution; the leaderboard
+    is its proof.
+  </p>
+  <p>
+    Validation is machine-checkable (no LLM-as-judge). Failures are classified
+    into eight modes (refusal, confabulation, schema break, truncation, partial,
+    off-task, timeout, error). One canonical prompt per task across all providers.
+    Temperature 0; N=3 runs per task instance.
+  </p>
+  <p>
+    See the <a href="methodology.html">full methodology</a> for formulas, retry policy, validator contract, and reproducibility caveats.
+  </p>
+</section>
+
+
+
+
+
+<h2>Task: <code>structured_extraction</code></h2>
+
+
+<h3>Reproducibility (latest pass vs previous)</h3>
+<div class="leaderboard-wrap">
+<table class="repro">
+  <thead>
+    <tr>
+      <th>Provider / Model</th>
+      <th class="num">Latest eff_TCoT</th>
+      <th class="num">Previous eff_TCoT</th>
+      <th class="num">Δ eff_TCoT</th>
+      <th class="num">Δ success rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        </span>
+      </td>
+      <td class="num">$0.00099</td>
+      <td class="num">$0.00099</td>
+      <td class="num delta-flat">
+        +0.0%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+        </span>
+      </td>
+      <td class="num">$0.00012</td>
+      <td class="num">$0.00011</td>
+      <td class="num delta-up">
+        +11.9%
+      </td>
+      <td class="num delta-up">
+        -13.3 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o
+        </span>
+      </td>
+      <td class="num">$0.00070</td>
+      <td class="num">$0.00071</td>
+      <td class="num delta-flat">
+        -1.2%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+<p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
+  Δ&nbsp;eff_TCoT colored: red if &gt;+5%, green if &lt;-5%, neutral otherwise. Δ&nbsp;success rate colored: red if dropped &gt;1pp, green if gained &gt;1pp.
 </p>
 
 
 
-
-<h2>structured_extraction</h2>
-
-<h3>
-  Pass 2026-05-06 01:25:00 UTC
-  &middot;
+<div class="pass-meta">
+  <strong>Pass 2026-05-06 01:25:00 UTC</strong>
   <code>423a52c</code>
   
-  <span class="dirty-badge">dirty tree, excluded from headline aggregates per s9</span>
+  <span class="badge badge-dirty">dirty tree, s9 non-headline</span>
   
-</h3>
+</div>
+
+<div class="leaderboard-wrap">
 <table>
   <thead>
     <tr>
-      <th>Rank</th>
+      <th>#</th>
       <th>Provider / Model</th>
       <th class="num">Success</th>
-      <th class="num">effective_TCoT (USD)</th>
-      <th class="num">latency p50 / p95</th>
-      <th class="num">N</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes</th>
     </tr>
   </thead>
   <tbody>
     
     <tr class="dirty">
-      <td>1</td>
-      <td><code>google/gemini-2.5-flash-lite</code></td>
-      <td class="num">86.7%
-        (13/15)</td>
-      <td class="num">
-        
-        $0.00012
-        
+      <td class="rank">1</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+        </span>
+      </td>
+      <td class="num">86.7% (13/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00012
+          </span>
+          <div class="cost-bar"><div style="width: 12%"></div></div>
+        </div>
       </td>
       <td class="num">0.66s / 1.47s</td>
-      <td class="num">15</td>
+      <td class="num">
+        37
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (0% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>22</strong>schema_break</span>
+          
+          <span class="fm-pill"><strong>2</strong>error</span>
+          
+        </span>
+        
+      </td>
     </tr>
     
     <tr class="dirty">
-      <td>2</td>
-      <td><code>openai/gpt-4o</code></td>
-      <td class="num">100.0%
-        (15/15)</td>
-      <td class="num">
-        
-        $0.00070
-        
+      <td class="rank">2</td>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00070
+          </span>
+          <div class="cost-bar"><div style="width: 71%"></div></div>
+        </div>
       </td>
       <td class="num">0.72s / 1.40s</td>
-      <td class="num">15</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
     </tr>
     
     <tr class="dirty">
-      <td>3</td>
-      <td><code>anthropic/claude-sonnet-4-6</code></td>
-      <td class="num">100.0%
-        (15/15)</td>
-      <td class="num">
-        
-        $0.00099
-        
+      <td class="rank">3</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00099
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
       </td>
       <td class="num">1.32s / 3.03s</td>
-      <td class="num">15</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
     </tr>
     
   </tbody>
 </table>
+</div>
 
-<h3>
-  Pass 2026-05-06 01:22:44 UTC
-  &middot;
+<div class="pass-meta">
+  <strong>Pass 2026-05-06 01:22:44 UTC</strong>
   <code>423a52c</code>
   
-</h3>
+  <span class="badge badge-clean">clean</span>
+  
+</div>
+
+<div class="leaderboard-wrap">
 <table>
   <thead>
     <tr>
-      <th>Rank</th>
+      <th>#</th>
       <th>Provider / Model</th>
       <th class="num">Success</th>
-      <th class="num">effective_TCoT (USD)</th>
-      <th class="num">latency p50 / p95</th>
-      <th class="num">N</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes</th>
     </tr>
   </thead>
   <tbody>
     
     <tr >
-      <td>1</td>
-      <td><code>google/gemini-2.5-flash-lite</code></td>
-      <td class="num">100.0%
-        (15/15)</td>
-      <td class="num">
-        
-        $0.00011
-        
+      <td class="rank">1</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00011
+          </span>
+          <div class="cost-bar"><div style="width: 11%"></div></div>
+        </div>
       </td>
       <td class="num">0.71s / 1.91s</td>
-      <td class="num">15</td>
+      <td class="num">
+        36
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (0% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>21</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
     </tr>
     
     <tr >
-      <td>2</td>
-      <td><code>openai/gpt-4o</code></td>
-      <td class="num">100.0%
-        (15/15)</td>
-      <td class="num">
-        
-        $0.00071
-        
+      <td class="rank">2</td>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00071
+          </span>
+          <div class="cost-bar"><div style="width: 72%"></div></div>
+        </div>
       </td>
       <td class="num">1.17s / 2.27s</td>
-      <td class="num">15</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
     </tr>
     
     <tr >
-      <td>3</td>
-      <td><code>anthropic/claude-sonnet-4-6</code></td>
-      <td class="num">100.0%
-        (15/15)</td>
-      <td class="num">
-        
-        $0.00099
-        
+      <td class="rank">3</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00099
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
       </td>
       <td class="num">1.40s / 2.66s</td>
-      <td class="num">15</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
     </tr>
     
   </tbody>
 </table>
+</div>
+
 
 
 
@@ -196,8 +487,12 @@
     methodology version 0.1
     &middot; bellwether 0.1.0
     &middot; last bench 2026-05-06 01:26:11 UTC
+    &middot; 6 result files loaded
   </p>
-  <p><a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a></p>
+  <p>
+    <a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a>
+    &middot; MIT license
+  </p>
 </footer>
 
 </body>
