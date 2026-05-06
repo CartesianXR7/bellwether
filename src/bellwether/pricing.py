@@ -31,12 +31,16 @@ class Pricing:
 PRICING_TABLE: dict[tuple[str, str], Pricing] = {
     # ============================================================
     # Verification status (as of as_of date below):
-    #   anthropic/claude-sonnet-4-6  : VERIFIED 2026-05-05 against the docs URL.
-    #   google/gemini-2.5-flash-lite : VERIFIED 2026-05-05 against the docs URL.
-    #   openai/gpt-4o                : UNVERIFIED 2026-05-05. The OpenAI pricing
-    #     page is a JS-rendered SPA that blocks scraping; the values here are
-    #     carried from training data (current through Jan 2026 cutoff).
-    #     Manual spot-check recommended before any published bench results.
+    #   anthropic/claude-sonnet-4-6  : VERIFIED 2026-05-05 against
+    #     platform.claude.com/docs/en/docs/about-claude/pricing.
+    #   google/gemini-2.5-flash-lite : VERIFIED 2026-05-05 against
+    #     ai.google.dev/pricing.
+    #   openai/gpt-4o                : VERIFIED 2026-05-05 against the
+    #     LiteLLM community pricing catalog (the official openai.com pricing
+    #     page is a JS-rendered SPA that blocks scraping). LiteLLM's catalog
+    #     records gpt-4o, gpt-4o-2024-08-06, and gpt-4o-2024-11-20 all at
+    #     $2.50/$10 per million; cross-references match.
+    #     Source: github.com/BerriAI/litellm model_prices_and_context_window_backup.json
     # Wrong pricing => wrong effective_TCoT => the leaderboard misranks.
     # source_url + as_of fields are the audit trail per METHODOLOGY s2.6.
     # ============================================================

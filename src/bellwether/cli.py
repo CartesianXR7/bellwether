@@ -5,12 +5,14 @@ Subcommands per HANDOFF s9 (subset shipped in v0.1):
     bellwether list tasks
     bellwether run [--task NAME|all] [--provider NAME|all] [--n N]
                    [--instances N] [--max-cost USD] [--seed N]
-                   [--output DIR] [--allow-dirty]
+                   [--output DIR] [--allow-dirty] [--call-delay-ms MS]
+    bellwether report [PATH]
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import sys
 from datetime import datetime, timezone
@@ -47,10 +49,23 @@ def _build_parser() -> argparse.ArgumentParser:
         action="version",
         version=f"bellwether {__version__} (methodology {__methodology_version__})",
     )
+    parser.add_argument(
+        "-q", "--quiet", action="store_true", help="Suppress per-attempt log lines (run subcommand)."
+    )
     sub = parser.add_subparsers(dest="command", required=False)
 
     list_p = sub.add_parser("list", help="List registered tasks or providers.")
     list_p.add_argument("kind", choices=["tasks", "providers"])
+
+    report_p = sub.add_parser(
+        "report", help="Re-render the leaderboard from existing results without re-running."
+    )
+    report_p.add_argument(
+        "path",
+        nargs="?",
+        default="results",
+        help="Results directory to walk (default: ./results).",
+    )
 
     run_p = sub.add_parser("run", help="Run benchmark for one or all (task, provider) pairs.")
     run_p.add_argument("--task", default="all", help="Task name, or 'all'. Default: all.")
@@ -115,6 +130,37 @@ def _cmd_list(args: argparse.Namespace) -> int:
     elif args.kind == "tasks":
         for name in _TASK_REGISTRY:
             print(name)
+    return 0
+
+
+def _cmd_report(args: argparse.Namespace) -> int:
+    """Walk a results directory and re-print the leaderboard. No re-run, no API calls."""
+    output_dir = Path(args.path)
+    if not output_dir.is_dir():
+        print(f"ERROR: '{output_dir}' is not a directory.", file=sys.stderr)
+        return 2
+
+    records: list[dict[str, Any]] = []
+    skipped: list[tuple[Path, str]] = []
+    for json_path in sorted(output_dir.rglob("*.json")):
+        try:
+            records.append(json.loads(json_path.read_text()))
+        except (json.JSONDecodeError, OSError) as exc:
+            skipped.append((json_path, f"{type(exc).__name__}: {exc}"))
+
+    if not records:
+        print(
+            f"No result JSONs found under {output_dir}. Run 'bellwether run' first.",
+            file=sys.stderr,
+        )
+        return 1
+
+    _print_leaderboard(records)
+    print(f"\nLoaded {len(records)} result file(s) from {output_dir}.", file=sys.stderr)
+    if skipped:
+        print(f"Skipped {len(skipped)} unreadable file(s):", file=sys.stderr)
+        for path, reason in skipped:
+            print(f"  {path}: {reason}", file=sys.stderr)
     return 0
 
 
@@ -197,50 +243,84 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
 
 def _print_leaderboard(records: list[dict[str, Any]]) -> None:
-    by_task: dict[str, list[dict[str, Any]]] = {}
+    """Print a per-task, per-pass ranked leaderboard.
+
+    Records are grouped by (task, started_at) so each pass shows its own
+    ranking. Passes within each task are ordered newest-first. Dirty-tree
+    passes are flagged so the reader knows to discount them per s9.
+    """
+    by_task: dict[str, dict[str, list[dict[str, Any]]]] = {}
     for r in records:
         if r.get("aggregate") is None:
             continue
-        by_task.setdefault(r["task"]["name"], []).append(r)
+        task = r["task"]["name"]
+        started = r["started_at"]
+        by_task.setdefault(task, {}).setdefault(started, []).append(r)
 
-    for task_name, rs in by_task.items():
-        rs.sort(
-            key=lambda r: (
-                1 if r["aggregate"]["effective_tcot_infinite"] else 0,
-                r["aggregate"]["effective_tcot"] or 0,
-            )
-        )
+    header = (
+        f"{'rank':<5} {'provider/model':<42} {'success':>9} "
+        f"{'eff_TCoT':>14} {'p50/p95 (s)':>14}"
+    )
+
+    for task_name, passes in by_task.items():
         print()
         print(f"=== Leaderboard: {task_name} ===")
-        header = (
-            f"{'rank':<5} {'provider/model':<42} {'success':>9} "
-            f"{'eff_TCoT':>14} {'p50/p95 (s)':>14}"
-        )
-        print(header)
-        print("-" * len(header))
-        for rank, r in enumerate(rs, 1):
-            agg = r["aggregate"]
-            prov = r["provider"]
-            eff = "infinite" if agg["effective_tcot_infinite"] else f"${agg['effective_tcot']:.5f}"
-            print(
-                f"{rank:<5} "
-                f"{prov['id'] + '/' + prov['model_id']:<42} "
-                f"{agg['success_rate'] * 100:>7.1f}%  "
-                f"{eff:>14} "
-                f"{agg['mean_latency_p50']:>5.2f}/{agg['mean_latency_p95']:>5.2f}"
+        for started_at in sorted(passes.keys(), reverse=True):
+            entries = passes[started_at]
+            entries.sort(
+                key=lambda r: (
+                    1 if r["aggregate"]["effective_tcot_infinite"] else 0,
+                    r["aggregate"]["effective_tcot"] or 0,
+                )
             )
+            sha7 = entries[0]["git_sha"][:7] if entries[0]["git_sha"] else "UNKNOWN"
+            dirty = any(e["git_dirty"] for e in entries)
+            dirty_tag = " [dirty tree, s9 non-headline]" if dirty else ""
+            print()
+            print(f"-- pass {started_at[:19].replace('T', ' ')} UTC  sha {sha7}{dirty_tag}")
+            print(header)
+            print("-" * len(header))
+            for rank, r in enumerate(entries, 1):
+                agg = r["aggregate"]
+                prov = r["provider"]
+                eff = (
+                    "infinite"
+                    if agg["effective_tcot_infinite"]
+                    else f"${agg['effective_tcot']:.5f}"
+                )
+                print(
+                    f"{rank:<5} "
+                    f"{prov['id'] + '/' + prov['model_id']:<42} "
+                    f"{agg['success_rate'] * 100:>7.1f}%  "
+                    f"{eff:>14} "
+                    f"{agg['mean_latency_p50']:>5.2f}/{agg['mean_latency_p95']:>5.2f}"
+                )
+
+
+def _silence_noisy_sdk_loggers() -> None:
+    """Pin third-party SDK loggers to WARNING. The default INFO level emits one
+    line per HTTP request (httpx) plus assorted notices (google-genai's AFC),
+    which drowns the per-attempt PASS/FAIL signal. Silenced unconditionally;
+    --quiet still applies to the runner's own logs on top of this.
+    """
+    for name in ("httpx", "anthropic", "openai", "google_genai", "google.genai"):
+        logging.getLogger(name).setLevel(logging.WARNING)
 
 
 def main(argv: list[str] | None = None) -> int:
     _load_dotenv_if_present()
-    logging.basicConfig(level=logging.INFO, format="%(message)s", stream=sys.stderr)
     parser = _build_parser()
     args = parser.parse_args(argv)
+    log_level = logging.WARNING if args.quiet else logging.INFO
+    logging.basicConfig(level=log_level, format="%(message)s", stream=sys.stderr)
+    _silence_noisy_sdk_loggers()
     if args.command is None:
         parser.print_help()
         return 0
     if args.command == "list":
         return _cmd_list(args)
+    if args.command == "report":
+        return _cmd_report(args)
     if args.command == "run":
         return _cmd_run(args)
     parser.print_help()

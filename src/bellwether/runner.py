@@ -28,6 +28,31 @@ from bellwether.tcot import AggregateMetrics, Attempt, InstanceResult, aggregate
 
 logger = logging.getLogger(__name__)
 
+# Untracked files under these path prefixes do NOT count as a dirty tree.
+# These are build artifacts the runner itself produces; if they triggered the
+# dirty-tree gate, every back-to-back run would refuse without --allow-dirty.
+DIRTY_IGNORE_UNTRACKED_PREFIXES: tuple[str, ...] = ("results/", "docs/")
+
+
+def is_dirty_status(status_porcelain: str) -> bool:
+    """Parse `git status --porcelain` output into a boolean dirty flag.
+
+    Untracked paths under DIRTY_IGNORE_UNTRACKED_PREFIXES are ignored.
+    Everything else (modified, staged, deleted, renamed, other untracked)
+    counts as dirty.
+    """
+    for line in status_porcelain.splitlines():
+        if not line.strip():
+            continue
+        marker = line[:2]
+        path = line[3:] if len(line) > 3 else ""
+        if path.startswith('"') and path.endswith('"'):
+            path = path[1:-1]
+        if marker == "??" and any(path.startswith(p) for p in DIRTY_IGNORE_UNTRACKED_PREFIXES):
+            continue
+        return True
+    return False
+
 
 def get_git_state(repo_dir: Path) -> tuple[str, bool]:
     """Return (git_sha, git_dirty). Falls back to ('UNKNOWN', True) if git fails.
@@ -56,7 +81,7 @@ def get_git_state(repo_dir: Path) -> tuple[str, bool]:
     except (subprocess.CalledProcessError, FileNotFoundError):
         return (sha, True)
 
-    return (sha, bool(status.strip()))
+    return (sha, is_dirty_status(status))
 
 
 def run_task_for_provider(
