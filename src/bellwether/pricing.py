@@ -30,10 +30,15 @@ class Pricing:
 
 PRICING_TABLE: dict[tuple[str, str], Pricing] = {
     # ============================================================
-    # PRICING_TABLE entries below are first-pass placeholders. VERIFY each
-    # value against the provider's pricing page (URL noted per entry) before
-    # publishing v0 results. Wrong pricing => wrong effective_TCoT => the
-    # leaderboard misranks. The source_url and as_of fields are the audit trail.
+    # Verification status (as of as_of date below):
+    #   anthropic/claude-sonnet-4-6  : VERIFIED 2026-05-05 against the docs URL.
+    #   google/gemini-2.5-flash-lite : VERIFIED 2026-05-05 against the docs URL.
+    #   openai/gpt-4o                : UNVERIFIED 2026-05-05. The OpenAI pricing
+    #     page is a JS-rendered SPA that blocks scraping; the values here are
+    #     carried from training data (current through Jan 2026 cutoff).
+    #     Manual spot-check recommended before any published bench results.
+    # Wrong pricing => wrong effective_TCoT => the leaderboard misranks.
+    # source_url + as_of fields are the audit trail per METHODOLOGY s2.6.
     # ============================================================
     ("anthropic", "claude-sonnet-4-6"): Pricing(
         provider="anthropic",
@@ -41,7 +46,7 @@ PRICING_TABLE: dict[tuple[str, str], Pricing] = {
         input_per_million_usd=3.00,
         output_per_million_usd=15.00,
         as_of="2026-05-05",
-        source_url="https://www.anthropic.com/pricing",
+        source_url="https://platform.claude.com/docs/en/docs/about-claude/pricing",
     ),
     ("openai", "gpt-4o"): Pricing(
         provider="openai",
