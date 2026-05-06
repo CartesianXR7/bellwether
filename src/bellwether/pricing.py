@@ -51,9 +51,9 @@ PRICING_TABLE: dict[tuple[str, str], Pricing] = {
         as_of="2026-05-05",
         source_url="https://openai.com/api/pricing/",
     ),
-    ("google", "gemini-2.0-flash-001"): Pricing(
+    ("google", "gemini-2.5-flash-lite"): Pricing(
         provider="google",
-        model="gemini-2.0-flash-001",
+        model="gemini-2.5-flash-lite",
         input_per_million_usd=0.10,
         output_per_million_usd=0.40,
         as_of="2026-05-05",

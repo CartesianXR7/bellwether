@@ -61,7 +61,7 @@ def test_pricing_table_has_v0_entries():
     expected_keys = {
         ("anthropic", "claude-sonnet-4-6"),
         ("openai", "gpt-4o"),
-        ("google", "gemini-2.0-flash-001"),
+        ("google", "gemini-2.5-flash-lite"),
     }
     assert set(PRICING_TABLE.keys()) == expected_keys
     for key, entry in PRICING_TABLE.items():

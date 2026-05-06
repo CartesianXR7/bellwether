@@ -29,7 +29,7 @@ from bellwether.tasks.structured_extraction import StructuredExtractionTask
 _PROVIDER_REGISTRY: dict[str, tuple[type, str]] = {
     "anthropic": (AnthropicAdapter, "claude-sonnet-4-6"),
     "openai": (OpenAIAdapter, "gpt-4o"),
-    "google": (GoogleAdapter, "gemini-2.0-flash-001"),
+    "google": (GoogleAdapter, "gemini-2.5-flash-lite"),
 }
 
 _TASK_REGISTRY: dict[str, type] = {
@@ -84,17 +84,26 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Allow runs from a dirty git tree (results flagged git_dirty=true).",
     )
+    run_p.add_argument(
+        "--call-delay-ms",
+        type=int,
+        default=200,
+        help="Minimum ms between API calls per (task, provider) for rate limiting. Default: 200.",
+    )
 
     return parser
 
 
 def _load_dotenv_if_present() -> None:
+    """Load .env from cwd or parents. override=True so .env wins over shell env;
+    matters when a stale shell variable would otherwise mask the project's key.
+    """
     try:
         from dotenv import find_dotenv, load_dotenv
 
         path = find_dotenv(usecwd=True)
         if path:
-            load_dotenv(path)
+            load_dotenv(path, override=True)
     except ImportError:
         pass
 
@@ -166,6 +175,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
                     repo_dir=repo_dir,
                     output_dir=Path(args.output),
                     timestamp_iso=timestamp,
+                    call_delay_seconds=args.call_delay_ms / 1000.0,
                 )
                 all_records.append(record)
             except Exception as exc:

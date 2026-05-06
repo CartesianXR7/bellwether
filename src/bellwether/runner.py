@@ -14,9 +14,10 @@ import json
 import logging
 import math
 import subprocess
+import time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 from bellwether import __methodology_version__, __version__
 from bellwether.guardrail import CostTracker
@@ -69,6 +70,7 @@ def run_task_for_provider(
     repo_dir: Path,
     output_dir: Path,
     timestamp_iso: str | None = None,
+    call_delay_seconds: float = 0.0,
 ) -> dict[str, Any]:
     """Run one task across all instances against one provider, N runs each.
 
@@ -77,6 +79,21 @@ def run_task_for_provider(
     """
     pricing = lookup(adapter.provider_id, adapter.model_id)
     started_at = timestamp_iso or datetime.now(timezone.utc).isoformat()
+
+    # Per-provider rate limiter: enforces minimum interval between API call
+    # starts. Shared across all instances/runs/attempts in this (task, provider).
+    # Cheap defense against 429s on free-tier or low-throughput keys.
+    last_request_start: list[float | None] = [None]
+
+    def _rate_limit() -> None:
+        if call_delay_seconds <= 0:
+            return
+        now = time.monotonic()
+        if last_request_start[0] is not None:
+            elapsed = now - last_request_start[0]
+            if elapsed < call_delay_seconds:
+                time.sleep(call_delay_seconds - elapsed)
+        last_request_start[0] = time.monotonic()
 
     instances_loaded = list(task.dataset_loader())
 
@@ -109,6 +126,7 @@ def run_task_for_provider(
                 run_idx=run_idx,
                 pricing=pricing,
                 cost_tracker=cost_tracker,
+                rate_limit_fn=_rate_limit,
             )
             instance_runs.append(run_record)
             if maybe_result is not None:
@@ -164,6 +182,7 @@ def _run_single_attempt_loop(
     run_idx: int,
     pricing: Pricing,
     cost_tracker: CostTracker,
+    rate_limit_fn: Callable[[], None] | None = None,
 ) -> tuple[dict[str, Any], InstanceResult | None]:
     """Run one (instance, run) up to max_attempts with retries per s3.
 
@@ -181,6 +200,9 @@ def _run_single_attempt_loop(
     for attempt_idx in range(task.max_attempts):
         if cost_tracker.tripped:
             break
+
+        if rate_limit_fn is not None:
+            rate_limit_fn()
 
         prompt = _build_retry_prompt(base_prompt, conversation_messages)
         response = adapter.call(prompt, max_tokens=2048)

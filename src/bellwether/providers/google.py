@@ -41,19 +41,28 @@ class GoogleAdapter:
     ) -> None:
         self.provider_id = provider_id
         self.model_id = model_id
-        if client is not None:
-            self._client = client
-        else:
-            from google import genai
+        self._api_key = api_key or os.environ.get("GOOGLE_API_KEY")
+        # Optional injected client (tests). If provided, reused across calls.
+        # In production we construct a fresh client per call to work around a
+        # google-genai 1.75 bug where tenacity-driven retries can close the
+        # underlying httpx client and leave subsequent calls failing with
+        # "Cannot send a request, as the client has been closed."
+        self._injected_client = client
 
-            self._client = genai.Client(api_key=api_key or os.environ.get("GOOGLE_API_KEY"))
+    def _get_client(self) -> Any:
+        if self._injected_client is not None:
+            return self._injected_client
+        from google import genai
+
+        return genai.Client(api_key=self._api_key)
 
     def call(self, prompt: str, max_tokens: int) -> ProviderResponse:
         from google.genai import types
 
+        client = self._get_client()
         start = time.monotonic()
         try:
-            resp = self._client.models.generate_content(
+            resp = client.models.generate_content(
                 model=self.model_id,
                 contents=prompt,
                 config=types.GenerateContentConfig(
