@@ -1,0 +1,65 @@
+name: publish to PyPI
+
+# Triggered by tagging a vX.Y.Z release. Uses PyPI Trusted Publishing
+# (OIDC, no API token in GH secrets). To enable on PyPI:
+#   1. Create the project once on pypi.org (manual upload of the first
+#      sdist/wheel via twine, OR set up a "pending" trusted publisher
+#      under your PyPI account before any upload).
+#   2. Under the project's Publishing settings, add a trusted publisher:
+#      - Owner: cartesianxr7
+#      - Repository: bellwether
+#      - Workflow: publish.yml
+#      - Environment: pypi
+#   3. Push a tag matching v*.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build sdist + wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip build
+
+      - name: Build distributions
+        run: python -m build
+
+      - name: Verify the built wheel imports cleanly
+        run: |
+          python -m venv /tmp/verify-venv
+          /tmp/verify-venv/bin/pip install --quiet dist/*.whl
+          /tmp/verify-venv/bin/python -c "import bellwether; print('OK', bellwether.__version__)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi  # configure as trusted publisher on PyPI
+    permissions:
+      id-token: write  # required for OIDC trusted publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # No api-token needed; OIDC trusted publisher handles auth.

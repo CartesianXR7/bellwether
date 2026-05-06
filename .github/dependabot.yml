@@ -1,0 +1,36 @@
+version: 2
+updates:
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: deps
+    groups:
+      sdk:
+        # Provider SDKs move fast; group their updates so each PR is one
+        # cohesive bench-needs-rerun review.
+        patterns:
+          - "anthropic"
+          - "openai"
+          - "google-genai"
+      dev:
+        patterns:
+          - "pytest*"
+          - "ruff"
+          - "mypy"
+          - "jinja2"
+          - "markdown"
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+    commit-message:
+      prefix: ci
