@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bellwether: methodology</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #fafafa; --muted: #666; --accent: #0066cc; --border: #ddd; --code-bg: rgba(127,127,127,0.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #e8e8e8; --bg: #161616; --muted: #999; --accent: #6db3ff; --border: #333; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.6; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 760px; margin-left: auto; margin-right: auto; }
+  header { padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  h1 { margin: 0 0 0.25rem 0; font-size: 1.75rem; }
+  h1 a { color: var(--fg); text-decoration: none; }
+  h2 { margin-top: 2.25rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  h3 { margin-top: 1.5rem; }
+  nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+  nav a:hover { text-decoration: underline; }
+  code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; background: var(--code-bg); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.9em; }
+  pre { background: var(--code-bg); padding: 0.75rem; border-radius: 4px; overflow-x: auto; }
+  pre code { background: transparent; padding: 0; }
+  table { border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+  th, td { padding: 0.4rem 0.75rem; text-align: left; border: 1px solid var(--border); }
+  th { background: var(--code-bg); font-weight: 600; }
+  blockquote { margin: 1rem 0; padding-left: 1rem; border-left: 3px solid var(--border); color: var(--muted); }
+  ul, ol { padding-left: 1.5rem; }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 2rem 0; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><a href="index.html">bellwether</a></h1>
+  <nav>
+    <a href="index.html">Leaderboard</a>
+    <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<h1 id="bellwether-methodology">Bellwether Methodology</h1>
+<p><strong>Status:</strong> Locked v0 draft. Update via PR plus version bump.
+<strong>Methodology version:</strong> 0.1
+<strong>Last updated:</strong> 2026-05-05</p>
+<blockquote>
+<p>The methodology is Bellwether's primary contribution. The leaderboard is its proof of work. Anyone disagreeing with the numbers must engage with this doc, not the table.</p>
+</blockquote>
+<hr />
+<h2 id="1-core-principles">1. Core principles</h2>
+<ol>
+<li><strong>The methodology is the contribution.</strong> The leaderboard is its proof. Disagreements must engage with this doc.</li>
+<li><strong>Reproducibility, with bounded stochasticity.</strong> Same code plus same model version plus same dataset = same results within provider non-determinism bounds. T=0 reduces stochasticity but does not eliminate it; we report <code>mean +/- std</code> across N runs (see s7) rather than claim byte-identity.</li>
+<li><strong>No LLM-as-judge.</strong> Validation is mechanically checkable. Schema, regex, exact match, F1 against fixed ground truth.</li>
+<li><strong>No per-provider prompt tuning in headline numbers.</strong> One canonical prompt per task. (Tuned track exists separately for comparison, never for the leaderboard.)</li>
+<li><strong>Honest reporting.</strong> All raw outputs preserved. Failures categorized. Costs reported including failed-attempt waste. If a provider loses, we say so.</li>
+</ol>
+<h2 id="2-total-cost-of-task-tcot">2. Total Cost of Task (TCoT)</h2>
+<blockquote>
+<p>The cost to <em>reliably complete a task end-to-end</em>, including retries and validation loops.</p>
+</blockquote>
+<h3 id="21-formula">2.1 Formula</h3>
+<p>For a single task instance attempted by provider <em>P</em>:</p>
+<pre><code>TCoT(P, instance) = sum over attempts a in [1..max_attempts]:
+                      input_tokens(a)  * input_price_per_token(P)
+                    + output_tokens(a) * output_price_per_token(P)
+                    until validation passes OR max_attempts reached
+</code></pre>
+<h3 id="22-outcomes">2.2 Outcomes</h3>
+<p>For a given task instance:
+- <strong><code>success</code></strong>: validation passed within <code>max_attempts</code>. <code>TCoT_success</code> = sum of all attempt costs up to the passing attempt.
+- <strong><code>failure</code></strong>: validation never passed. <code>TCoT_failure</code> = sum of all attempt costs across all <code>max_attempts</code>. The failed work still costs money. It counts.</p>
+<h3 id="23-aggregate-metrics-per-provider-x-task-over-n-instances">2.3 Aggregate metrics (per provider x task, over N instances)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Formula</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success_rate</code></td>
+<td>(passing instances) / N</td>
+<td>Reliability under the standard retry loop</td>
+</tr>
+<tr>
+<td><code>mean_TCoT_success</code></td>
+<td>mean over passing instances</td>
+<td>Cost per successful completion</td>
+</tr>
+<tr>
+<td><code>mean_TCoT_failure</code></td>
+<td>mean over failing instances</td>
+<td>Cost of wasted work</td>
+</tr>
+<tr>
+<td><code>effective_TCoT</code></td>
+<td><code>mean_TCoT_success + mean_TCoT_failure * (1 - success_rate) / success_rate</code></td>
+<td><strong>Headline metric.</strong> Total spend per successful completion, including failed-attempt waste amortized across the successes. Equivalent to <code>(total_spend_across_all_instances) / num_successes</code>.</td>
+</tr>
+<tr>
+<td><code>mean_latency_p50</code></td>
+<td>median wall-clock per attempt</td>
+<td></td>
+</tr>
+<tr>
+<td><code>mean_latency_p95</code></td>
+<td>95th percentile wall-clock per attempt</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><code>effective_TCoT</code> is the metric we publish in the leaderboard. It captures both efficiency (cheaper attempts win) and reliability (each failure forces successes to amortize the wasted spend). Worked example: provider A completes 100% of attempts at $0.002/success; provider B completes 50% at $0.001/success but burns $0.003 on each failure (3 retries before giving up). <code>effective_TCoT_A = 0.002</code>. <code>effective_TCoT_B = 0.001 + 0.003 * (0.5 / 0.5) = 0.004</code>. Reliability dominates as failure rate rises and as failure costs diverge from success costs. The naive shorthand <code>mean_TCoT_success / success_rate</code> undercounts because it implicitly assumes <code>mean_TCoT_failure == mean_TCoT_success</code>, which is rarely true: failures usually consume all <code>max_attempts</code> while successes often pass on attempt 1.</p>
+<h3 id="24-whats-included">2.4 What's included</h3>
+<ul>
+<li>All API token costs across all retries.</li>
+<li>All API token costs across failed attempts that didn't lead to success.</li>
+</ul>
+<h3 id="25-whats-excluded-and-why">2.5 What's excluded (and why)</h3>
+<ul>
+<li><strong>Compute cost of running the harness itself</strong>: negligible, not provider-attributable.</li>
+<li><strong>Network egress</strong>: negligible, not provider-attributable.</li>
+<li><strong>Engineering time</strong>: out of scope; users can model this separately.</li>
+<li><strong>Validator costs</strong>: in v0 we use only machine-checkable validators (validator cost = $0). If LLM-validators are ever introduced (v1+), validator costs MUST be added to TCoT for the validating provider.</li>
+</ul>
+<h3 id="26-provider-price-changes">2.6 Provider price changes</h3>
+<p>Pricing tables live in <code>src/bellwether/pricing.py</code>, versioned with the package. Pricing is loaded once at run-start and frozen for the run; no provider exposes a public pricing API, so mid-run price changes go undetected by the harness. Each result JSON records the pricing version used; <code>pricing.py</code> comments link the dated provider-pricing page that informed each entry, for audit trail. If a provider changes prices between two runs, results from the two pricing versions are NOT averaged: they are reported as separate dated runs.</p>
+<h2 id="3-retry-policy">3. Retry policy</h2>
+<ul>
+<li><strong>Default <code>max_attempts = 3</code></strong> (configurable per task).</li>
+<li><strong>On validation failure:</strong> retry with the same canonical prompt plus a structured "your previous response failed validation: <code>&lt;reason&gt;</code>. Please correct and try again." appended as a new user-turn message. The original assistant turn(s) remain in context.</li>
+<li><strong><code>&lt;reason&gt;</code> is constrained to schema and format level only.</strong> Allowed: missing required field names from the declared schema, parser/JSON errors, <code>finish_reason</code> from the provider, length-limit hits. <strong>Forbidden: any echo of expected values, named missing entities, F1 deltas, score values, or quoted ground truth.</strong> Validators that emit content-level reasons leak ground truth and invalidate the run.</li>
+<li>This is a deliberately simple repair strategy. Production systems use more sophisticated repair; we benchmark BASE model reliability under a STANDARD repair loop. That's the apples-to-apples test.</li>
+<li><strong>No prompt rewriting between retries.</strong> No chain-of-thought injection between retries. No per-provider retry hacks. Same loop for everyone.</li>
+<li><strong>After <code>max_attempts</code>:</strong> outcome = <code>failure</code>, classify failure mode, record final attempt's output. Move on.</li>
+</ul>
+<h2 id="4-validation-policy">4. Validation policy</h2>
+<p>Per-task validators are pure functions: <code>validate(output: str, ground_truth: Any) -&gt; ValidationResult</code>.</p>
+<pre><code class="language-python">@dataclass
+class ValidationResult:
+    passed: bool                       # True iff score &gt;= the task's pass_threshold
+    score: float                       # in [0, 1]; may be partial credit
+    failure_reason: str | None         # schema/format level only; see s3 retry policy
+    failure_modes: list[FailureMode]   # taxonomic, empty if passed
+</code></pre>
+<p><code>pass_threshold</code> is a task-level constant defined on <code>Task</code> (see s8), not stored on each <code>ValidationResult</code>. Storing it per-result invites per-instance drift.</p>
+<p>Validators MUST be:
+- <strong>Deterministic</strong> (same input gives same output).
+- <strong>Implementable without an LLM</strong> (no API calls, no model loading).
+- <strong>Documented</strong> in the task's docstring with examples.
+- <strong>Unit-tested</strong> with both passing and failing fixtures.</p>
+<h2 id="5-failure-mode-taxonomy">5. Failure-mode taxonomy</h2>
+<p>Every failure (<code>passed = False</code>) is classified into one or more modes. Multiple modes per failure allowed (e.g. <code>[CONFABULATION, PARTIAL]</code>).</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Definition</th>
+<th>Detection in v0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>REFUSAL</code></td>
+<td>Model declined to attempt the task</td>
+<td>Output matches refusal regex bank ("I can't", "I won't", "as an AI", "I'm not able to", etc.); score = 0</td>
+</tr>
+<tr>
+<td><code>CONFABULATION</code></td>
+<td>Output is fluent and well-formatted but factually wrong or fabricated</td>
+<td>Passes format/schema checks, fails content checks (exact match, F1, fact-check against ground truth)</td>
+</tr>
+<tr>
+<td><code>SCHEMA_BREAK</code></td>
+<td>Output is malformed (invalid JSON, wrong structure, missing required fields)</td>
+<td>Output fails parser/schema validation</td>
+</tr>
+<tr>
+<td><code>TRUNCATION</code></td>
+<td>Output cut off mid-response</td>
+<td>Final token is mid-word OR <code>finish_reason == "length"</code> from the provider</td>
+</tr>
+<tr>
+<td><code>OFFTASK</code></td>
+<td>Output is on-topic but answers a different question than asked</td>
+<td>Format OK; content addresses something other than the task instance (low overlap with expected key entities)</td>
+</tr>
+<tr>
+<td><code>PARTIAL</code></td>
+<td>Output partially correct (some fields right, others wrong; or partial F1)</td>
+<td><code>0 &lt; score &lt; pass_threshold</code></td>
+</tr>
+<tr>
+<td><code>TIMEOUT</code></td>
+<td>Provider exceeded wall-clock budget</td>
+<td>Attempt aborted after <code>task_timeout_seconds</code></td>
+</tr>
+<tr>
+<td><code>ERROR</code></td>
+<td>Provider returned an API error</td>
+<td>HTTP error, rate limit, content filter trip, etc. Recorded with the error class.</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Detection is best-effort and conservative. <strong>In v0, <code>OFFTASK</code> and <code>CONFABULATION</code> collapse in practice</strong> because v0 datasets do not ship per-instance "expected key entities" annotations needed to distinguish them; classifiers default to <code>CONFABULATION</code> for content failures and reserve <code>OFFTASK</code> for the rare case where a manual annotation is available. The taxonomy improves as we collect more data. v0 is a starting point, not a final ontology.</p>
+</blockquote>
+<h2 id="6-prompt-portability">6. Prompt portability</h2>
+<p>Each task can carry TWO prompt tracks:</p>
+<ol>
+<li><strong>Canonical</strong> (used for headline / leaderboard numbers): the single prompt used across ALL providers without modification. Designed to be reasonable for any modern instruct-tuned LLM. No provider name, no model-specific tokens, no provider-favoring tricks.</li>
+<li><strong>Tuned</strong> (v1 feature, NOT in v0): per-provider optimized prompt. Reported alongside canonical results in a "tuned delta" column once shipped.</li>
+</ol>
+<p><strong>v0 ships canonical only.</strong> <code>tuned_prompt_templates</code> defaults to an empty dict; the leaderboard renders no "tuned delta" column. Operationalizing the tuned track requires a contract that v0 does not yet have: who tunes, with what compute budget, against which validation split, to what convergence criterion. v1 will define and publish that contract before populating tuned numbers. Any v0 result claiming tuned-track numbers is a bug.</p>
+<p>The eventual DELTA between canonical and tuned per provider is the <strong>portability cost</strong>: how much performance you leave on the table by not tuning per provider. This is the number an enterprise CE actually wants when a customer asks "what is the lift to swap from GPT to Gemini?"</p>
+<h2 id="7-stochasticity-and-multi-run">7. Stochasticity and multi-run</h2>
+<ul>
+<li><strong>Default temperature: 0</strong> where supported (Gemini, GPT, Claude all support). <strong>T=0 minimizes stochasticity but does not guarantee determinism.</strong> All three providers exhibit backend non-determinism even at T=0 due to batch effects and floating-point non-associativity on GPU; Anthropic documents this explicitly. Treat T=0 as a noise-reduction default, not a reproducibility guarantee.</li>
+<li><strong>Default <code>N</code> runs per (task instance x provider): 3</strong> in v0 (cheap; minimal stats).</li>
+<li>For <code>N &gt; 1</code>: report <code>mean +/- std</code> for all aggregate metrics. <strong>The leaderboard visually marks ranks within 1 std of each other as tied</strong>; with N=3 the noise floor is high and small gaps are not significant.</li>
+<li>For <code>N = 1</code> results, the JSON includes a <code>"single_run": true</code> flag and the leaderboard renders them with a caveat.</li>
+<li>v1 will expand to <code>N=5+</code> with bootstrap confidence intervals.</li>
+</ul>
+<h2 id="8-per-task-contract">8. Per-task contract</h2>
+<p>Every task in <code>bellwether/tasks/</code> MUST provide:</p>
+<pre><code class="language-python">class Task(Protocol):
+    name: str                                              # unique identifier (e.g. &quot;structured_extraction&quot;)
+    description: str                                       # one-paragraph description
+    dataset_version: str                                   # version/checksum recorded per result for reproducibility (s9)
+    dataset_loader: Callable[[], Iterable[Example]]        # yields task instances with ground truth
+    canonical_prompt_template: str                         # one prompt, all providers (Jinja-style placeholders)
+    tuned_prompt_templates: dict[ProviderId, str]          # optional per-provider tuning, default: {}
+    validator: Callable[[output: str, ground_truth: Any], ValidationResult]
+    max_attempts: int = 3
+    timeout_seconds: int = 30
+    pass_threshold: float = 1.0                            # task-specific
+    license: str                                           # dataset license; must be redistribution-compatible OR loadable by reference
+</code></pre>
+<p>Tasks failing the contract are rejected at collection time. Runner refuses to bench them.</p>
+<h2 id="9-reproducibility-guarantees">9. Reproducibility guarantees</h2>
+<p>Every benchmark run records, per attempt:</p>
+<pre><code class="language-json">{
+  &quot;bellwether_version&quot;: &quot;0.1.0&quot;,
+  &quot;methodology_version&quot;: &quot;0.1&quot;,
+  &quot;git_sha&quot;: &quot;abc1234&quot;,
+  &quot;git_dirty&quot;: false,
+  &quot;pricing_version&quot;: &quot;2026-05-05&quot;,
+  &quot;provider&quot;: {
+    &quot;id&quot;: &quot;gemini&quot;,
+    &quot;model_id&quot;: &quot;gemini-2.0-flash-001&quot;,
+    &quot;model_version_hint&quot;: &quot;from API where exposed&quot;
+  },
+  &quot;task&quot;: {
+    &quot;name&quot;: &quot;structured_extraction&quot;,
+    &quot;instance_id&quot;: &quot;...&quot;,
+    &quot;dataset_version&quot;: &quot;sha or checksum&quot;
+  },
+  &quot;attempt&quot;: 1,
+  &quot;prompt&quot;: &quot;...&quot;,
+  &quot;output&quot;: &quot;...&quot;,
+  &quot;input_tokens&quot;: 1234,
+  &quot;output_tokens&quot;: 567,
+  &quot;cost_usd&quot;: 0.001234,
+  &quot;latency_seconds&quot;: 1.2,
+  &quot;validation&quot;: { &quot;passed&quot;: true, &quot;score&quot;: 1.0, &quot;failure_modes&quot;: [] }
+}
+</code></pre>
+<p>Re-running with the same versions produces results within stochasticity bounds. T=0 reduces but does not eliminate non-determinism (see s7); we do NOT claim byte-identity. The runner refuses to write results from a dirty git tree unless <code>--allow-dirty</code> is passed; the <code>git_dirty</code> field reflects the tree state at run-start. Dirty results are flagged in the leaderboard and excluded from headline aggregates.</p>
+<h2 id="10-what-this-benchmark-does-not-measure-in-v0">10. What this benchmark does NOT measure (in v0)</h2>
+<ul>
+<li><strong>Subjective output quality</strong> ("is this answer beautifully written?")</li>
+<li><strong>Capability on tasks without machine-checkable ground truth</strong></li>
+<li><strong>Multi-turn dialogue quality</strong></li>
+<li><strong>Adversarial robustness / jailbreaks</strong></li>
+<li><strong>Bias / fairness</strong> (separate evaluation domain, not our remit)</li>
+<li><strong>Cost at scale</strong> (we measure unit cost; users extrapolate)</li>
+</ul>
+<p>We say so explicitly to prevent over-claims.</p>
+<h2 id="11-versioning">11. Versioning</h2>
+<ul>
+<li>This methodology versions with the package. <code>methodology_version</code> recorded in every result JSON.</li>
+<li><strong>MAJOR</strong> bump = breaking changes to formulas (TCoT, effective_TCoT) or taxonomy semantics. Old results are NOT comparable; require re-run.</li>
+<li><strong>MINOR</strong> bump = new task contract fields, new failure modes (additive only), new validators.</li>
+<li><strong>PATCH</strong> = bugfix to validators, pricing updates, doc edits.</li>
+</ul>
+<h2 id="12-honest-reporting-checklist-every-results-page">12. Honest reporting checklist (every results page)</h2>
+<ul>
+<li>[ ] All providers shown for all tasks (no hiding losers).</li>
+<li>[ ] <code>success_rate &lt; 1.0</code> shown prominently, not buried.</li>
+<li>[ ] Failure-mode breakdown linked from every cell.</li>
+<li>[ ] Methodology version and git SHA on every page.</li>
+<li>[ ] Date of run and pricing version visible.</li>
+<li>[ ] Per-attempt raw outputs linked from each result.</li>
+<li>[ ] "Where each provider wins" section is honest: no rigging the categorization.</li>
+<li>[ ] Ranks within 1 std visually marked as tied (see s7); small leaderboard gaps at N=3 are noise, not signal.</li>
+<li>[ ] Any results from a dirty git tree (<code>git_dirty: true</code>) flagged and excluded from headline aggregates (see s9).</li>
+</ul>
+</main>
+
+<footer>
+  <p>methodology version 0.1</p>
+</footer>
+
+</body>
+</html>

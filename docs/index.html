@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bellwether</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #fafafa; --muted: #666; --accent: #0066cc; --border: #ddd; --dirty: #b54708; --dirty-bg: #fff8eb; }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #e8e8e8; --bg: #161616; --muted: #999; --accent: #6db3ff; --border: #333; --dirty: #f7b955; --dirty-bg: #2a1c08; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 960px; margin-left: auto; margin-right: auto; }
+  header { padding-bottom: 1rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  h1 { margin: 0 0 0.25rem 0; font-size: 1.75rem; }
+  h2 { margin-top: 2.5rem; font-size: 1.25rem; }
+  h3 { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); font-weight: 500; }
+  .tagline { color: var(--muted); margin: 0.25rem 0 0.5rem 0; }
+  nav a { color: var(--accent); text-decoration: none; margin-right: 1rem; }
+  nav a:hover { text-decoration: underline; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; margin-bottom: 0.5rem; }
+  th, td { padding: 0.5rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+  th { font-weight: 600; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  tr.dirty { background: var(--dirty-bg); }
+  tr.dirty td:first-child::before { content: "* "; color: var(--dirty); }
+  .dirty-badge { display: inline-block; font-size: 0.75rem; color: var(--dirty); background: var(--dirty-bg); padding: 0.1rem 0.4rem; border-radius: 3px; border: 1px solid var(--dirty); margin-left: 0.5rem; }
+  .pass-meta { font-size: 0.85rem; color: var(--muted); }
+  code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace; background: rgba(127,127,127,0.12); padding: 0.05rem 0.25rem; border-radius: 3px; font-size: 0.9em; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+  .empty { color: var(--muted); font-style: italic; padding: 2rem 0; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>bellwether</h1>
+  <p class="tagline">The cost-and-failure-mode benchmark for LLM agents.</p>
+  <nav>
+    <a href="methodology.html">Methodology</a>
+    <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
+  </nav>
+</header>
+
+<main>
+
+<p>
+  Headline metric is <code>effective_TCoT</code>: total spend per successful task completion,
+  including the cost of failed attempts amortized across the successes.
+  Lower is better. See the <a href="methodology.html">methodology</a> for the formula and the
+  validator contract.
+</p>
+
+
+
+
+<h2>structured_extraction</h2>
+
+<h3>
+  Pass 2026-05-06 01:25:00 UTC
+  &middot;
+  <code>423a52c</code>
+  
+  <span class="dirty-badge">dirty tree, excluded from headline aggregates per s9</span>
+  
+</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT (USD)</th>
+      <th class="num">latency p50 / p95</th>
+      <th class="num">N</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr class="dirty">
+      <td>1</td>
+      <td><code>google/gemini-2.5-flash-lite</code></td>
+      <td class="num">86.7%
+        (13/15)</td>
+      <td class="num">
+        
+        $0.00012
+        
+      </td>
+      <td class="num">0.66s / 1.47s</td>
+      <td class="num">15</td>
+    </tr>
+    
+    <tr class="dirty">
+      <td>2</td>
+      <td><code>openai/gpt-4o</code></td>
+      <td class="num">100.0%
+        (15/15)</td>
+      <td class="num">
+        
+        $0.00070
+        
+      </td>
+      <td class="num">0.72s / 1.40s</td>
+      <td class="num">15</td>
+    </tr>
+    
+    <tr class="dirty">
+      <td>3</td>
+      <td><code>anthropic/claude-sonnet-4-6</code></td>
+      <td class="num">100.0%
+        (15/15)</td>
+      <td class="num">
+        
+        $0.00099
+        
+      </td>
+      <td class="num">1.32s / 3.03s</td>
+      <td class="num">15</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+<h3>
+  Pass 2026-05-06 01:22:44 UTC
+  &middot;
+  <code>423a52c</code>
+  
+</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT (USD)</th>
+      <th class="num">latency p50 / p95</th>
+      <th class="num">N</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr >
+      <td>1</td>
+      <td><code>google/gemini-2.5-flash-lite</code></td>
+      <td class="num">100.0%
+        (15/15)</td>
+      <td class="num">
+        
+        $0.00011
+        
+      </td>
+      <td class="num">0.71s / 1.91s</td>
+      <td class="num">15</td>
+    </tr>
+    
+    <tr >
+      <td>2</td>
+      <td><code>openai/gpt-4o</code></td>
+      <td class="num">100.0%
+        (15/15)</td>
+      <td class="num">
+        
+        $0.00071
+        
+      </td>
+      <td class="num">1.17s / 2.27s</td>
+      <td class="num">15</td>
+    </tr>
+    
+    <tr >
+      <td>3</td>
+      <td><code>anthropic/claude-sonnet-4-6</code></td>
+      <td class="num">100.0%
+        (15/15)</td>
+      <td class="num">
+        
+        $0.00099
+        
+      </td>
+      <td class="num">1.40s / 2.66s</td>
+      <td class="num">15</td>
+    </tr>
+    
+  </tbody>
+</table>
+
+
+
+</main>
+
+<footer>
+  <p>
+    methodology version 0.1
+    &middot; bellwether 0.1.0
+    &middot; last bench 2026-05-06 01:26:11 UTC
+  </p>
+  <p><a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a></p>
+</footer>
+
+</body>
+</html>
