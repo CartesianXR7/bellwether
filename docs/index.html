@@ -198,13 +198,13 @@
           <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
         </span>
       </td>
-      <td class="num">$0.00012</td>
       <td class="num">$0.00011</td>
-      <td class="num delta-up">
-        +11.9%
+      <td class="num">$0.00012</td>
+      <td class="num delta-down">
+        -10.7%
       </td>
-      <td class="num delta-up">
-        -13.3 pp
+      <td class="num delta-down">
+        +13.3 pp
       </td>
     </tr>
     
@@ -214,10 +214,10 @@
           <span class="prov-swatch"></span>openai/gpt-4o
         </span>
       </td>
+      <td class="num">$0.00069</td>
       <td class="num">$0.00070</td>
-      <td class="num">$0.00071</td>
       <td class="num delta-flat">
-        -1.2%
+        -2.5%
       </td>
       <td class="num delta-flat">
         +0.0 pp
@@ -232,6 +232,127 @@
 </p>
 
 
+
+<div class="pass-meta">
+  <strong>Pass 2026-05-06 02:14:42 UTC</strong>
+  <code>2eb9d9a</code>
+  
+  <span class="badge badge-clean">clean</span>
+  
+</div>
+
+<div class="leaderboard-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr >
+      <td class="rank">1</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00011
+          </span>
+          <div class="cost-bar"><div style="width: 11%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.62s / 0.95s</td>
+      <td class="num">
+        36
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (0% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>21</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">2</td>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00069
+          </span>
+          <div class="cost-bar"><div style="width: 69%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.84s / 1.97s</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">3</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00099
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.37s / 3.65s</td>
+      <td class="num">
+        15
+        <span style="color: var(--muted); font-size: 0.8em;">
+          (100% 1st-try)
+        </span>
+      </td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
 
 <div class="pass-meta">
   <strong>Pass 2026-05-06 01:25:00 UTC</strong>
@@ -486,8 +607,8 @@
   <p>
     methodology version 0.1
     &middot; bellwether 0.1.0
-    &middot; last bench 2026-05-06 01:26:11 UTC
-    &middot; 6 result files loaded
+    &middot; last bench 2026-05-06 02:15:49 UTC
+    &middot; 9 result files loaded
   </p>
   <p>
     <a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a>
