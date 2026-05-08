@@ -3,7 +3,7 @@
 What is shipped, what is next, what is later. Methodology-version semantics
 per [METHODOLOGY.md s11](METHODOLOGY.md#11-versioning).
 
-## Shipped (v0.1, v0.3)
+## Shipped (v0.1, v0.3, v0.4)
 
 ### v0.1 (2026-05-06)
 - Methodology v0.1 (corrected `effective_TCoT`, schema-only retry, taxonomy)
@@ -25,9 +25,25 @@ per [METHODOLOGY.md s11](METHODOLOGY.md#11-versioning).
 - CONTRIBUTING, CODE_OF_CONDUCT, ARCHITECTURE, ROADMAP, CHANGELOG, issue templates
 - 144 tests, ruff lint clean
 
-## Next (v0.4)
+### v0.4 (2026-05-08)
+- 17 more provider entries across 4 new providers: xAI Grok (4), Perplexity
+  Sonar (4), OpenAI o-series (3), OpenRouter (8 open-weights + commercial).
+  Total 27 entries across 6 providers.
+- Methodology PATCH 0.1 to 0.1.1: `model_class` field (`standard`, `reasoning`,
+  `search`) so reasoning and search models are not silently ranked alongside
+  standard chat models. Site renders class chips and groups the cross-task
+  ranking matrix by class.
+- `OpenAIAdapter` generalized to take `base_url` and `api_key_env_var`,
+  letting xAI / Perplexity / OpenRouter share one adapter class.
+  o-series carve-out for OpenAI proper only.
+- Runner result filenames include sanitized `model_id` so OpenRouter's
+  8 models do not collide.
+- 150 tests, ruff lint clean.
 
-Theme: developer ergonomics + statistical rigor.
+## Next (v0.5)
+
+Theme: developer ergonomics + statistical rigor (deferred from v0.4 in
+favor of provider-coverage expansion).
 
 - **Async runner.** Parallelize adapter calls across providers within a task;
   cuts wall-clock roughly proportional to provider count. Per-provider rate
@@ -45,23 +61,21 @@ Theme: developer ergonomics + statistical rigor.
 - **More CLI ergonomics.** `--filter "success_rate>0.95"`, `--format json|md|csv`,
   `--sort eff_tcot|p50|p95`.
 - **Per-instance / per-attempt drill-down pages** on the static site.
-
-## Later (v0.5)
-
-Theme: more procurement scenarios.
-
+- **Search-cost accounting in TCoT** for `model_class="search"` entries
+  (Perplexity Sonar). Per-search fees (about $5 per 1k) are currently
+  excluded from TCoT; v0.5 closes the gap.
 - **Tuned-prompt track formalization.** Real contract for who tunes,
   against which split, to what convergence criterion. Renders alongside
   canonical numbers as a "tuned delta" column. Without the contract, the
   track does not ship.
-- **One more synthetic task** (long-context summarization with key-fact
-  recall, where key facts are deterministically generated rather than
-  LLM-extracted).
 - **Historical leaderboard with trend lines.** Show how each provider's
   `effective_TCoT` and `success_rate` move over time across model
   snapshots. Inline SVG sparklines.
 - **Automated re-bench on schedule.** GH Actions cron weekly, or on
   pricing-table updates.
+- **One more synthetic task** (long-context summarization with key-fact
+  recall, where key facts are deterministically generated rather than
+  LLM-extracted).
 
 ## v1 (DO NOT BUILD YET)
 

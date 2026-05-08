@@ -28,6 +28,13 @@
     --prov-anthropic: #c9764e;
     --prov-openai: #10a37f;
     --prov-google: #4285f4;
+    --prov-xai: #555555;
+    --prov-perplexity: #20a5b8;
+    --prov-openrouter: #e6633a;
+    --class-reasoning-fg: #5b21b6;
+    --class-reasoning-bg: #ede9fe;
+    --class-search-fg: #92400e;
+    --class-search-bg: #fef3c7;
   }
   [data-theme="dark"] {
     --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
@@ -38,6 +45,11 @@
     --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
     --tied: #777;
     --purple: #a78bfa;
+    --prov-xai: #aaaaaa;
+    --class-reasoning-fg: #c4b5fd;
+    --class-reasoning-bg: #2a1f4a;
+    --class-search-fg: #fcd34d;
+    --class-search-bg: #3a2a08;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -82,6 +94,14 @@
   .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
   .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
   .prov.provider-google .prov-swatch { background: var(--prov-google); }
+  .prov.provider-xai .prov-swatch { background: var(--prov-xai); }
+  .prov.provider-perplexity .prov-swatch { background: var(--prov-perplexity); }
+  .prov.provider-openrouter .prov-swatch { background: var(--prov-openrouter); }
+
+  .class-chip { display: inline-block; font-size: 0.66rem; padding: 0.05rem 0.35rem; margin-left: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; vertical-align: middle; }
+  .class-chip.class-reasoning { color: var(--class-reasoning-fg); background: var(--class-reasoning-bg); }
+  .class-chip.class-search { color: var(--class-search-fg); background: var(--class-search-bg); }
+  .class-chip.class-standard { display: none; }
 
   .cost-cell { min-width: 9rem; }
   .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
@@ -247,7 +267,7 @@
     {% for entry in pass_data.entries %}
     <tr {% if entry.git_dirty %}class="dirty"{% elif entry.tied_with_above %}class="tied"{% endif %}>
       <td class="rank">{{ entry.rank }}</td>
-      <td><span class="prov provider-{{ entry.provider }}"><span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}</span></td>
+      <td><span class="prov provider-{{ entry.provider }}"><span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}</span><span class="class-chip class-{{ entry.model_class }}">{{ entry.model_class }}</span></td>
       <td class="num">{{ "%.1f"|format(entry.success_rate * 100) }}% ({{ entry.n_successes }}/{{ entry.n_trials }})</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">

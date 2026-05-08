@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bellwether"
-version = "0.3.0"
+version = "0.4.0"
 description = "The cost-and-failure-mode benchmark for LLM agents."
 readme = "README.md"
 license = { text = "MIT" }

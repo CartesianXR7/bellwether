@@ -110,3 +110,65 @@ def test_call_handles_none_content():
     result = a.call("p", max_tokens=1024)
     assert result.output_text == ""
     assert result.finish_reason == "content_filter"
+
+
+def test_call_for_openai_reasoning_models_uses_max_completion_tokens_no_temperature():
+    """OpenAI o-series (o1/o3/o4) reject temperature != 1 and require
+    max_completion_tokens instead of max_tokens. Verify the adapter switches
+    to that calling convention only for openai/o<digit> models, not for
+    gpt-4o (which is a standard chat model despite the leading 'o' in 'gpt-4o')
+    and not for OpenAI-compatible vendors that route their own reasoning models.
+    """
+    client = MagicMock()
+    client.chat.completions.create.return_value = _mock_response("ok", "stop", 5, 5)
+    a = OpenAIAdapter("openai", "o3", client=client)
+
+    a.call("p", max_tokens=512)
+
+    kwargs = client.chat.completions.create.call_args.kwargs
+    assert kwargs["model"] == "o3"
+    assert kwargs["max_completion_tokens"] == 512
+    assert "max_tokens" not in kwargs
+    assert "temperature" not in kwargs
+
+
+def test_call_for_openai_compatible_reasoning_uses_normal_params():
+    """OpenAI-compatible vendors (Perplexity, OpenRouter routing DeepSeek R1)
+    accept the normal temperature + max_tokens convention even for their own
+    reasoning models. The o-series carve-out is OpenAI-proper only."""
+    client = MagicMock()
+    client.chat.completions.create.return_value = _mock_response("ok", "stop", 5, 5)
+    a = OpenAIAdapter("openrouter", "deepseek/deepseek-r1", client=client)
+
+    a.call("p", max_tokens=512)
+
+    kwargs = client.chat.completions.create.call_args.kwargs
+    assert kwargs["max_tokens"] == 512
+    assert kwargs["temperature"] == 0.0
+
+
+def test_adapter_accepts_base_url_for_openai_compatible_services(monkeypatch):
+    """v0.4: OpenAIAdapter is parameterized so the same class works for any
+    OpenAI-compatible HTTPS endpoint (xAI, Perplexity, OpenRouter). The
+    adapter must read the API key from the named env var (NOT OPENAI_API_KEY)
+    and pass base_url through to the underlying SDK client.
+    """
+    captured: dict[str, object] = {}
+
+    class _FakeOpenAI:
+        def __init__(self, **kwargs):
+            captured.update(kwargs)
+
+    monkeypatch.setenv("XAI_API_KEY", "xai-test-key-9999")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setattr("openai.OpenAI", _FakeOpenAI)
+
+    OpenAIAdapter(
+        provider_id="xai",
+        model_id="grok-4",
+        base_url="https://api.x.ai/v1",
+        api_key_env_var="XAI_API_KEY",
+    )
+
+    assert captured["base_url"] == "https://api.x.ai/v1"
+    assert captured["api_key"] == "xai-test-key-9999"

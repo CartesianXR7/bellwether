@@ -4,6 +4,106 @@ All notable changes are recorded here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); methodology
 versioning per METHODOLOGY.md s11.
 
+## [v0.4.0] - 2026-05-08
+
+Provider-coverage expansion plus a small methodology PATCH (0.1 to 0.1.1)
+introducing the `model_class` field so reasoning and search-augmented
+models are not silently ranked alongside standard chat models.
+
+### Providers (was 8, now 27)
+
+PRICING_TABLE expanded from 8 to 27 entries across 6 providers. All values
+checked against the LiteLLM pricing catalog and provider docs where
+available; entries marked UNVERIFIED in the v0.4 PR comment are pulled
+from provider-page screenshots and should be re-verified before headline
+publication.
+
+- **xAI Grok via api.x.ai/v1** (4 entries): grok-4, grok-4-fast, grok-3,
+  grok-3-mini.
+- **Perplexity Sonar via api.perplexity.ai** (4 entries): sonar, sonar-pro
+  (both `model_class="search"`); sonar-reasoning, sonar-reasoning-pro
+  (both `model_class="reasoning"`). Per-search costs (about $5 per 1k
+  searches) are NOT yet captured in TCoT for `search` class; v0.5 will add
+  search-cost accounting.
+- **OpenAI o-series** (3 entries): o3, o3-mini, o4-mini. All
+  `model_class="reasoning"`. Adapter detects o-series by the `o<digit>`
+  prefix and switches to `max_completion_tokens` plus default temperature
+  to satisfy the o-series API contract.
+- **OpenRouter via openrouter.ai/api/v1** (8 entries): meta-llama/llama-4-maverick,
+  meta-llama/llama-4-scout, meta-llama/llama-3.3-70b-instruct,
+  deepseek/deepseek-chat, deepseek/deepseek-r1 (`model_class="reasoning"`),
+  mistralai/mistral-large, cohere/command-r-plus, qwen/qwen-3-235b-a22b.
+
+### Methodology (v0.1 to v0.1.1, PATCH bump)
+
+- **`model_class` field** on `Pricing` (METHODOLOGY s2.7). Three values:
+  `standard` (default; conventional chat completion), `reasoning` (explicit
+  thinking-budget output tokens; output costs include thinking tokens, so
+  absolute `effective_TCoT` runs 5x to 20x higher per task than non-reasoning
+  peers), `search` (retrieval-augmented; per-query knowledge varies; per-search
+  costs not yet captured in TCoT). Additive with a safe default, hence PATCH.
+- s11 versioning rule clarified: additive pricing fields with safe defaults
+  qualify as PATCH.
+- The leaderboard renderer surfaces `model_class` as an inline chip and
+  groups the cross-task ranking matrix by class so within-class ranking is
+  the primary procurement signal. Cross-class ranking misleads (reasoning
+  burns more output tokens, search has unmetered per-search fees).
+
+### OpenAI-compatible adapter generalization
+
+- `OpenAIAdapter.__init__` now accepts `base_url` and `api_key_env_var`,
+  letting xAI, Perplexity, and OpenRouter share the OpenAI Chat Completions
+  wire protocol without a new adapter class. `OPENAI_API_KEY` remains the
+  default env var; per-provider keys (`XAI_API_KEY`, `PERPLEXITY_API_KEY`,
+  `OPENROUTER_API_KEY`) are wired through the CLI registry.
+- O-series carve-out for OpenAI proper only: `temperature` is omitted and
+  `max_tokens` becomes `max_completion_tokens`. OpenAI-compatible vendors
+  (xAI, Perplexity, OpenRouter routing DeepSeek R1) accept the normal
+  parameter convention transparently and are NOT subject to the carve-out.
+
+### Runner
+
+- `_write_result` filename now includes a sanitized model_id segment:
+  `<task>__<model>__<sha7>.json`. Required because OpenRouter routes 8
+  distinct models under `provider_id="openrouter"` and they would otherwise
+  collide on disk. Slashes and colons in model_ids are replaced with
+  underscores. Backward-compatible at read time (`build.py` rglobs all
+  JSONs); only new files use the longer naming.
+- Result records carry `provider.model_class` so the leaderboard renderer
+  can surface it without needing to look up pricing at site-build time
+  (the lookup remains as a fallback for pre-v0.1.1 result files).
+
+### CLI
+
+- `_PROVIDER_REGISTRY` entry shape changes to `(adapter_class, provider_id,
+  model_id, adapter_kwargs)` so OpenAI-compatible vendors can supply their
+  `base_url` plus `api_key_env_var` without polluting the registry value
+  shape with empty positional fields.
+- Six provider-name aliases now: `anthropic`, `openai`, `google`, `xai`,
+  `perplexity`, `openrouter`. `--provider all` iterates the 27 distinct
+  (provider, model) entries.
+
+### Site
+
+- Class chip rendered next to each model name across the index, the cost
+  calculator, and the per-task pages. Standard is shown low-contrast (the
+  default) and reasoning/search are color-tinted (purple, amber). Glossary
+  page documents the chip and links back to methodology s2.7.
+- Cross-task ranking matrix groups rows by `model_class` (standard, then
+  reasoning, then search) and sorts within class by average rank.
+- Provider color swatches added for xAI (gray), Perplexity (teal),
+  OpenRouter (orange).
+
+### Tests
+
+150 passing (was 144). New tests cover: 27-entry table shape across 6
+providers, reasoning/search classification, default `model_class` is
+`standard`, OpenAI o-series adapter calling convention, OpenAI-compatible
+vendors keep the normal parameter convention, base_url plus
+api_key_env_var threading.
+
+---
+
 ## [v0.3.0] - 2026-05-07
 
 Procurement-question reach: 3 tasks across 8 provider models, with statistical

@@ -29,6 +29,15 @@
     --prov-anthropic: #c9764e;
     --prov-openai: #10a37f;
     --prov-google: #4285f4;
+    --prov-xai: #555555;
+    --prov-perplexity: #20a5b8;
+    --prov-openrouter: #e6633a;
+    --class-reasoning-fg: #5b21b6;
+    --class-reasoning-bg: #ede9fe;
+    --class-search-fg: #92400e;
+    --class-search-bg: #fef3c7;
+    --class-standard-fg: #4a4a4a;
+    --class-standard-bg: #f1f1f1;
   }
   [data-theme="dark"] {
     --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
@@ -39,6 +48,13 @@
     --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
     --tied: #777;
     --purple: #a78bfa;
+    --prov-xai: #aaaaaa;
+    --class-reasoning-fg: #c4b5fd;
+    --class-reasoning-bg: #2a1f4a;
+    --class-search-fg: #fcd34d;
+    --class-search-bg: #3a2a08;
+    --class-standard-fg: #aaaaaa;
+    --class-standard-bg: #2a2a2a;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -89,6 +105,19 @@
   .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
   .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
   .prov.provider-google .prov-swatch { background: var(--prov-google); }
+  .prov.provider-xai .prov-swatch { background: var(--prov-xai); }
+  .prov.provider-perplexity .prov-swatch { background: var(--prov-perplexity); }
+  .prov.provider-openrouter .prov-swatch { background: var(--prov-openrouter); }
+
+  /* model_class chip: surfaces reasoning vs search vs standard so cross-class
+     comparisons are visually flagged (METHODOLOGY s2.7). Standard is rendered
+     low-contrast since it is the default. */
+  .class-chip { display: inline-block; font-size: 0.66rem; padding: 0.05rem 0.35rem; margin-left: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; vertical-align: middle; }
+  .class-chip.class-reasoning { color: var(--class-reasoning-fg); background: var(--class-reasoning-bg); }
+  .class-chip.class-search { color: var(--class-search-fg); background: var(--class-search-bg); }
+  .class-chip.class-standard { display: none; }
+  .class-note { font-size: 0.78rem; color: var(--muted); margin: 0.25rem 0 0.75rem 0; }
+  .class-note .class-chip { display: inline-block; margin: 0 0.25rem; }
 
   .cost-cell { min-width: 11rem; }
   .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
@@ -241,12 +270,13 @@
 {% if ranking and ranking.rows %}
 <section class="overview" aria-label="Cross-task ranking matrix">
   <h2>Cross-task ranking</h2>
-  <p class="note">Each cell is the model's rank on that task in its latest clean pass. Lower is better. Rank 1 highlighted in purple. Rows sorted by average observed rank (best overall first).</p>
+  <p class="note">Each cell is the model's rank on that task in its latest clean pass. Lower is better. Rank 1 highlighted in purple. Rows are grouped by <code>model_class</code> (standard, then <span class="class-chip class-reasoning">reasoning</span>, then <span class="class-chip class-search">search</span>) and sorted within each class by average observed rank. Cross-class comparisons mislead because reasoning models burn 5x to 20x more output tokens per attempt and search models pay an unmetered per-search fee; see <a href="methodology.html#27-model_class">methodology s2.7</a>.</p>
   <div class="leaderboard-wrap">
     <table class="ranking-matrix">
       <thead>
         <tr>
           <th>Provider / Model</th>
+          <th>Class</th>
           {% for task_name in ranking.task_order %}
           <th class="task-col"><a href="tasks/{{ task_name }}.html"><code>{{ task_name }}</code></a></th>
           {% endfor %}
@@ -257,6 +287,7 @@
         {% for row in ranking.rows %}
         <tr>
           <td><span class="prov provider-{{ row.provider }}"><span class="prov-swatch"></span>{{ row.provider }}/{{ row.model }}</span></td>
+          <td>{% if row.model_class != 'standard' %}<span class="class-chip class-{{ row.model_class }}">{{ row.model_class }}</span>{% else %}<span style="color: var(--muted); font-size: 0.78rem;">standard</span>{% endif %}</td>
           {% for task_name in ranking.task_order %}
           {% if task_name in row.ranks %}
           {% set rk = row.ranks[task_name].rank %}
@@ -308,6 +339,7 @@
         <span class="prov provider-{{ entry.provider }}">
           <span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}
         </span>
+        <span class="class-chip class-{{ entry.model_class }}">{{ entry.model_class }}</span>
       </td>
       <td class="num">{{ "%.1f"|format(entry.success_rate * 100) }}% ({{ entry.n_successes }}/{{ entry.n_trials }})</td>
       <td class="num cost-cell">
@@ -357,7 +389,7 @@
       <tbody>
         {% for entry in headline.entries %}
         <tr>
-          <td><span class="prov provider-{{ entry.provider }}"><span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}</span></td>
+          <td><span class="prov provider-{{ entry.provider }}"><span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}</span><span class="class-chip class-{{ entry.model_class }}">{{ entry.model_class }}</span></td>
           <td class="num" data-calc-task="{{ task_name }}"
               data-calc-eff="{{ entry.effective_tcot if not entry.effective_tcot_infinite else 'Infinity' }}">
             {% if entry.effective_tcot_infinite %}n/a{% else %}${{ "%.2f"|format(entry.effective_tcot * 10000) }}{% endif %}

@@ -175,6 +175,7 @@ def run_task_for_provider(
             "id": adapter.provider_id,
             "model_id": adapter.model_id,
             "model_version_hint": None,
+            "model_class": pricing.model_class,
         },
         "task": {
             "name": task.name,
@@ -195,7 +196,9 @@ def run_task_for_provider(
         "stopped_early": stopped_early,
     }
 
-    out_path = _write_result(record, output_dir, git_sha, adapter.provider_id, task.name)
+    out_path = _write_result(
+        record, output_dir, git_sha, adapter.provider_id, task.name, adapter.model_id
+    )
     logger.info(f"Wrote {out_path}")
     return record
 
@@ -407,15 +410,24 @@ def _write_result(
     git_sha: str,
     provider_id: str,
     task_name: str,
+    model_id: str = "",
 ) -> Path:
-    """Write to output_dir/<date>/<provider>/<task>__<sha7>.json per HANDOFF s8."""
+    """Write to output_dir/<date>/<provider>/<task>__<model>__<sha7>.json.
+
+    model_id is sanitized (slashes and colons -> underscores) so OpenRouter-
+    style ids like 'meta-llama/llama-4-scout' don't break the filesystem.
+    Multiple distinct models can share provider_id (e.g. all 8 OpenRouter
+    models), so the model_id segment is required to keep filenames unique.
+    """
     date_str = datetime.now(UTC).strftime("%Y-%m-%d")
     sha7 = (git_sha or "UNKNOWN")[:7]
     target_dir = output_dir / date_str / provider_id
     target_dir.mkdir(parents=True, exist_ok=True)
-    target_path = target_dir / f"{task_name}__{sha7}.json"
+    sanitized_model = (model_id or "model").replace("/", "_").replace(":", "_")
+    base = f"{task_name}__{sanitized_model}__{sha7}"
+    target_path = target_dir / f"{base}.json"
     if target_path.exists():
         ts = datetime.now(UTC).strftime("%H%M%S")
-        target_path = target_dir / f"{task_name}__{sha7}__{ts}.json"
+        target_path = target_dir / f"{base}__{ts}.json"
     target_path.write_text(json.dumps(record, indent=2, default=str))
     return target_path

@@ -10,6 +10,7 @@ calculator widget. The page degrades gracefully if JS is disabled.
 from __future__ import annotations
 
 import json
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -23,6 +24,17 @@ SITE_DIR = REPO_ROOT / "site"
 DOCS_DIR = REPO_ROOT / "docs"
 METHODOLOGY_MD = REPO_ROOT / "METHODOLOGY.md"
 GLOSSARY_MD = SITE_DIR / "glossary.md"
+
+# Pull pricing.lookup so we can derive model_class for older result files
+# that pre-date v0.1.1 and don't carry it in the provider block.
+sys.path.insert(0, str(REPO_ROOT / "src"))
+from bellwether.pricing import lookup as _pricing_lookup  # noqa: E402
+
+# Visual ordering of classes in the cross-task ranking matrix. Standard first
+# so the eye lands on the most common class; reasoning and search follow as
+# their own visually-grouped bands. Per METHODOLOGY s2.7, within-class rank
+# is the primary procurement signal.
+_MODEL_CLASS_ORDER = {"standard": 0, "reasoning": 1, "search": 2}
 
 # Two adjacent ranks are tagged "tied within noise" when the ratio of their
 # effective_TCoT values is within this fraction. Conservative; with N=3 the
@@ -70,6 +82,19 @@ def _attempt_metrics(result: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _resolve_model_class(prov: dict[str, Any]) -> str:
+    """Pull model_class from the result's provider block, falling back to the
+    pricing table for pre-v0.1.1 result files. Default 'standard' if neither
+    source has it (covers result JSONs that predate the field entirely).
+    """
+    if prov.get("model_class"):
+        return str(prov["model_class"])
+    try:
+        return _pricing_lookup(prov["id"], prov["model_id"]).model_class
+    except KeyError:
+        return "standard"
+
+
 def _entry_from_result(r: dict[str, Any]) -> dict[str, Any]:
     """Flatten a result JSON into a render-ready dict for the leaderboard."""
     agg = r["aggregate"]
@@ -78,6 +103,7 @@ def _entry_from_result(r: dict[str, Any]) -> dict[str, Any]:
     return {
         "provider": prov["id"],
         "model": prov["model_id"],
+        "model_class": _resolve_model_class(prov),
         "success_rate": agg["success_rate"],
         "effective_tcot": agg["effective_tcot"],
         "effective_tcot_infinite": agg["effective_tcot_infinite"],
@@ -222,7 +248,13 @@ def _summary_stats(
 def _ranking_matrix(task_views: dict[str, dict[str, Any]]) -> dict[str, Any]:
     """Cross-task ranking matrix: rows = models, cols = tasks, cells = rank in latest-clean.
 
-    Rows sorted by average observed rank ascending (best overall first).
+    Rows are grouped by model_class (standard, then reasoning, then search)
+    and sorted within each class by average observed rank ascending. Per
+    METHODOLOGY s2.7, cross-class ranking is misleading because reasoning
+    models burn 5x to 20x more output tokens per attempt and search models
+    pay an unmetered per-search fee; grouping keeps the eye comparing
+    apples to apples.
+
     Models that did not appear in some task's latest clean pass have a blank
     cell for that task and are excluded from that task's contribution to
     avg_rank (only observed ranks counted).
@@ -239,6 +271,7 @@ def _ranking_matrix(task_views: dict[str, dict[str, Any]]) -> dict[str, Any]:
                 by_model[key] = {
                     "provider": entry["provider"],
                     "model": entry["model"],
+                    "model_class": entry["model_class"],
                     "ranks": {},
                 }
             by_model[key]["ranks"][task_name] = {
@@ -252,7 +285,16 @@ def _ranking_matrix(task_views: dict[str, dict[str, Any]]) -> dict[str, Any]:
         observed = [r["rank"] for r in row["ranks"].values() if not r["infinite"]]
         row["avg_rank"] = sum(observed) / len(observed) if observed else 999.0
         row["n_observed"] = len(observed)
-    rows.sort(key=lambda r: (r["avg_rank"], r["model"]))
+    # Sort by class first (standard, reasoning, search), then by avg_rank
+    # within class. The result reads top-down: best standard model, then the
+    # rest of the standard band, then the reasoning band, then search.
+    rows.sort(
+        key=lambda r: (
+            _MODEL_CLASS_ORDER.get(r["model_class"], 99),
+            r["avg_rank"],
+            r["model"],
+        )
+    )
     return {"rows": rows, "task_order": task_order}
 
 

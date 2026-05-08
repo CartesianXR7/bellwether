@@ -1,8 +1,8 @@
 # Bellwether Methodology
 
 **Status:** Locked v0 draft. Update via PR plus version bump.
-**Methodology version:** 0.1
-**Last updated:** 2026-05-05
+**Methodology version:** 0.1.1
+**Last updated:** 2026-05-08
 
 > The methodology is Bellwether's primary contribution. The leaderboard is its proof of work. Anyone disagreeing with the numbers must engage with this doc, not the table.
 
@@ -65,6 +65,16 @@ For a given task instance:
 ### 2.6 Provider price changes
 
 Pricing tables live in `src/bellwether/pricing.py`, versioned with the package. Pricing is loaded once at run-start and frozen for the run; no provider exposes a public pricing API, so mid-run price changes go undetected by the harness. Each result JSON records the pricing version used; `pricing.py` comments link the dated provider-pricing page that informed each entry, for audit trail. If a provider changes prices between two runs, results from the two pricing versions are NOT averaged: they are reported as separate dated runs.
+
+### 2.7 model_class
+
+Each pricing entry carries a `model_class` field that categorizes the architectural lineage. Three classes are recognized in v0.1.1:
+
+- `standard`: conventional chat completion model (default).
+- `reasoning`: model with explicit thinking-budget output tokens (OpenAI o-series, DeepSeek R1, Perplexity Sonar Reasoning, Anthropic models with extended-thinking explicitly enabled). Output token costs include thinking tokens; `effective_TCoT` is still computed correctly per s2.3, but absolute values are typically 5x to 20x higher per task than non-reasoning peers because each attempt burns more output budget.
+- `search`: retrieval-augmented (Perplexity Sonar non-reasoning variants). Knowledge varies per query, which weakens cross-pass reproducibility (s7); per-search costs (about $5 per 1k searches) are NOT yet captured in TCoT (v0.5 adds search-cost accounting).
+
+The leaderboard renderer surfaces `model_class` so cross-class comparisons are visually flagged. Procurement decisions should use within-class ranking as the primary signal: a 5x cheaper standard model is not directly substitutable for a reasoning model on tasks that benefit from thinking tokens, and vice-versa.
 
 ## 3. Retry policy
 
@@ -203,7 +213,7 @@ We say so explicitly to prevent over-claims.
 - This methodology versions with the package. `methodology_version` recorded in every result JSON.
 - **MAJOR** bump = breaking changes to formulas (TCoT, effective_TCoT) or taxonomy semantics. Old results are NOT comparable; require re-run.
 - **MINOR** bump = new task contract fields, new failure modes (additive only), new validators.
-- **PATCH** = bugfix to validators, pricing updates, doc edits.
+- **PATCH** = bugfix to validators, pricing updates, doc edits, additive pricing fields with safe defaults (e.g. `model_class` in 0.1 to 0.1.1).
 
 ## 12. Honest reporting checklist (every results page)
 

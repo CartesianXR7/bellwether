@@ -114,6 +114,24 @@ Reported next to `effective_TCoT` in the form `$0.00099 ±$0.00012`. The
 trials in this pass. Useful for spotting providers whose performance is
 unusually variable; expect 0 when fewer than two successes were observed.
 
+### `model_class` chip
+
+A small uppercase chip next to the model name flagging its architectural
+lineage:
+
+- `standard`: conventional chat completion model (rendered as a low-contrast
+  pill, since this is the default).
+- `reasoning`: model with explicit thinking-budget output tokens (OpenAI
+  o-series, DeepSeek R1, Perplexity Sonar Reasoning). Output token costs
+  include thinking tokens, so absolute `effective_TCoT` runs 5x to 20x
+  higher per task than non-reasoning peers.
+- `search`: retrieval-augmented (Perplexity Sonar non-reasoning variants).
+  Knowledge varies per query; per-search costs (~$5 per 1k searches) are
+  not yet captured in TCoT (v0.5 adds search-cost accounting).
+
+The cross-task ranking matrix groups rows by class so within-class ranking
+is the primary procurement signal. See methodology s2.7.
+
 ## Concepts in the methodology
 
 ### TCoT (Total Cost of Task)

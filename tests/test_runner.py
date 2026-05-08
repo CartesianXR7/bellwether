@@ -56,7 +56,7 @@ def test_is_dirty_mixed_artifact_and_real_dirt_is_dirty():
 
 
 def test_is_dirty_artifact_dir_lookalike_is_dirty():
-    """A path that starts with 'resultsfoo/' is NOT under 'results/' — must be dirty."""
+    """A path that starts with 'resultsfoo/' is NOT under 'results/'; must be dirty."""
     assert is_dirty_status("?? resultsfoo/bar.json\n")
 
 

@@ -29,35 +29,118 @@ from bellwether.tasks.function_call_routing import FunctionCallRoutingTask
 from bellwether.tasks.structured_extraction import StructuredExtractionTask
 from bellwether.tasks.synthetic_rag import SyntheticRagTask
 
-# Each entry: alias -> (adapter_class, provider_id, model_id).
-# The provider-name aliases ('anthropic', 'openai', 'google') resolve to the
-# default model; specific model_ids resolve to that exact model. This lets
-# `--provider all` iterate all distinct (provider, model) entries while
-# `--provider anthropic` keeps the v0.1 ergonomics of "the default Anthropic".
-_PROVIDER_REGISTRY: dict[str, tuple[type, str, str]] = {
+# Each entry: alias -> (adapter_class, provider_id, model_id, adapter_kwargs).
+# The provider-name aliases ('anthropic', 'openai', 'google', 'xai',
+# 'perplexity', 'openrouter') resolve to a default model; specific model_ids
+# resolve to that exact model. This lets `--provider all` iterate all distinct
+# (provider, model) entries while `--provider anthropic` keeps the ergonomics
+# of "the default Anthropic". adapter_kwargs are extra constructor args (empty
+# for native SDKs; populated for OpenAI-compatible HTTPS endpoints reusing
+# OpenAIAdapter with a different base_url + key env var).
+
+# OpenAI-compatible HTTPS endpoints (xAI Grok, Perplexity Sonar, OpenRouter)
+# share the OpenAIAdapter and only differ in base_url + the env var holding
+# the API key.
+_OR_KW = {"base_url": "https://openrouter.ai/api/v1", "api_key_env_var": "OPENROUTER_API_KEY"}
+_XAI_KW = {"base_url": "https://api.x.ai/v1", "api_key_env_var": "XAI_API_KEY"}
+_PPLX_KW = {"base_url": "https://api.perplexity.ai", "api_key_env_var": "PERPLEXITY_API_KEY"}
+
+_PROVIDER_REGISTRY: dict[str, tuple[type, str, str, dict[str, Any]]] = {
     # Anthropic
-    "anthropic": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6"),
-    "claude-sonnet-4-6": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6"),
-    "claude-haiku-4-5": (AnthropicAdapter, "anthropic", "claude-haiku-4-5"),
-    "claude-opus-4-7": (AnthropicAdapter, "anthropic", "claude-opus-4-7"),
-    # OpenAI
-    "openai": (OpenAIAdapter, "openai", "gpt-4o"),
-    "gpt-4o": (OpenAIAdapter, "openai", "gpt-4o"),
-    "gpt-4o-mini": (OpenAIAdapter, "openai", "gpt-4o-mini"),
+    "anthropic": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6", {}),
+    "claude-sonnet-4-6": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6", {}),
+    "claude-haiku-4-5": (AnthropicAdapter, "anthropic", "claude-haiku-4-5", {}),
+    "claude-opus-4-7": (AnthropicAdapter, "anthropic", "claude-opus-4-7", {}),
+    # OpenAI (standard chat + o-series reasoning)
+    "openai": (OpenAIAdapter, "openai", "gpt-4o", {}),
+    "gpt-4o": (OpenAIAdapter, "openai", "gpt-4o", {}),
+    "gpt-4o-mini": (OpenAIAdapter, "openai", "gpt-4o-mini", {}),
+    "o3": (OpenAIAdapter, "openai", "o3", {}),
+    "o3-mini": (OpenAIAdapter, "openai", "o3-mini", {}),
+    "o4-mini": (OpenAIAdapter, "openai", "o4-mini", {}),
     # Google
-    "google": (GoogleAdapter, "google", "gemini-2.5-flash-lite"),
-    "gemini-2.5-flash-lite": (GoogleAdapter, "google", "gemini-2.5-flash-lite"),
-    "gemini-2.5-flash": (GoogleAdapter, "google", "gemini-2.5-flash"),
-    "gemini-2.5-pro": (GoogleAdapter, "google", "gemini-2.5-pro"),
+    "google": (GoogleAdapter, "google", "gemini-2.5-flash-lite", {}),
+    "gemini-2.5-flash-lite": (GoogleAdapter, "google", "gemini-2.5-flash-lite", {}),
+    "gemini-2.5-flash": (GoogleAdapter, "google", "gemini-2.5-flash", {}),
+    "gemini-2.5-pro": (GoogleAdapter, "google", "gemini-2.5-pro", {}),
+    # xAI Grok via OpenAI-compatible api.x.ai
+    "xai": (OpenAIAdapter, "xai", "grok-4", _XAI_KW),
+    "grok-4": (OpenAIAdapter, "xai", "grok-4", _XAI_KW),
+    "grok-4-fast": (OpenAIAdapter, "xai", "grok-4-fast", _XAI_KW),
+    "grok-3": (OpenAIAdapter, "xai", "grok-3", _XAI_KW),
+    "grok-3-mini": (OpenAIAdapter, "xai", "grok-3-mini", _XAI_KW),
+    # Perplexity Sonar via api.perplexity.ai (search + reasoning variants)
+    "perplexity": (OpenAIAdapter, "perplexity", "sonar", _PPLX_KW),
+    "sonar": (OpenAIAdapter, "perplexity", "sonar", _PPLX_KW),
+    "sonar-pro": (OpenAIAdapter, "perplexity", "sonar-pro", _PPLX_KW),
+    "sonar-reasoning": (OpenAIAdapter, "perplexity", "sonar-reasoning", _PPLX_KW),
+    "sonar-reasoning-pro": (OpenAIAdapter, "perplexity", "sonar-reasoning-pro", _PPLX_KW),
+    # OpenRouter (open-weights + commercial via openrouter.ai/api/v1)
+    "openrouter": (
+        OpenAIAdapter,
+        "openrouter",
+        "meta-llama/llama-3.3-70b-instruct",
+        _OR_KW,
+    ),
+    "meta-llama/llama-4-maverick": (
+        OpenAIAdapter,
+        "openrouter",
+        "meta-llama/llama-4-maverick",
+        _OR_KW,
+    ),
+    "meta-llama/llama-4-scout": (
+        OpenAIAdapter,
+        "openrouter",
+        "meta-llama/llama-4-scout",
+        _OR_KW,
+    ),
+    "meta-llama/llama-3.3-70b-instruct": (
+        OpenAIAdapter,
+        "openrouter",
+        "meta-llama/llama-3.3-70b-instruct",
+        _OR_KW,
+    ),
+    "deepseek/deepseek-chat": (
+        OpenAIAdapter,
+        "openrouter",
+        "deepseek/deepseek-chat",
+        _OR_KW,
+    ),
+    "deepseek/deepseek-r1": (
+        OpenAIAdapter,
+        "openrouter",
+        "deepseek/deepseek-r1",
+        _OR_KW,
+    ),
+    "mistralai/mistral-large": (
+        OpenAIAdapter,
+        "openrouter",
+        "mistralai/mistral-large",
+        _OR_KW,
+    ),
+    "cohere/command-r-plus": (
+        OpenAIAdapter,
+        "openrouter",
+        "cohere/command-r-plus",
+        _OR_KW,
+    ),
+    "qwen/qwen-3-235b-a22b": (
+        OpenAIAdapter,
+        "openrouter",
+        "qwen/qwen-3-235b-a22b",
+        _OR_KW,
+    ),
 }
 
 # Provider-name aliases that should NOT be iterated under `--provider all`
 # (they are duplicates of model-id keys). The remaining keys are the canonical
 # distinct (provider, model) pairs.
-_PROVIDER_ALIAS_NAMES: frozenset[str] = frozenset({"anthropic", "openai", "google"})
+_PROVIDER_ALIAS_NAMES: frozenset[str] = frozenset(
+    {"anthropic", "openai", "google", "xai", "perplexity", "openrouter"}
+)
 
 
-def _all_distinct_models() -> list[tuple[str, tuple[type, str, str]]]:
+def _all_distinct_models() -> list[tuple[str, tuple[type, str, str, dict[str, Any]]]]:
     """Return the registry entries that are NOT provider-name aliases."""
     return [(k, v) for k, v in _PROVIDER_REGISTRY.items() if k not in _PROVIDER_ALIAS_NAMES]
 
@@ -158,7 +241,7 @@ def _load_dotenv_if_present() -> None:
 
 def _cmd_list(args: argparse.Namespace) -> int:
     if args.kind == "providers":
-        for name, (cls, prov_id, model_id) in _PROVIDER_REGISTRY.items():
+        for name, (cls, prov_id, model_id, _kw) in _PROVIDER_REGISTRY.items():
             tag = " [alias]" if name in _PROVIDER_ALIAS_NAMES else ""
             print(f"{name}: {cls.__name__} -> {prov_id}/{model_id}{tag}")
     elif args.kind == "tasks":
@@ -242,10 +325,10 @@ def _cmd_run(args: argparse.Namespace) -> int:
     print(f"git_sha: {git_sha[:7]} dirty: {git_dirty}", file=sys.stderr)
 
     for task_name, task_cls in selected_tasks:
-        for prov_name, (adapter_cls, prov_id, model_id) in selected_providers:
+        for prov_name, (adapter_cls, prov_id, model_id, adapter_kwargs) in selected_providers:
             if cost_tracker.tripped:
                 break
-            adapter = adapter_cls(provider_id=prov_id, model_id=model_id)
+            adapter = adapter_cls(provider_id=prov_id, model_id=model_id, **adapter_kwargs)
             task = task_cls(n_instances=args.instances, seed=args.seed)
             try:
                 record = run_task_for_provider(
