@@ -4,6 +4,95 @@ All notable changes are recorded here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); methodology
 versioning per METHODOLOGY.md s11.
 
+## [v0.3.0] - 2026-05-07
+
+Procurement-question reach: 3 tasks across 8 provider models, with statistical
+rigor and a much more useful leaderboard.
+
+### Tasks (was 1, now 3)
+
+- **function_call_routing**: synthetic tool-selection task. Model sees a
+  6-tool registry and a user query; outputs JSON with tool name + arguments.
+  Score 1.0 (correct tool + args), 0.5 (correct tool, wrong args -> PARTIAL),
+  0.0 (wrong tool -> CONFABULATION). Deterministic generator avoids the
+  BFCL dataset dependency for v0.x; real-dataset upgrade is v1.
+- **synthetic_rag**: read a 4-sentence synthetic passage about a company,
+  answer one fact-retrieval question. Case-insensitive exact match with
+  light normalization (whitespace, surrounding quotes, trailing period).
+  Avoids FinanceBench / NQ-open / HotpotQA license complications;
+  real-dataset upgrade is v1.
+
+### Providers (was 3, now 8)
+
+PRICING_TABLE expanded from 3 to 8 entries. All values verified against
+LiteLLM pricing catalog and provider docs (output cost >= input cost
+sanity check enforced in tests):
+
+- anthropic/claude-haiku-4-5 ($1 / $5 per M)
+- anthropic/claude-opus-4-7 ($5 / $25 per M)
+- openai/gpt-4o-mini ($0.15 / $0.60 per M)
+- google/gemini-2.5-flash ($0.30 / $2.50 per M, thinking model)
+- google/gemini-2.5-pro ($1.25 / $10 per M)
+
+CLI registry now keys both provider-name aliases (anthropic/openai/google
+-> their default model) and direct model_ids. `--provider all` iterates
+all 8 distinct (provider, model) entries.
+
+### Methodology rigor (s7 spec gap closed)
+
+- **mean +/- std reporting** on `effective_TCoT` per s7. AggregateMetrics
+  gains `std_tcot_success` and `std_latency`; population stddev across
+  per-trial costs / per-attempt latencies; reported as 0.0 when fewer
+  than 2 observations (avoids NaN).
+- **Tied-rank marker**: adjacent ranks within 5% on `effective_TCoT` are
+  visually marked tied within bench noise. v0.4 will replace the heuristic
+  with bootstrap confidence intervals.
+
+### Site UI
+
+- **Per-task drill-down pages** at `docs/tasks/<task_name>.html` with full
+  reproducibility table, all-pass aggregated failure-mode totals, and full
+  per-pass breakdowns. Linked from each task header on the index.
+- **Latest-clean-pass headline** per task on the index, per s9 honest
+  reporting rule (dirty-tree passes are non-headline).
+- **Inline cost calculator widget**: enter "tasks per month" and JS computes
+  per-provider monthly cost from the pass's `effective_TCoT`.
+- **Glossary page** with plain-English definitions of every metric, every
+  failure mode, every status flag, and the methodology concepts that
+  appear on the leaderboard.
+- Inline cost-bar widths normalize per-pass; provider-color swatches
+  consistent across leaderboard, drill-down, and reproducibility tables.
+
+### Bug fixes
+
+- providers/google.py coerces None token counts to 0. Gemini 2.5 Pro and
+  Flash thinking models can return `None` for `candidates_token_count`
+  when the entire output budget is consumed by internal thinking and no
+  visible text is produced; this previously crashed the runner mid-bench
+  with TypeError in the cost computation.
+- runner._compute_cost defensive coercion: any None token count from any
+  adapter coerces to 0.
+
+### Documentation
+
+- `ARCHITECTURE.md`: layered structure, module map, key design decisions,
+  rationale for synchronous runner / no async (yet) and synthetic-task
+  approach for v0.x.
+- `ROADMAP.md`: shipped (v0.1, v0.3), next (v0.4: async runner + BYO config
+  + plugin loader + bootstrap CIs), later (v0.5), v1 (real datasets,
+  open-weights, code-gen with sandboxing).
+- `CODE_OF_CONDUCT.md`: Contributor Covenant 2.1.
+- `CITATION.cff` + BibTeX block in README. GitHub renders a "Cite this
+  repository" button from the .cff file.
+
+### Tests
+
+144 passing (was 120). Includes ground-truth-leak checks on the two new
+task validators per METHODOLOGY s3, and a sanity test that every pricing
+row has output_cost >= input_cost.
+
+---
+
 ## [v0.1.0] - 2026-05-06
 
 Initial release. Methodology v0.1.

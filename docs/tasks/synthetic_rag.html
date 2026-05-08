@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bellwether: synthetic_rag</title>
+<style>
+  :root {
+    color-scheme: light dark;
+    --fg: #1a1a1a; --bg: #fcfcfc; --surface: #ffffff; --muted: #5a5a5a;
+    --accent: #0066cc; --accent-soft: #e6f0ff;
+    --border: #e0e0e0; --border-strong: #c0c0c0;
+    --dirty: #b54708; --dirty-bg: #fff8eb;
+    --good: #117a3c; --good-bg: #e8f7ed;
+    --bar-bg: #ececec; --bar-fill: #5a93d6;
+    --tied: #888;
+    --prov-anthropic: #c9764e;
+    --prov-openai: #10a37f;
+    --prov-google: #4285f4;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
+      --accent: #6db3ff; --accent-soft: #1a2a3f;
+      --border: #2a2a2a; --border-strong: #3a3a3a;
+      --dirty: #f7b955; --dirty-bg: #2a1c08;
+      --good: #4ec97a; --good-bg: #0f2316;
+      --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
+      --tied: #777;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 1100px; margin-left: auto; margin-right: auto; }
+
+  header { padding: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+  h1 { margin: 0; font-size: 1.6rem; }
+  h1 a { color: inherit; text-decoration: none; }
+  .task-name { color: var(--accent); }
+  nav a { color: var(--accent); text-decoration: none; margin-right: 1.25rem; font-weight: 500; }
+  nav a:hover { text-decoration: underline; }
+
+  h2 { margin: 2rem 0 0.5rem 0; font-size: 1.2rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  h3 { margin: 1.25rem 0 0.5rem 0; font-size: 1rem; color: var(--muted); font-weight: 600; }
+
+  .pass-meta {
+    font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem;
+    margin: 1rem 0 0.5rem 0;
+  }
+  .pass-meta code { font-size: 0.85em; }
+  .badge { display: inline-block; font-size: 0.75rem; padding: 0.1rem 0.5rem; border-radius: 3px; border: 1px solid currentColor; }
+  .badge-dirty { color: var(--dirty); background: var(--dirty-bg); }
+  .badge-clean { color: var(--good); background: var(--good-bg); }
+
+  .leaderboard-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { padding: 0.5rem 0.7rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+  th { font-weight: 600; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.rank { font-weight: 600; color: var(--accent); width: 2.5rem; }
+  tbody tr:hover { background: rgba(127,127,127,0.04); }
+  tr.dirty { background: var(--dirty-bg); }
+  tr.dirty td.rank { color: var(--dirty); }
+  tr.dirty td.rank::before { content: "*"; }
+  tr.tied td.rank::after { content: " ≈"; color: var(--tied); font-weight: normal; }
+
+  .prov { display: inline-flex; align-items: center; gap: 0.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.9em; }
+  .prov-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+  .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
+  .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
+  .prov.provider-google .prov-swatch { background: var(--prov-google); }
+
+  .cost-cell { min-width: 9rem; }
+  .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
+  .cost-bar { flex: 0 0 50px; height: 6px; background: var(--bar-bg); border-radius: 3px; overflow: hidden; }
+  .cost-bar > div { height: 100%; background: var(--bar-fill); border-radius: 3px; }
+  .cost-std { color: var(--muted); font-size: 0.85em; margin-left: 0.15rem; }
+
+  .fm-list { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .fm-pill { display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 10px; background: rgba(127,127,127,0.1); color: var(--muted); white-space: nowrap; }
+  .fm-pill strong { color: var(--fg); margin-right: 0.2rem; }
+
+  .repro td.delta-up { color: var(--dirty); }
+  .repro td.delta-down { color: var(--good); }
+  .repro td.delta-flat { color: var(--muted); }
+
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    body { padding: 0.75rem; }
+    h1 { font-size: 1.3rem; }
+    h2 { font-size: 1.1rem; }
+    th, td { padding: 0.4rem 0.5rem; font-size: 0.88rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>
+    <a href="../index.html">bellwether</a>
+    &nbsp;&rsaquo;&nbsp;
+    <span class="task-name"><code>synthetic_rag</code></span>
+  </h1>
+  <nav>
+    <a href="../index.html">All tasks</a>
+    <a href="../methodology.html">Methodology</a>
+    <a href="../glossary.html">Glossary</a>
+    <a href="https://github.com/cartesianxr7/bellwether/tree/main/results">Raw results</a>
+  </nav>
+</header>
+
+<main>
+
+
+<h2>Reproducibility (latest pass vs previous)</h2>
+<div class="leaderboard-wrap">
+<table class="repro">
+  <thead>
+    <tr>
+      <th>Provider / Model</th>
+      <th class="num">Latest eff_TCoT</th>
+      <th class="num">Previous eff_TCoT</th>
+      <th class="num">Δ eff_TCoT</th>
+      <th class="num">Δ success rate</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td class="num">$0.00057</td>
+      <td class="num">$0.00044</td>
+      <td class="num delta-up">
+        +27.6%
+      </td>
+      <td class="num delta-up">
+        -13.3 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td class="num">$n/a</td>
+      <td class="num">$n/a</td>
+      <td class="num delta-flat">
+        n/a
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td class="num">$0.00174</td>
+      <td class="num">$0.00174</td>
+      <td class="num delta-flat">
+        +0.0%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td class="num">$0.00004</td>
+      <td class="num">$0.00004</td>
+      <td class="num delta-flat">
+        +0.0%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td class="num">$0.00110</td>
+      <td class="num">$0.00110</td>
+      <td class="num delta-flat">
+        -0.1%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+    <tr>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td class="num">$0.00007</td>
+      <td class="num">$0.00007</td>
+      <td class="num delta-flat">
+        +0.0%
+      </td>
+      <td class="num delta-flat">
+        +0.0 pp
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+
+
+<h2>Failure-mode totals across all passes</h2>
+<p style="font-size: 0.85rem; color: var(--muted); margin: 0;">Counts per failure mode summed across every attempt across every pass; useful for spotting which providers exhibit which failure patterns systematically.</p>
+<div class="leaderboard-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>Provider / Model</th>
+      <th>Failure modes (total counts)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    
+    <tr>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>36</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>36</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>16</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>12</strong>confabulation</span>
+          
+          <span class="fm-pill"><strong>4</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>32</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>36</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>36</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>90</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+
+<h2>All bench passes (chronological, newest first)</h2>
+
+
+<div class="pass-meta">
+  <strong>Pass 2026-05-08 01:46:18 UTC</strong>
+  <code>e6e987c</code>
+  
+  <span class="badge badge-clean">clean</span>
+  
+</div>
+
+<div class="leaderboard-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes (this pass)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr >
+      <td class="rank">1</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00004<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.50s / 0.73s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">2</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00007<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 4%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.67s / 1.34s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">3</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+      <td class="num">73.3% (11/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00012<span class="cost-std">±$0.00004</span>
+          </span>
+          <div class="cost-bar"><div style="width: 6%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.15s / 10.89s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>16</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">4</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+      <td class="num">73.3% (11/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00049<span class="cost-std">±$0.00018</span>
+          </span>
+          <div class="cost-bar"><div style="width: 28%"></div></div>
+        </div>
+      </td>
+      <td class="num">6.45s / 18.34s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>12</strong>confabulation</span>
+          
+          <span class="fm-pill"><strong>4</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">5</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td class="num">66.7% (10/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00057<span class="cost-std">±$0.00013</span>
+          </span>
+          <div class="cost-bar"><div style="width: 32%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.70s / 1.51s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>17</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">6</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00110<span class="cost-std">±$0.00001</span>
+          </span>
+          <div class="cost-bar"><div style="width: 63%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.51s / 0.73s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">7</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00174<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.08s / 3.36s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">8</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.13s / 0.41s</td>
+      <td class="num">45 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+<div class="pass-meta">
+  <strong>Pass 2026-05-08 01:28:01 UTC</strong>
+  <code>d95fbc2</code>
+  
+  <span class="badge badge-clean">clean</span>
+  
+</div>
+
+<div class="leaderboard-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes (this pass)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr >
+      <td class="rank">1</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00004
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.49s / 0.80s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">2</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00007
+          </span>
+          <div class="cost-bar"><div style="width: 4%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.61s / 0.88s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">3</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td class="num">80.0% (12/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00044
+          </span>
+          <div class="cost-bar"><div style="width: 25%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.61s / 1.28s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>15</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">4</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00110
+          </span>
+          <div class="cost-bar"><div style="width: 63%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.49s / 0.81s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">5</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00174
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.11s / 1.91s</td>
+      <td class="num">27 <span style="color: var(--muted); font-size: 0.8em;">(60% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">6</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.11s / 0.27s</td>
+      <td class="num">45 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+
+
+</main>
+
+<footer>
+  <p>
+    methodology version 0.1
+    &middot; bellwether 0.1.0
+    &middot; <a href="../index.html">back to all tasks</a>
+  </p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,694 @@
+{
+  "bellwether_version": "0.1.0",
+  "methodology_version": "0.1",
+  "git_sha": "e6e987c8da3aeb18ad889a8334f98134424a5360",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "anthropic",
+    "model_id": "claude-sonnet-4-6",
+    "model_version_hint": null
+  },
+  "task": {
+    "name": "synthetic_rag",
+    "dataset_version": "synthetic-rag-v1-seed42-n5",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 3,
+  "started_at": "2026-05-08T01:46:18.341274+00:00",
+  "completed_at": "2026-05-08T02:03:07.979054+00:00",
+  "instances": [
+    {
+      "instance_id": "rag-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 131,
+              "output_tokens": 5,
+              "cost_usd": 0.000468,
+              "latency_seconds": 0.6987498342059553,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000468,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 131,
+              "output_tokens": 5,
+              "cost_usd": 0.000468,
+              "latency_seconds": 0.7025446249172091,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000468,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 2,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 131,
+              "output_tokens": 5,
+              "cost_usd": 0.000468,
+              "latency_seconds": 0.887283792020753,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000468,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 129,
+              "output_tokens": 6,
+              "cost_usd": 0.000477,
+              "latency_seconds": 1.1517010419629514,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000477,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 129,
+              "output_tokens": 6,
+              "cost_usd": 0.000477,
+              "latency_seconds": 1.810995833016932,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000477,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 2,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 129,
+              "output_tokens": 6,
+              "cost_usd": 0.000477,
+              "latency_seconds": 1.1106310000177473,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.000477,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 121,
+              "output_tokens": 6,
+              "cost_usd": 0.000453,
+              "latency_seconds": 2.6382951671257615,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "{\"answer\": \"the energy industry\"}",
+              "input_tokens": 163,
+              "output_tokens": 11,
+              "cost_usd": 0.0006540000000000001,
+              "latency_seconds": 0.9271380831487477,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 922,
+              "output": "{\"answer\": \"energy industry\"}",
+              "input_tokens": 210,
+              "output_tokens": 10,
+              "cost_usd": 0.0007800000000000001,
+              "latency_seconds": 3.668444750132039,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0018870000000000002,
+          "failure_modes": [
+            "confabulation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 121,
+              "output_tokens": 6,
+              "cost_usd": 0.000453,
+              "latency_seconds": 0.7916758339852095,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "{\"answer\": \"the energy industry\"}",
+              "input_tokens": 163,
+              "output_tokens": 11,
+              "cost_usd": 0.0006540000000000001,
+              "latency_seconds": 35.95588554209098,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 922,
+              "output": "{\"answer\": \"energy industry\"}",
+              "input_tokens": 210,
+              "output_tokens": 10,
+              "cost_usd": 0.0007800000000000001,
+              "latency_seconds": 1.6008116251323372,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0018870000000000002,
+          "failure_modes": [
+            "confabulation"
+          ]
+        },
+        {
+          "run_idx": 2,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 121,
+              "output_tokens": 6,
+              "cost_usd": 0.000453,
+              "latency_seconds": 1.4949672499205917,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "{\"answer\": \"the energy industry\"}",
+              "input_tokens": 163,
+              "output_tokens": 11,
+              "cost_usd": 0.0006540000000000001,
+              "latency_seconds": 0.7582986250054091,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 922,
+              "output": "{\"answer\": \"energy industry\"}",
+              "input_tokens": 210,
+              "output_tokens": 10,
+              "cost_usd": 0.0007800000000000001,
+              "latency_seconds": 1.081010582856834,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0018870000000000002,
+          "failure_modes": [
+            "confabulation"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0003",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 491,
+              "output": "Elena Rossi",
+              "input_tokens": 123,
+              "output_tokens": 7,
+              "cost_usd": 0.00047400000000000003,
+              "latency_seconds": 1.0780606248881668,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00047400000000000003,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 491,
+              "output": "Elena Rossi",
+              "input_tokens": 123,
+              "output_tokens": 7,
+              "cost_usd": 0.00047400000000000003,
+              "latency_seconds": 1.4745695409364998,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00047400000000000003,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 2,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 491,
+              "output": "Elena Rossi",
+              "input_tokens": 123,
+              "output_tokens": 7,
+              "cost_usd": 0.00047400000000000003,
+              "latency_seconds": 1.3865065830759704,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00047400000000000003,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0004",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 501,
+              "output": "the technology industry",
+              "input_tokens": 123,
+              "output_tokens": 6,
+              "cost_usd": 0.00045900000000000004,
+              "latency_seconds": 0.938207000028342,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 717,
+              "output": "{\"answer\": \"the technology industry\"}",
+              "input_tokens": 165,
+              "output_tokens": 11,
+              "cost_usd": 0.00066,
+              "latency_seconds": 1.171706167049706,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 947,
+              "output": "{\"answer\": \"technology industry\"}",
+              "input_tokens": 212,
+              "output_tokens": 10,
+              "cost_usd": 0.000786,
+              "latency_seconds": 1.0271612498909235,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.001905,
+          "failure_modes": [
+            "confabulation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 501,
+              "output": "the technology industry",
+              "input_tokens": 123,
+              "output_tokens": 6,
+              "cost_usd": 0.00045900000000000004,
+              "latency_seconds": 1.0707639588508755,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 717,
+              "output": "{\"answer\": \"the technology industry\"}",
+              "input_tokens": 165,
+              "output_tokens": 11,
+              "cost_usd": 0.00066,
+              "latency_seconds": 1.2365952909458429,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 947,
+              "output": "{\"answer\": \"technology industry\"}",
+              "input_tokens": 212,
+              "output_tokens": 10,
+              "cost_usd": 0.000786,
+              "latency_seconds": 0.8359128339216113,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.001905,
+          "failure_modes": [
+            "confabulation"
+          ]
+        },
+        {
+          "run_idx": 2,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 501,
+              "output": "the technology industry",
+              "input_tokens": 123,
+              "output_tokens": 6,
+              "cost_usd": 0.00045900000000000004,
+              "latency_seconds": 1.0751388750504702,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 717,
+              "output": "{\"answer\": \"the technology industry\"}",
+              "input_tokens": 165,
+              "output_tokens": 11,
+              "cost_usd": 0.00066,
+              "latency_seconds": 1.1694684999529272,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 947,
+              "output": "{\"answer\": \"technology industry\"}",
+              "input_tokens": 212,
+              "output_tokens": 10,
+              "cost_usd": 0.000786,
+              "latency_seconds": 0.9370208750478923,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.001905,
+          "failure_modes": [
+            "confabulation"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 15,
+    "n_successes": 9,
+    "success_rate": 0.6,
+    "mean_tcot_success": 0.000473,
+    "mean_tcot_failure": 0.0018960000000000001,
+    "effective_tcot": 0.0017370000000000003,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 1.081010582856834,
+    "mean_latency_p95": 3.3593998752301557,
+    "std_tcot_success": 3.96862696659689e-06,
+    "std_latency": 6.706838973051714
+  },
+  "cost_guardrail": {
+    "max_usd": 15.0,
+    "spent_usd": 0.19783810000000002,
+    "tripped": false
+  },
+  "stopped_early": null
+}

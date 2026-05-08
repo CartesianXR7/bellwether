@@ -81,7 +81,24 @@ The cost guardrail (`--max-cost USD`) is a hard cap on total spend per invocatio
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Adding a task or a provider adapter is a single PR; the contract is documented and small.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Adding a task or a provider adapter is a single PR; the contract is documented and small. Architecture overview in [ARCHITECTURE.md](ARCHITECTURE.md); roadmap in [ROADMAP.md](ROADMAP.md); community standards in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
+
+## Citation
+
+If you use bellwether or its methodology in your work, please cite it. BibTeX:
+
+```bibtex
+@software{bellwether2026,
+  author = {Hedrick, Stephen},
+  title = {bellwether: cost-and-failure-mode benchmark for LLM agents},
+  year = {2026},
+  version = {0.1.0},
+  url = {https://github.com/cartesianxr7/bellwether},
+  license = {MIT}
+}
+```
+
+[CITATION.cff](CITATION.cff) is the machine-readable form (GitHub renders a "Cite this repository" button from it).
 
 ## License
 

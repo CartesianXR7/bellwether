@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+title: "bellwether: cost-and-failure-mode benchmark for LLM agents"
+message: >-
+  If you use bellwether or its methodology in your work, please cite it
+  using the metadata below.
+type: software
+authors:
+  - given-names: Stephen
+    family-names: Hedrick
+    email: Stephen@wavebound.io
+repository-code: "https://github.com/cartesianxr7/bellwether"
+url: "https://cartesianxr7.github.io/bellwether/"
+abstract: >-
+  Cross-provider LLM benchmark and Python package for procurement-style
+  evaluation. Defines and implements effective_TCoT (total cost per
+  successful task completion, including failed-attempt waste) and an
+  eight-mode failure-mode taxonomy. Machine-checkable ground truth, no
+  LLM-as-judge.
+keywords:
+  - llm
+  - benchmark
+  - evaluation
+  - agents
+  - procurement
+  - tcot
+license: MIT
+version: 0.3.0
+date-released: "2026-05-07"

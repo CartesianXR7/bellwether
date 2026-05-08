@@ -1,0 +1,110 @@
+# Roadmap
+
+What is shipped, what is next, what is later. Methodology-version semantics
+per [METHODOLOGY.md s11](METHODOLOGY.md#11-versioning).
+
+## Shipped (v0.1, v0.3)
+
+### v0.1 (2026-05-06)
+- Methodology v0.1 (corrected `effective_TCoT`, schema-only retry, taxonomy)
+- Python package on PyPI
+- Live leaderboard
+- 1 task (structured_extraction), 3 providers (Sonnet 4.6 / GPT-4o / Gemini 2.5 Flash Lite)
+- Cost guardrail, dirty-tree gate, per-provider rate limiter
+- 120 tests, CI on Python 3.11/3.12/3.13, MIT license
+
+### v0.3 (2026-05-07)
+- 2 more tasks: `function_call_routing`, `synthetic_rag`
+- 5 more provider models: Haiku 4.5, Opus 4.7, GPT-4o-mini, Gemini 2.5 Flash, Gemini 2.5 Pro
+- All 8 pricing entries verified
+- mean ± std reporting on `effective_TCoT` per s7
+- Tied-rank ≈ marker for ranks within bench noise
+- Per-task drill-down pages (failure-mode aggregates, all-pass detail, reproducibility)
+- Inline cost calculator widget
+- Glossary page
+- CONTRIBUTING, CODE_OF_CONDUCT, ARCHITECTURE, ROADMAP, CHANGELOG, issue templates
+- 144 tests, ruff lint clean
+
+## Next (v0.4)
+
+Theme: developer ergonomics + statistical rigor.
+
+- **Async runner.** Parallelize adapter calls across providers within a task;
+  cuts wall-clock roughly proportional to provider count. Per-provider rate
+  limiter stays per-provider; cost guardrail becomes thread-safe.
+- **BYO task config.** TOML schema + `ConfigDrivenTask` that loads from
+  `--task-config PATH`. Validator types: `json_field_match`, `exact_match`,
+  `regex_match`, `schema_match`. JSONL data file pointer. Goal: a developer
+  can benchmark on their own prompts without writing Python.
+- **Plugin loader.** `--plugins-dir DIR` loads tasks/providers from
+  arbitrary paths. Lets contributors ship in their own repos. Prerequisite
+  for the v1 hosted-run service.
+- **Bootstrap confidence intervals** on `effective_TCoT` to replace the
+  v0.3 5%-ratio tied-rank heuristic.
+- **Increased default N from 3 to 5** with the bootstrap CI infra in place.
+- **More CLI ergonomics.** `--filter "success_rate>0.95"`, `--format json|md|csv`,
+  `--sort eff_tcot|p50|p95`.
+- **Per-instance / per-attempt drill-down pages** on the static site.
+
+## Later (v0.5)
+
+Theme: more procurement scenarios.
+
+- **Tuned-prompt track formalization.** Real contract for who tunes,
+  against which split, to what convergence criterion. Renders alongside
+  canonical numbers as a "tuned delta" column. Without the contract, the
+  track does not ship.
+- **One more synthetic task** (long-context summarization with key-fact
+  recall, where key facts are deterministically generated rather than
+  LLM-extracted).
+- **Historical leaderboard with trend lines.** Show how each provider's
+  `effective_TCoT` and `success_rate` move over time across model
+  snapshots. Inline SVG sparklines.
+- **Automated re-bench on schedule.** GH Actions cron weekly, or on
+  pricing-table updates.
+
+## v1 (DO NOT BUILD YET)
+
+Theme: real datasets, open-weights, larger surface.
+
+- **Code-generation task with sandboxing.** HumanEval+ or LiveCodeBench
+  tier-easy. Requires Docker / firejail / seatbelt isolation; sandboxing
+  IS the v1 work, not the task plumbing.
+- **Real-dataset replacements** for the synthetic v0.x tasks:
+  - BFCL pinned to a specific release commit
+  - FinanceBench / NaturalQuestions-open / HotpotQA distractor (RAG)
+  - GAIA validation set (multi-step reasoning)
+  - GovReport (long-context summarization with manually annotated key facts)
+- **OpenRouter for open-weights** (Llama, Mistral, Qwen). Adds a new
+  provider class that routes through OpenRouter's unified API.
+- **Adversarial / robustness tasks.** Out of scope for v0; needs careful
+  methodology around what counts as a robustness failure.
+- **Long-running agent tasks** (multi-hour, multi-step research).
+  Stretches the runner significantly.
+- **Custom-corpus RAG** (user-provided document set).
+- **TOML/YAML config files** for full bench specifications, beyond
+  per-task config.
+- **Hosted run service.** POST a task spec, receive results JSON. Built
+  on top of the plugin loader.
+
+## Out of scope (intentional)
+
+- Subjective-quality evaluation. The methodology requires machine-checkable
+  ground truth.
+- LLM-as-judge anywhere. Sidesteps the well-documented judge-bias issue.
+- Capability rankings. HELM and Chatbot Arena exist; bellwether is the
+  procurement-question complement, not a competitor.
+- Real-time service-level guarantees on the leaderboard. Rebuilds happen
+  manually after each bench pass; v0.5 adds scheduled re-bench but the
+  leaderboard freshness is still bench-pass-driven, not real-time.
+
+## How to influence this
+
+- **Issues** with `methodology` or `enhancement` labels for changes
+  upstream of code (formula proposals, taxonomy proposals, validator
+  contract changes).
+- **PRs** for new tasks or provider adapters following the contracts in
+  [CONTRIBUTING.md](CONTRIBUTING.md). New tasks land in v0.x point releases;
+  new providers land continuously.
+- **Pricing table updates** are the easiest first contribution and the
+  most operationally important; provider prices drift.

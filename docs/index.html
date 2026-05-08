@@ -14,6 +14,7 @@
     --dirty: #b54708; --dirty-bg: #fff8eb;
     --good: #117a3c; --good-bg: #e8f7ed;
     --bar-bg: #ececec; --bar-fill: #5a93d6;
+    --tied: #888;
     --prov-anthropic: #c9764e;
     --prov-openai: #10a37f;
     --prov-google: #4285f4;
@@ -26,35 +27,29 @@
       --dirty: #f7b955; --dirty-bg: #2a1c08;
       --good: #4ec97a; --good-bg: #0f2316;
       --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
+      --tied: #777;
     }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    line-height: 1.5; color: var(--fg); background: var(--bg);
-    margin: 0; padding: 1rem;
-  }
-  main, header, footer { max-width: 1080px; margin-left: auto; margin-right: auto; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 1100px; margin-left: auto; margin-right: auto; }
 
-  /* Header */
   header { padding: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
   h1 { margin: 0; font-size: 1.9rem; letter-spacing: -0.01em; }
   .tagline { color: var(--muted); margin: 0.25rem 0 0.75rem 0; font-size: 1.05rem; }
   nav a { color: var(--accent); text-decoration: none; margin-right: 1.25rem; font-weight: 500; }
   nav a:hover { text-decoration: underline; }
 
-  /* Intro */
   .intro { padding: 1rem 0 0.5rem 0; max-width: 760px; }
   .intro p { margin: 0.5rem 0; }
   .intro code, .intro-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(127,127,127,0.12); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
 
-  /* Section + headings */
   h2 { margin: 2.5rem 0 0.5rem 0; font-size: 1.3rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  h2 a { color: inherit; text-decoration: none; }
+  h2 .task-link { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-left: 0.75rem; }
   h3 { margin: 1.25rem 0 0.5rem 0; font-size: 1rem; color: var(--muted); font-weight: 600; }
-  h4 { margin: 1rem 0 0.5rem 0; font-size: 0.92rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* Pass meta */
   .pass-meta {
     font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem;
     margin: 1rem 0 0.5rem 0;
@@ -64,55 +59,51 @@
   .badge-dirty { color: var(--dirty); background: var(--dirty-bg); }
   .badge-clean { color: var(--good); background: var(--good-bg); }
 
-  /* Tables */
   .leaderboard-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
   th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  th {
-    font-weight: 600; font-size: 0.78rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.5px;
-    background: var(--surface); position: sticky; top: 0;
-  }
+  th { font-weight: 600; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface); }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.rank { font-weight: 600; color: var(--accent); width: 2rem; }
+  td.rank { font-weight: 600; color: var(--accent); width: 2.5rem; }
   tbody tr:hover { background: rgba(127,127,127,0.04); }
   tr.dirty { background: var(--dirty-bg); }
   tr.dirty:hover { background: var(--dirty-bg); }
   tr.dirty td.rank { color: var(--dirty); }
   tr.dirty td.rank::before { content: "*"; }
+  tr.tied td.rank::after { content: " ≈"; color: var(--tied); font-weight: normal; }
 
-  /* Provider color hints */
   .prov { display: inline-flex; align-items: center; gap: 0.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
   .prov-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
   .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
   .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
   .prov.provider-google .prov-swatch { background: var(--prov-google); }
 
-  /* Inline cost bar */
-  .cost-cell { min-width: 9rem; }
+  .cost-cell { min-width: 11rem; }
   .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
   .cost-bar { flex: 0 0 60px; height: 6px; background: var(--bar-bg); border-radius: 3px; overflow: hidden; }
   .cost-bar > div { height: 100%; background: var(--bar-fill); border-radius: 3px; }
   .cost-value { font-variant-numeric: tabular-nums; }
+  .cost-std { color: var(--muted); font-size: 0.85em; margin-left: 0.15rem; }
 
-  /* Failure mode pills */
   .fm-list { display: flex; flex-wrap: wrap; gap: 0.25rem; }
   .fm-pill { display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 10px; background: rgba(127,127,127,0.1); color: var(--muted); white-space: nowrap; }
   .fm-pill strong { color: var(--fg); margin-right: 0.2rem; }
 
-  /* Repro table */
-  .repro td.delta-up { color: var(--dirty); }
-  .repro td.delta-down { color: var(--good); }
-  .repro td.delta-flat { color: var(--muted); }
+  /* Cost calculator */
+  .calc { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .calc h3 { margin: 0 0 0.5rem 0; color: var(--accent); }
+  .calc label { display: block; margin-bottom: 0.5rem; font-size: 0.92rem; }
+  .calc input[type="number"] { font: inherit; padding: 0.3rem 0.5rem; width: 10rem; border: 1px solid var(--border-strong); border-radius: 3px; background: var(--surface); color: var(--fg); }
+  .calc-output { margin-top: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+  .calc table { margin-top: 0.5rem; }
+  .calc th, .calc td { padding: 0.3rem 0.6rem; font-size: 0.85rem; }
 
-  /* Footer */
   footer { margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
   .empty { color: var(--muted); font-style: italic; padding: 2.5rem 0; text-align: center; }
 
-  /* Mobile */
   @media (max-width: 640px) {
     body { padding: 0.75rem; }
     h1 { font-size: 1.5rem; }
@@ -130,8 +121,9 @@
   <p class="tagline">The cost-and-failure-mode benchmark for LLM agents.</p>
   <nav>
     <a href="methodology.html">Methodology</a>
+    <a href="glossary.html">Glossary</a>
     <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
-    <a href="https://github.com/cartesianxr7/bellwether/tree/main/results">Raw results</a>
+    <a href="https://pypi.org/project/bellwether/">PyPI</a>
   </nav>
 </header>
 
@@ -148,10 +140,13 @@
     Validation is machine-checkable (no LLM-as-judge). Failures are classified
     into eight modes (refusal, confabulation, schema break, truncation, partial,
     off-task, timeout, error). One canonical prompt per task across all providers.
-    Temperature 0; N=3 runs per task instance.
+    Temperature 0; N=3 runs per task instance; cost-per-million-token pricing
+    verified per provider.
   </p>
   <p>
-    See the <a href="methodology.html">full methodology</a> for formulas, retry policy, validator contract, and reproducibility caveats.
+    See the <a href="methodology.html">full methodology</a> for formulas, retry
+    policy, validator contract, and reproducibility caveats. New to the metrics?
+    The <a href="glossary.html">glossary</a> defines each term.
   </p>
 </section>
 
@@ -159,87 +154,371 @@
 
 
 
-<h2>Task: <code>structured_extraction</code></h2>
+<h2>
+  <a href="tasks/structured_extraction.html">Task: <code>structured_extraction</code></a>
+  <a class="task-link" href="tasks/structured_extraction.html">detailed page &rsaquo;</a>
+</h2>
 
 
-<h3>Reproducibility (latest pass vs previous)</h3>
+
+<h3>Latest clean pass &middot; 2026-05-08 01:46:18 UTC &middot; <code>e6e987c</code></h3>
+
 <div class="leaderboard-wrap">
-<table class="repro">
+<table>
   <thead>
     <tr>
+      <th>#</th>
       <th>Provider / Model</th>
-      <th class="num">Latest eff_TCoT</th>
-      <th class="num">Previous eff_TCoT</th>
-      <th class="num">Δ eff_TCoT</th>
-      <th class="num">Δ success rate</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">1st-try pass</th>
+      <th>Failure modes (this pass)</th>
     </tr>
   </thead>
   <tbody>
     
-    <tr>
+    <tr 
+        data-eff-tcot="4.425e-05">
+      <td class="rank">1</td>
       <td>
-        <span class="prov provider-anthropic">
-          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o-mini
         </span>
       </td>
-      <td class="num">$0.00099</td>
-      <td class="num">$0.00099</td>
-      <td class="num delta-flat">
-        +0.0%
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00004
+          </span>
+          <div class="cost-bar"><div style="width: 4%"></div></div>
+        </div>
       </td>
-      <td class="num delta-flat">
-        +0.0 pp
+      <td class="num">1.07s / 1.53s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
       </td>
     </tr>
     
-    <tr>
+    <tr 
+        data-eff-tcot="0.00010992">
+      <td class="rank">2</td>
       <td>
         <span class="prov provider-google">
           <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
         </span>
       </td>
-      <td class="num">$0.00011</td>
-      <td class="num">$0.00012</td>
-      <td class="num delta-down">
-        -10.7%
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00011<span class="cost-std">±$0.00003</span>
+          </span>
+          <div class="cost-bar"><div style="width: 11%"></div></div>
+        </div>
       </td>
-      <td class="num delta-down">
-        +13.3 pp
+      <td class="num">0.70s / 1.62s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>21</strong>schema_break</span>
+          
+        </span>
+        
       </td>
     </tr>
     
-    <tr>
+    <tr 
+        data-eff-tcot="0.0006768333333333333">
+      <td class="rank">3</td>
       <td>
         <span class="prov provider-openai">
           <span class="prov-swatch"></span>openai/gpt-4o
         </span>
       </td>
-      <td class="num">$0.00069</td>
-      <td class="num">$0.00070</td>
-      <td class="num delta-flat">
-        -2.5%
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00068<span class="cost-std">±$0.00007</span>
+          </span>
+          <div class="cost-bar"><div style="width: 68%"></div></div>
+        </div>
       </td>
-      <td class="num delta-flat">
-        +0.0 pp
+      <td class="num">0.66s / 1.18s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.0007560545454545455">
+      <td class="rank">4</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash
+        </span>
+      </td>
+      <td class="num">73.3% (11/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00076<span class="cost-std">±$0.00014</span>
+          </span>
+          <div class="cost-bar"><div style="width: 76%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.98s / 2.89s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>27</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.0009852">
+      <td class="rank">5</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00099<span class="cost-std">±$0.00001</span>
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.40s / 1.75s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">6</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.82s / 2.27s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">7</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.11s / 0.41s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">8</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-pro
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">7.94s / 9.93s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>schema_break</span>
+          
+        </span>
+        
       </td>
     </tr>
     
   </tbody>
 </table>
 </div>
-<p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
-  Δ&nbsp;eff_TCoT colored: red if &gt;+5%, green if &lt;-5%, neutral otherwise. Δ&nbsp;success rate colored: red if dropped &gt;1pp, green if gained &gt;1pp.
+
+<p style="font-size: 0.82rem; color: var(--muted); margin: 0.5rem 0;">
+  Rank rows marked with &ldquo;&approx;&rdquo; are within 5% of the rank above on <code>effective_TCoT</code> &mdash; treat as tied within bench noise. See <a href="methodology.html#7-stochasticity-and-multi-run">methodology s7</a>.
+</p>
+
+<section class="calc">
+  <h3>Cost calculator</h3>
+  <label>
+    If I run this task
+    <input type="number" min="1" step="1" value="10000" id="calc-structured_extraction-n"
+           oninput="updateCalc('structured_extraction', this.value)">
+    times per month, monthly cost per provider:
+  </label>
+  <div class="calc-output">
+    <table>
+      <thead>
+        <tr><th>Provider / Model</th><th class="num">Monthly cost (USD)</th></tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="4.425e-05">
+            $0.44
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="0.00010992">
+            $1.10
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="0.0006768333333333333">
+            $6.77
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="0.0007560545454545455">
+            $7.56
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="0.0009852">
+            $9.85
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+          <td class="num" data-calc-task="structured_extraction"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.78rem;">
+      Computed from this pass's <code>effective_TCoT</code>. Real production cost will vary with prompt length, model snapshot drift, and retry distribution on your data.
+    </p>
+  </div>
+</section>
+
+
+
+
+<p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
+  5 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/structured_extraction.html">detailed task page</a>.
 </p>
 
 
 
-<div class="pass-meta">
-  <strong>Pass 2026-05-06 02:14:42 UTC</strong>
-  <code>2eb9d9a</code>
-  
-  <span class="badge badge-clean">clean</span>
-  
-</div>
+
+<h2>
+  <a href="tasks/function_call_routing.html">Task: <code>function_call_routing</code></a>
+  <a class="task-link" href="tasks/function_call_routing.html">detailed page &rsaquo;</a>
+</h2>
+
+
+
+<h3>Latest clean pass &middot; 2026-05-08 01:46:18 UTC &middot; <code>e6e987c</code></h3>
 
 <div class="leaderboard-wrap">
 <table>
@@ -250,13 +529,14 @@
       <th class="num">Success</th>
       <th class="num">effective_TCoT</th>
       <th class="num">Latency p50 / p95</th>
-      <th class="num">Attempts</th>
-      <th>Failure modes</th>
+      <th class="num">1st-try pass</th>
+      <th>Failure modes (this pass)</th>
     </tr>
   </thead>
   <tbody>
     
-    <tr >
+    <tr 
+        data-eff-tcot="3.426e-05">
       <td class="rank">1</td>
       <td>
         <span class="prov provider-google">
@@ -267,31 +547,75 @@
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00011
+            $0.00003<span class="cost-std">±$0.00000</span>
           </span>
-          <div class="cost-bar"><div style="width: 11%"></div></div>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
         </div>
       </td>
-      <td class="num">0.62s / 0.95s</td>
-      <td class="num">
-        36
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (0% 1st-try)
-        </span>
-      </td>
+      <td class="num">0.48s / 0.62s</td>
+      <td class="num">100% (15/15)</td>
       <td>
         
-        <span class="fm-list">
-          
-          <span class="fm-pill"><strong>21</strong>schema_break</span>
-          
-        </span>
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
         
       </td>
     </tr>
     
-    <tr >
+    <tr 
+        data-eff-tcot="4.6679999999999994e-05">
       <td class="rank">2</td>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o-mini
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00005<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.82s / 1.06s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.00013164">
+      <td class="rank">3</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash
+        </span>
+      </td>
+      <td class="num">100.0% (15/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00013<span class="cost-std">±$0.00001</span>
+          </span>
+          <div class="cost-bar"><div style="width: 3%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.92s / 0.97s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.000778">
+      <td class="rank">4</td>
       <td>
         <span class="prov provider-openai">
           <span class="prov-swatch"></span>openai/gpt-4o
@@ -301,18 +625,13 @@
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00069
+            $0.00078<span class="cost-std">±$0.00004</span>
           </span>
-          <div class="cost-bar"><div style="width: 69%"></div></div>
+          <div class="cost-bar"><div style="width: 18%"></div></div>
         </div>
       </td>
-      <td class="num">0.84s / 1.97s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
+      <td class="num">0.52s / 0.82s</td>
+      <td class="num">100% (15/15)</td>
       <td>
         
         <span style="color: var(--muted); font-size: 0.85rem;">none</span>
@@ -320,8 +639,9 @@
       </td>
     </tr>
     
-    <tr >
-      <td class="rank">3</td>
+    <tr 
+        data-eff-tcot="0.0011988">
+      <td class="rank">5</td>
       <td>
         <span class="prov provider-anthropic">
           <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
@@ -331,21 +651,106 @@
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00099
+            $0.00120<span class="cost-std">±$0.00007</span>
+          </span>
+          <div class="cost-bar"><div style="width: 28%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.17s / 1.72s</td>
+      <td class="num">100% (15/15)</td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.004183333333333334">
+      <td class="rank">6</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-pro
+        </span>
+      </td>
+      <td class="num">40.0% (6/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00418<span class="cost-std">±$0.00012</span>
           </span>
           <div class="cost-bar"><div style="width: 100%"></div></div>
         </div>
       </td>
-      <td class="num">1.37s / 3.65s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
+      <td class="num">6.06s / 13.01s</td>
+      <td class="num">0% (0/15)</td>
       <td>
         
-        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>33</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">7</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.80s / 1.85s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">8</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.11s / 0.22s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>error</span>
+          
+        </span>
         
       </td>
     </tr>
@@ -354,13 +759,115 @@
 </table>
 </div>
 
-<div class="pass-meta">
-  <strong>Pass 2026-05-06 01:25:00 UTC</strong>
-  <code>423a52c</code>
-  
-  <span class="badge badge-dirty">dirty tree, s9 non-headline</span>
-  
-</div>
+<p style="font-size: 0.82rem; color: var(--muted); margin: 0.5rem 0;">
+  Rank rows marked with &ldquo;&approx;&rdquo; are within 5% of the rank above on <code>effective_TCoT</code> &mdash; treat as tied within bench noise. See <a href="methodology.html#7-stochasticity-and-multi-run">methodology s7</a>.
+</p>
+
+<section class="calc">
+  <h3>Cost calculator</h3>
+  <label>
+    If I run this task
+    <input type="number" min="1" step="1" value="10000" id="calc-function_call_routing-n"
+           oninput="updateCalc('function_call_routing', this.value)">
+    times per month, monthly cost per provider:
+  </label>
+  <div class="calc-output">
+    <table>
+      <thead>
+        <tr><th>Provider / Model</th><th class="num">Monthly cost (USD)</th></tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="3.426e-05">
+            $0.34
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="4.6679999999999994e-05">
+            $0.47
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="0.00013164">
+            $1.32
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="0.000778">
+            $7.78
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="0.0011988">
+            $11.99
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="0.004183333333333334">
+            $41.83
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+          <td class="num" data-calc-task="function_call_routing"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.78rem;">
+      Computed from this pass's <code>effective_TCoT</code>. Real production cost will vary with prompt length, model snapshot drift, and retry distribution on your data.
+    </p>
+  </div>
+</section>
+
+
+
+
+<p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
+  2 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/function_call_routing.html">detailed task page</a>.
+</p>
+
+
+
+
+<h2>
+  <a href="tasks/synthetic_rag.html">Task: <code>synthetic_rag</code></a>
+  <a class="task-link" href="tasks/synthetic_rag.html">detailed page &rsaquo;</a>
+</h2>
+
+
+
+<h3>Latest clean pass &middot; 2026-05-08 01:46:18 UTC &middot; <code>e6e987c</code></h3>
 
 <div class="leaderboard-wrap">
 <table>
@@ -371,104 +878,250 @@
       <th class="num">Success</th>
       <th class="num">effective_TCoT</th>
       <th class="num">Latency p50 / p95</th>
-      <th class="num">Attempts</th>
-      <th>Failure modes</th>
+      <th class="num">1st-try pass</th>
+      <th>Failure modes (this pass)</th>
     </tr>
   </thead>
   <tbody>
     
-    <tr class="dirty">
+    <tr 
+        data-eff-tcot="4.403333333333334e-05">
       <td class="rank">1</td>
       <td>
         <span class="prov provider-google">
           <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
         </span>
       </td>
-      <td class="num">86.7% (13/15)</td>
+      <td class="num">60.0% (9/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00012
+            $0.00004<span class="cost-std">±$0.00000</span>
           </span>
-          <div class="cost-bar"><div style="width: 12%"></div></div>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
         </div>
       </td>
-      <td class="num">0.66s / 1.47s</td>
-      <td class="num">
-        37
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (0% 1st-try)
-        </span>
-      </td>
+      <td class="num">0.50s / 0.73s</td>
+      <td class="num">60% (9/15)</td>
       <td>
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>22</strong>schema_break</span>
-          
-          <span class="fm-pill"><strong>2</strong>error</span>
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
           
         </span>
         
       </td>
     </tr>
     
-    <tr class="dirty">
+    <tr 
+        data-eff-tcot="7.19e-05">
       <td class="rank">2</td>
+      <td>
+        <span class="prov provider-openai">
+          <span class="prov-swatch"></span>openai/gpt-4o-mini
+        </span>
+      </td>
+      <td class="num">60.0% (9/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00007<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 4%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.67s / 1.34s</td>
+      <td class="num">60% (9/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.00011734545454545455">
+      <td class="rank">3</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-flash
+        </span>
+      </td>
+      <td class="num">73.3% (11/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00012<span class="cost-std">±$0.00004</span>
+          </span>
+          <div class="cost-bar"><div style="width: 6%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.15s / 10.89s</td>
+      <td class="num">60% (9/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>16</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.0004868181818181819">
+      <td class="rank">4</td>
+      <td>
+        <span class="prov provider-google">
+          <span class="prov-swatch"></span>google/gemini-2.5-pro
+        </span>
+      </td>
+      <td class="num">73.3% (11/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00049<span class="cost-std">±$0.00018</span>
+          </span>
+          <div class="cost-bar"><div style="width: 28%"></div></div>
+        </div>
+      </td>
+      <td class="num">6.45s / 18.34s</td>
+      <td class="num">60% (9/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>12</strong>confabulation</span>
+          
+          <span class="fm-pill"><strong>4</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.0005677000000000002">
+      <td class="rank">5</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+        </span>
+      </td>
+      <td class="num">66.7% (10/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            $0.00057<span class="cost-std">±$0.00013</span>
+          </span>
+          <div class="cost-bar"><div style="width: 32%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.70s / 1.51s</td>
+      <td class="num">60% (9/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>17</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="0.0010969444444444447">
+      <td class="rank">6</td>
       <td>
         <span class="prov provider-openai">
           <span class="prov-swatch"></span>openai/gpt-4o
         </span>
       </td>
-      <td class="num">100.0% (15/15)</td>
+      <td class="num">60.0% (9/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00070
+            $0.00110<span class="cost-std">±$0.00001</span>
           </span>
-          <div class="cost-bar"><div style="width: 71%"></div></div>
+          <div class="cost-bar"><div style="width: 63%"></div></div>
         </div>
       </td>
-      <td class="num">0.72s / 1.40s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
+      <td class="num">0.51s / 0.73s</td>
+      <td class="num">60% (9/15)</td>
       <td>
         
-        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
         
       </td>
     </tr>
     
-    <tr class="dirty">
-      <td class="rank">3</td>
+    <tr 
+        data-eff-tcot="0.0017370000000000003">
+      <td class="rank">7</td>
       <td>
         <span class="prov provider-anthropic">
           <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
         </span>
       </td>
-      <td class="num">100.0% (15/15)</td>
+      <td class="num">60.0% (9/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            $0.00099
+            $0.00174<span class="cost-std">±$0.00000</span>
           </span>
           <div class="cost-bar"><div style="width: 100%"></div></div>
         </div>
       </td>
-      <td class="num">1.32s / 3.03s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
+      <td class="num">1.08s / 3.36s</td>
+      <td class="num">60% (9/15)</td>
       <td>
         
-        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>confabulation</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr 
+        data-eff-tcot="Infinity">
+      <td class="rank">8</td>
+      <td>
+        <span class="prov provider-anthropic">
+          <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+        </span>
+      </td>
+      <td class="num">0.0% (0/15)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span class="cost-value">
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.13s / 0.41s</td>
+      <td class="num">0% (0/15)</td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>45</strong>error</span>
+          
+        </span>
         
       </td>
     </tr>
@@ -477,126 +1130,103 @@
 </table>
 </div>
 
-<div class="pass-meta">
-  <strong>Pass 2026-05-06 01:22:44 UTC</strong>
-  <code>423a52c</code>
-  
-  <span class="badge badge-clean">clean</span>
-  
-</div>
+<p style="font-size: 0.82rem; color: var(--muted); margin: 0.5rem 0;">
+  Rank rows marked with &ldquo;&approx;&rdquo; are within 5% of the rank above on <code>effective_TCoT</code> &mdash; treat as tied within bench noise. See <a href="methodology.html#7-stochasticity-and-multi-run">methodology s7</a>.
+</p>
 
-<div class="leaderboard-wrap">
-<table>
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Provider / Model</th>
-      <th class="num">Success</th>
-      <th class="num">effective_TCoT</th>
-      <th class="num">Latency p50 / p95</th>
-      <th class="num">Attempts</th>
-      <th>Failure modes</th>
-    </tr>
-  </thead>
-  <tbody>
-    
-    <tr >
-      <td class="rank">1</td>
-      <td>
-        <span class="prov provider-google">
-          <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
-        </span>
-      </td>
-      <td class="num">100.0% (15/15)</td>
-      <td class="num cost-cell">
-        <div class="cost-bar-wrap">
-          <span class="cost-value">
-            $0.00011
-          </span>
-          <div class="cost-bar"><div style="width: 11%"></div></div>
-        </div>
-      </td>
-      <td class="num">0.71s / 1.91s</td>
-      <td class="num">
-        36
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (0% 1st-try)
-        </span>
-      </td>
-      <td>
+<section class="calc">
+  <h3>Cost calculator</h3>
+  <label>
+    If I run this task
+    <input type="number" min="1" step="1" value="10000" id="calc-synthetic_rag-n"
+           oninput="updateCalc('synthetic_rag', this.value)">
+    times per month, monthly cost per provider:
+  </label>
+  <div class="calc-output">
+    <table>
+      <thead>
+        <tr><th>Provider / Model</th><th class="num">Monthly cost (USD)</th></tr>
+      </thead>
+      <tbody>
         
-        <span class="fm-list">
-          
-          <span class="fm-pill"><strong>21</strong>schema_break</span>
-          
-        </span>
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="4.403333333333334e-05">
+            $0.44
+          </td>
+        </tr>
         
-      </td>
-    </tr>
-    
-    <tr >
-      <td class="rank">2</td>
-      <td>
-        <span class="prov provider-openai">
-          <span class="prov-swatch"></span>openai/gpt-4o
-        </span>
-      </td>
-      <td class="num">100.0% (15/15)</td>
-      <td class="num cost-cell">
-        <div class="cost-bar-wrap">
-          <span class="cost-value">
-            $0.00071
-          </span>
-          <div class="cost-bar"><div style="width: 72%"></div></div>
-        </div>
-      </td>
-      <td class="num">1.17s / 2.27s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
-      <td>
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="7.19e-05">
+            $0.72
+          </td>
+        </tr>
         
-        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="0.00011734545454545455">
+            $1.17
+          </td>
+        </tr>
         
-      </td>
-    </tr>
-    
-    <tr >
-      <td class="rank">3</td>
-      <td>
-        <span class="prov provider-anthropic">
-          <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
-        </span>
-      </td>
-      <td class="num">100.0% (15/15)</td>
-      <td class="num cost-cell">
-        <div class="cost-bar-wrap">
-          <span class="cost-value">
-            $0.00099
-          </span>
-          <div class="cost-bar"><div style="width: 100%"></div></div>
-        </div>
-      </td>
-      <td class="num">1.40s / 2.66s</td>
-      <td class="num">
-        15
-        <span style="color: var(--muted); font-size: 0.8em;">
-          (100% 1st-try)
-        </span>
-      </td>
-      <td>
+        <tr>
+          <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="0.0004868181818181819">
+            $4.87
+          </td>
+        </tr>
         
-        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="0.0005677000000000002">
+            $5.68
+          </td>
+        </tr>
         
-      </td>
-    </tr>
-    
-  </tbody>
-</table>
-</div>
+        <tr>
+          <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="0.0010969444444444447">
+            $10.97
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="0.0017370000000000003">
+            $17.37
+          </td>
+        </tr>
+        
+        <tr>
+          <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+          <td class="num" data-calc-task="synthetic_rag"
+              data-calc-eff="Infinity">
+            n/a
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.78rem;">
+      Computed from this pass's <code>effective_TCoT</code>. Real production cost will vary with prompt length, model snapshot drift, and retry distribution on your data.
+    </p>
+  </div>
+</section>
+
+
+
+
+<p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
+  2 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/synthetic_rag.html">detailed task page</a>.
+</p>
 
 
 
@@ -607,14 +1237,29 @@
   <p>
     methodology version 0.1
     &middot; bellwether 0.1.0
-    &middot; last bench 2026-05-06 02:15:49 UTC
-    &middot; 9 result files loaded
+    &middot; last bench 2026-05-08 02:10:39 UTC
+    &middot; 54 result files loaded
   </p>
   <p>
     <a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a>
+    &middot; <a href="https://pypi.org/project/bellwether/">pip install bellwether</a>
     &middot; MIT license
   </p>
 </footer>
+
+<script>
+  function updateCalc(task, n) {
+    const monthly = parseFloat(n) || 0;
+    document.querySelectorAll('td[data-calc-task="' + task + '"]').forEach(function(td) {
+      const eff = parseFloat(td.dataset.calcEff);
+      if (isFinite(eff)) {
+        td.textContent = '$' + (eff * monthly).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      } else {
+        td.textContent = 'n/a';
+      }
+    });
+  }
+</script>
 
 </body>
 </html>

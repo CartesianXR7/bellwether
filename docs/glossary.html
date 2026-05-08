@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>bellwether: glossary</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #fcfcfc; --muted: #5a5a5a; --accent: #0066cc; --border: #e0e0e0; --code-bg: rgba(127,127,127,0.10); }
+  @media (prefers-color-scheme: dark) {
+    :root { --fg: #e8e8e8; --bg: #0f0f0f; --muted: #999; --accent: #6db3ff; --border: #2a2a2a; }
+  }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.6; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 760px; margin: 0 auto; }
+  header { padding: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+  h1 { margin: 0; font-size: 1.7rem; }
+  h1 a { color: var(--fg); text-decoration: none; }
+  nav a { color: var(--accent); text-decoration: none; margin-right: 1.25rem; font-weight: 500; }
+  nav a:hover { text-decoration: underline; }
+  main h2 { margin-top: 2rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); font-size: 1.2rem; }
+  main h3 { margin-top: 1.5rem; font-size: 1.05rem; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--code-bg); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
+  a { color: var(--accent); }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><a href="index.html">bellwether</a></h1>
+  <nav>
+    <a href="index.html">Leaderboard</a>
+    <a href="methodology.html">Methodology</a>
+    <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
+  </nav>
+</header>
+
+<main>
+<h1>Glossary</h1>
+<p>Plain-English definitions of every term that appears on the leaderboard or in
+the methodology. For formal definitions see <a href="methodology.html">METHODOLOGY</a>.</p>
+<h2>Headline metrics</h2>
+<h3><code>effective_TCoT</code></h3>
+<p>The total cost of getting one task done <strong>successfully</strong>, including the cost
+of every failed attempt that happened along the way before the model finally
+got it right (or before retries were exhausted).</p>
+<p>A provider that is cheap per call but fails often can have a <em>higher</em>
+<code>effective_TCoT</code> than a provider that costs more per call but succeeds first
+try. That trade-off is the whole point of the metric.</p>
+<p>Lower is better. Reported in USD.</p>
+<h3>Success rate</h3>
+<p>Out of every (instance, run) trial benched, the fraction that produced a
+validator-passing result within the configured <code>max_attempts</code> retry budget.
+Shown as percentage and absolute count.</p>
+<h3>Latency p50 / p95</h3>
+<p>Per-API-call wall-clock time, in seconds. p50 is the median; p95 is the 95th
+percentile (the slow tail). Tracks all attempts across all trials, not just
+successful ones.</p>
+<h3>1st-try pass rate</h3>
+<p>Of every trial, the fraction that passed validation on its very first attempt
+(no retries needed). High first-try-pass means the provider is well-calibrated
+to the prompt; low first-try-pass means the retry loop is doing real work.</p>
+<h2>Failure modes</h2>
+<p>The eight categories every failed attempt is classified into. Multiple modes
+per failure are allowed (e.g. <code>truncation</code> plus <code>refusal</code>).</p>
+<h3><code>refusal</code></h3>
+<p>The model declined to attempt the task ("I can't help with that," "as an AI
+assistant," etc.). Detected by regex against a bank of common refusal phrases;
+only counted on attempts that also fail validation.</p>
+<h3><code>confabulation</code></h3>
+<p>The model produced fluent, well-formatted output that was factually wrong or
+fabricated. Passes format/schema checks but fails content checks. The
+default classification for content-level failures that are not also schema
+breaks.</p>
+<h3><code>schema_break</code></h3>
+<p>The output did not parse as the expected structure: invalid JSON, wrong
+shape, missing required fields, etc. Recoverable by retry in many cases;
+provider's structured-output discipline.</p>
+<h3><code>truncation</code></h3>
+<p>The output was cut off mid-response, either because the provider returned
+<code>finish_reason == "length"</code> or because the visible end of the output is a
+half-word with no terminal punctuation.</p>
+<h3><code>partial</code></h3>
+<p>The output was partially correct: some required fields right, others wrong;
+or partial F1 against ground truth. Score strictly between 0 and the
+task's <code>pass_threshold</code>.</p>
+<h3><code>offtask</code></h3>
+<p>The output was on-topic but answered a different question than the one asked.
+In v0 this is hard to distinguish from <code>confabulation</code> because the synthetic
+datasets do not ship per-instance "expected key entities" annotations needed
+to tell them apart; v0 classifiers default to <code>confabulation</code> for content
+failures.</p>
+<h3><code>timeout</code></h3>
+<p>The provider did not return a response within the task's <code>timeout_seconds</code>
+budget. The attempt was aborted and recorded as a timeout.</p>
+<h3><code>error</code></h3>
+<p>The provider's API returned an error (HTTP 4xx/5xx, rate limit, content
+filter trip, transport failure). The error class is recorded for audit.</p>
+<h2>Status flags</h2>
+<h3>Dirty tree</h3>
+<p>A row marked with a leading <code>*</code> (or a <code>dirty tree</code> badge in the pass header)
+came from a benchmark run where the source-code tree had uncommitted changes
+at run-start. Per <a href="methodology.html#9-reproducibility-guarantees">methodology s9</a>,
+dirty results are flagged and excluded from headline aggregates because they
+cannot be tied to a known git commit.</p>
+<h3>Tied within noise (≈)</h3>
+<p>A row marked with <code>≈</code> after its rank is within 5% of the rank above on
+<code>effective_TCoT</code>. With N=3 runs per instance the headline metric carries
+real noise; near-tied ranks should be read as ties, not as a meaningful
+ordering. v0.4 will replace this heuristic with bootstrap confidence
+intervals.</p>
+<h3><code>±</code> (standard deviation)</h3>
+<p>Reported next to <code>effective_TCoT</code> in the form <code>$0.00099 ±$0.00012</code>. The
+±-value is the population stddev of per-trial cost across the successful
+trials in this pass. Useful for spotting providers whose performance is
+unusually variable; expect 0 when fewer than two successes were observed.</p>
+<h2>Concepts in the methodology</h2>
+<h3>TCoT (Total Cost of Task)</h3>
+<p>The cost to <em>attempt</em> one task instance end-to-end, including every retry.
+<code>effective_TCoT</code> then amortizes failed-attempt cost across the successes.
+See <a href="methodology.html#2-total-cost-of-task-tcot">methodology s2</a>.</p>
+<h3><code>max_attempts</code></h3>
+<p>The retry budget per (instance, run) trial. Default 3. After this many
+attempts without a passing validation, the trial is recorded as a failure.</p>
+<h3>Canonical prompt</h3>
+<p>The single prompt template used across <strong>all</strong> providers for headline
+numbers, with no per-provider tweaking. The point is to measure cost and
+failure modes under the same input the user actually controls. Per-provider
+tuned prompts are a v1 feature; see methodology s6.</p>
+<h3>Schema-only retry feedback</h3>
+<p>When a trial fails and is retried, the prompt that goes back to the model
+includes a description of what went wrong, but only at the schema/format
+level (e.g. "your output is not valid JSON"). It must never echo the
+expected ground-truth values, or the bench is contaminated. Validators
+that violate this rule invalidate their results. See methodology s3.</p>
+<h3>Reproducibility (and why we don't claim byte-identity)</h3>
+<p>Same code + same model snapshot + same dataset <em>should</em> give the same
+results. In practice it does not, even at temperature 0, because all
+three providers exhibit backend non-determinism (batch effects, GPU
+floating-point non-associativity). T=0 reduces stochasticity but does
+not eliminate it; the methodology reports <code>mean ± std</code> across N runs
+rather than claiming exact reproducibility. See methodology s7.</p>
+</main>
+
+<footer>
+  <p>For formal definitions see the <a href="methodology.html">methodology</a>.</p>
+</footer>
+
+</body>
+</html>

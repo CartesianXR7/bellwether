@@ -3,7 +3,7 @@
 See METHODOLOGY.md for formulas, validator contract, and reproducibility rules.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.3.0"
 __methodology_version__ = "0.1"
 
 from bellwether.guardrail import CostExceeded, CostTracker
