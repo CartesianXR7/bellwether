@@ -115,6 +115,44 @@
 
   .empty { color: var(--muted); font-style: italic; padding: 2.5rem 0; text-align: center; }
 
+  /* Top-of-page stats strip */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    margin: 1.5rem 0 2.5rem 0;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .stat { background: var(--surface); padding: 0.95rem 1.1rem; }
+  .stat .num { font-family: 'Montserrat', sans-serif; font-size: 1.55rem; font-weight: 700; color: var(--fg); line-height: 1.15; }
+  .stat .label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; margin-top: 0.3rem; font-family: 'Montserrat', sans-serif; }
+
+  /* Cross-task ranking matrix overview */
+  .overview { margin: 0 0 3rem 0; }
+  .overview h2 { font-size: 1.15rem; margin-top: 0; border-bottom: 1px solid var(--border); padding-bottom: 0.25rem; }
+  .overview p.note { font-size: 0.82rem; color: var(--muted); margin: 0.5rem 0 0.75rem 0; }
+  .ranking-matrix th.task-col, .ranking-matrix td.rank-cell { text-align: center; min-width: 7rem; }
+  .ranking-matrix th.task-col a { color: var(--muted); text-decoration: none; }
+  .ranking-matrix th.task-col a:hover { color: var(--accent); text-decoration: underline; }
+  .ranking-matrix td.rank-cell { font-variant-numeric: tabular-nums; font-weight: 500; }
+  .ranking-matrix td.rank-1 { background: rgba(109, 40, 217, 0.18); color: var(--purple); font-weight: 700; }
+  .ranking-matrix td.rank-2 { background: rgba(109, 40, 217, 0.10); font-weight: 600; }
+  .ranking-matrix td.rank-3 { background: rgba(109, 40, 217, 0.05); }
+  .ranking-matrix td.rank-na { color: var(--muted); }
+  [data-theme="dark"] .ranking-matrix td.rank-1 { background: rgba(167, 139, 250, 0.22); color: var(--purple); }
+  [data-theme="dark"] .ranking-matrix td.rank-2 { background: rgba(167, 139, 250, 0.13); }
+  [data-theme="dark"] .ranking-matrix td.rank-3 { background: rgba(167, 139, 250, 0.06); }
+
+  /* Per-task sections: heavier visual separation, accent stripe, headline color */
+  .task-section { margin-top: 4.5rem; padding-top: 2.5rem; border-top: 2px solid var(--border-strong); position: relative; }
+  .task-section::before { content: ""; position: absolute; left: -1rem; top: 2.5rem; bottom: 0; width: 3px; background: var(--purple); opacity: 0.6; }
+  .task-section h2 { margin-top: 0; font-size: 1.55rem; font-weight: 700; color: var(--purple); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+  .task-section h2 a { color: inherit; text-decoration: none; }
+  .task-section h2 a code { color: var(--purple); background: transparent; padding: 0; }
+  .task-section h2 a:hover { text-decoration: underline; }
+  .task-section h2 .task-link { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-left: 0.75rem; }
+
   /* Theme toggle: minimal, far top right, fixed position */
   #theme-toggle {
     position: fixed; top: 0.75rem; right: 1rem;
@@ -191,8 +229,54 @@
 <p class="empty">No bench results yet. Run <code>bellwether run</code> and rebuild the site.</p>
 {% endif %}
 
+{% if stats %}
+<section class="stats" aria-label="Bench summary">
+  <div class="stat"><div class="num">{{ stats.n_tasks }}</div><div class="label">tasks benched</div></div>
+  <div class="stat"><div class="num">{{ stats.n_models }}</div><div class="label">distinct models</div></div>
+  <div class="stat"><div class="num">{{ stats.n_passes }}</div><div class="label">bench passes</div></div>
+  <div class="stat"><div class="num">${{ "%.2f"|format(stats.total_spend_usd) }}</div><div class="label">total bench spend</div></div>
+</section>
+{% endif %}
+
+{% if ranking and ranking.rows %}
+<section class="overview" aria-label="Cross-task ranking matrix">
+  <h2>Cross-task ranking</h2>
+  <p class="note">Each cell is the model's rank on that task in its latest clean pass. Lower is better. Rank 1 highlighted in purple. Rows sorted by average observed rank (best overall first).</p>
+  <div class="leaderboard-wrap">
+    <table class="ranking-matrix">
+      <thead>
+        <tr>
+          <th>Provider / Model</th>
+          {% for task_name in ranking.task_order %}
+          <th class="task-col"><a href="tasks/{{ task_name }}.html"><code>{{ task_name }}</code></a></th>
+          {% endfor %}
+          <th class="num">avg rank</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in ranking.rows %}
+        <tr>
+          <td><span class="prov provider-{{ row.provider }}"><span class="prov-swatch"></span>{{ row.provider }}/{{ row.model }}</span></td>
+          {% for task_name in ranking.task_order %}
+          {% if task_name in row.ranks %}
+          {% set rk = row.ranks[task_name].rank %}
+          <td class="rank-cell rank-{{ rk if rk <= 3 else 'other' }}">#{{ rk }}{% if row.ranks[task_name].infinite %}*{% endif %}</td>
+          {% else %}
+          <td class="rank-cell rank-na">n/a</td>
+          {% endif %}
+          {% endfor %}
+          <td class="num">{{ "%.1f"|format(row.avg_rank) if row.n_observed else "n/a" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+
 {% for task_name, view in tasks.items() %}
 
+<section class="task-section">
 <h2>
   <a href="tasks/{{ task_name }}.html">Task: <code>{{ task_name }}</code></a>
   <a class="task-link" href="tasks/{{ task_name }}.html">detailed page &rsaquo;</a>
@@ -296,6 +380,7 @@
 </p>
 {% endif %}
 
+</section>
 {% endfor %}
 
 </main>

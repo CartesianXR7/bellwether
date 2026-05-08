@@ -197,6 +197,65 @@ def _latest_clean_pass(passes: list[dict[str, Any]]) -> dict[str, Any] | None:
     return None
 
 
+def _summary_stats(
+    results: list[dict[str, Any]], task_views: dict[str, dict[str, Any]]
+) -> dict[str, Any]:
+    """Top-of-page numbers: tasks, distinct models, total passes, total spend."""
+    distinct_models = set()
+    distinct_passes = set()
+    total_spend = 0.0
+    for r in results:
+        prov = r["provider"]
+        distinct_models.add((prov["id"], prov["model_id"]))
+        distinct_passes.add((r["task"]["name"], r["started_at"]))
+        guard = r.get("cost_guardrail") or {}
+        total_spend += float(guard.get("spent_usd") or 0.0)
+    return {
+        "n_tasks": len(task_views),
+        "n_models": len(distinct_models),
+        "n_passes": len(distinct_passes),
+        "n_results": len(results),
+        "total_spend_usd": total_spend,
+    }
+
+
+def _ranking_matrix(task_views: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    """Cross-task ranking matrix: rows = models, cols = tasks, cells = rank in latest-clean.
+
+    Rows sorted by average observed rank ascending (best overall first).
+    Models that did not appear in some task's latest clean pass have a blank
+    cell for that task and are excluded from that task's contribution to
+    avg_rank (only observed ranks counted).
+    """
+    by_model: dict[str, dict[str, Any]] = {}
+    task_order = list(task_views.keys())
+    for task_name, view in task_views.items():
+        clean = view["latest_clean"]
+        if not clean:
+            continue
+        for entry in clean["entries"]:
+            key = f"{entry['provider']}/{entry['model']}"
+            if key not in by_model:
+                by_model[key] = {
+                    "provider": entry["provider"],
+                    "model": entry["model"],
+                    "ranks": {},
+                }
+            by_model[key]["ranks"][task_name] = {
+                "rank": entry["rank"],
+                "tied": entry.get("tied_with_above", False),
+                "success_rate": entry["success_rate"],
+                "infinite": entry["effective_tcot_infinite"],
+            }
+    rows = list(by_model.values())
+    for row in rows:
+        observed = [r["rank"] for r in row["ranks"].values() if not r["infinite"]]
+        row["avg_rank"] = sum(observed) / len(observed) if observed else 999.0
+        row["n_observed"] = len(observed)
+    rows.sort(key=lambda r: (r["avg_rank"], r["model"]))
+    return {"rows": rows, "task_order": task_order}
+
+
 def _aggregate_failure_modes_per_provider(
     passes: list[dict[str, Any]],
 ) -> dict[str, dict[str, int]]:
@@ -250,8 +309,13 @@ def main() -> None:
 
     env = Environment(loader=FileSystemLoader(SITE_DIR), autoescape=True)
 
+    stats = _summary_stats(results, task_views)
+    ranking = _ranking_matrix(task_views)
+
     index_html = env.get_template("index.html.j2").render(
         tasks=task_views,
+        stats=stats,
+        ranking=ranking,
         methodology_version=methodology_version,
         bellwether_version=bellwether_version,
         latest_bench_iso=latest_bench,
