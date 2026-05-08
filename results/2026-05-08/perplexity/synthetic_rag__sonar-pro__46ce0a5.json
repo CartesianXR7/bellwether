@@ -1,0 +1,293 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.1.1",
+  "git_sha": "46ce0a5d395e6bff63fdaca464cee36761f61573",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "perplexity",
+    "model_id": "sonar-pro",
+    "model_version_hint": null,
+    "model_class": "search"
+  },
+  "task": {
+    "name": "synthetic_rag",
+    "dataset_version": "synthetic-rag-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "started_at": "2026-05-08T15:11:05.775869+00:00",
+  "completed_at": "2026-05-08T15:52:09.270386+00:00",
+  "instances": [
+    {
+      "instance_id": "rag-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 113,
+              "output_tokens": 2,
+              "cost_usd": 0.00036899999999999997,
+              "latency_seconds": 2.048570290906355,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00036899999999999997,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 113,
+              "output_tokens": 2,
+              "cost_usd": 0.00036899999999999997,
+              "latency_seconds": 1.8798828748986125,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00036899999999999997,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 108,
+              "output_tokens": 2,
+              "cost_usd": 0.00035399999999999993,
+              "latency_seconds": 1.441025957930833,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00035399999999999993,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 108,
+              "output_tokens": 2,
+              "cost_usd": 0.00035399999999999993,
+              "latency_seconds": 1.1242226250469685,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00035399999999999993,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 103,
+              "output_tokens": 3,
+              "cost_usd": 0.000354,
+              "latency_seconds": 2.1706229171250015,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "{\"answer\": \"the energy industry\"}",
+              "input_tokens": 141,
+              "output_tokens": 8,
+              "cost_usd": 0.0005430000000000001,
+              "latency_seconds": 1.5909479998517781,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 922,
+              "output": "I appreciate you sharing this, but I notice there's a disconnect in your request. You've provided:\n\n1. Search results (about Emacs, Pandoc, academic papers, etc.)\n2. A passage about \"Massive Dynamic\" \n3. A question asking what industry Massive Dynamic operates in\n4. Notes about previous validation failures\n\nHowever, the passage you've provided clearly states: \"Massive Dynamic operates in the energy industry.\"\n\nThe answer, exactly as it appears in the passage, is:\n\nenergy industry",
+              "input_tokens": 183,
+              "output_tokens": 103,
+              "cost_usd": 0.002094,
+              "latency_seconds": 3.346836042124778,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.002991,
+          "failure_modes": [
+            "confabulation",
+            "truncation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "energy industry",
+              "input_tokens": 103,
+              "output_tokens": 2,
+              "cost_usd": 0.000339,
+              "latency_seconds": 1.373661208897829,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 692,
+              "output": "{\"answer\": \"energy industry\"}",
+              "input_tokens": 140,
+              "output_tokens": 7,
+              "cost_usd": 0.000525,
+              "latency_seconds": 1.3337346659973264,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 914,
+              "output": "{\"answer\": \"energy industry\"}",
+              "input_tokens": 181,
+              "output_tokens": 7,
+              "cost_usd": 0.0006480000000000001,
+              "latency_seconds": 1.4610505828168243,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.001512,
+          "failure_modes": [
+            "confabulation"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 4,
+    "success_rate": 0.6666666666666666,
+    "mean_tcot_success": 0.00036149999999999995,
+    "mean_tcot_failure": 0.0022515,
+    "effective_tcot": 0.0014872500000000003,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 1.5259992913343012,
+    "mean_latency_p95": 2.8175401358748786,
+    "std_tcot_success": 8.660254037844409e-06,
+    "std_latency": 0.6443137653502312
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.42879528999999994,
+    "tripped": false
+  },
+  "stopped_early": null
+}

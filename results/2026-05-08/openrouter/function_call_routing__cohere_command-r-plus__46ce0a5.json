@@ -1,0 +1,460 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.1.1",
+  "git_sha": "46ce0a5d395e6bff63fdaca464cee36761f61573",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "openrouter",
+    "model_id": "cohere/command-r-plus",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "function_call_routing",
+    "dataset_version": "synthetic-fc-routing-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "started_at": "2026-05-08T15:11:05.775869+00:00",
+  "completed_at": "2026-05-08T15:37:46.858981+00:00",
+  "instances": [
+    {
+      "instance_id": "fc-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.0842467499896884,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1273,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02472820784896612,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1538,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02835649996995926,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.035787458065897226,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1273,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.0876870839856565,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1538,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.022140832850709558,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02689945907332003,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1268,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.038727874867618084,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1533,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02476858301088214,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.102431874955073,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1268,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.027414957992732525,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1533,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.023470208048820496,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.03322670818306506,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1278,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.0197652499191463,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1543,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02409229101613164,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.027350000105798244,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1278,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.023273458937183022,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1543,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06995595805346966,
+              "finish_reason": null,
+              "error": "NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: NotFoundError: Error code: 404 - {'error': {'message': 'No endpoints found for cohere/command-r-plus.', 'code': 404}, 'u",
+                "failure_modes": [
+                  "error"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 0.027382479049265385,
+    "mean_latency_p95": 0.08989880263106897,
+    "std_tcot_success": 0.0,
+    "std_latency": 0.026252641592852108
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.32805758999999984,
+    "tripped": false
+  },
+  "stopped_early": null
+}

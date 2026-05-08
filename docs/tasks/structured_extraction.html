@@ -28,6 +28,13 @@
     --prov-anthropic: #c9764e;
     --prov-openai: #10a37f;
     --prov-google: #4285f4;
+    --prov-xai: #555555;
+    --prov-perplexity: #20a5b8;
+    --prov-openrouter: #e6633a;
+    --class-reasoning-fg: #5b21b6;
+    --class-reasoning-bg: #ede9fe;
+    --class-search-fg: #92400e;
+    --class-search-bg: #fef3c7;
   }
   [data-theme="dark"] {
     --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
@@ -38,6 +45,11 @@
     --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
     --tied: #777;
     --purple: #a78bfa;
+    --prov-xai: #aaaaaa;
+    --class-reasoning-fg: #c4b5fd;
+    --class-reasoning-bg: #2a1f4a;
+    --class-search-fg: #fcd34d;
+    --class-search-bg: #3a2a08;
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -82,6 +94,14 @@
   .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
   .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
   .prov.provider-google .prov-swatch { background: var(--prov-google); }
+  .prov.provider-xai .prov-swatch { background: var(--prov-xai); }
+  .prov.provider-perplexity .prov-swatch { background: var(--prov-perplexity); }
+  .prov.provider-openrouter .prov-swatch { background: var(--prov-openrouter); }
+
+  .class-chip { display: inline-block; font-size: 0.66rem; padding: 0.05rem 0.35rem; margin-left: 0.5rem; letter-spacing: 0.5px; text-transform: uppercase; font-weight: 600; vertical-align: middle; }
+  .class-chip.class-reasoning { color: var(--class-reasoning-fg); background: var(--class-reasoning-bg); }
+  .class-chip.class-search { color: var(--class-search-fg); background: var(--class-search-bg); }
+  .class-chip.class-standard { display: none; }
 
   .cost-cell { min-width: 9rem; }
   .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
@@ -192,10 +212,10 @@
     
     <tr>
       <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td class="num">$0.00108</td>
       <td class="num">$0.00099</td>
-      <td class="num">$0.00099</td>
-      <td class="num delta-flat">
-        +0.0%
+      <td class="num delta-up">
+        +9.5%
       </td>
       <td class="num delta-flat">
         +0.0 pp
@@ -204,13 +224,13 @@
     
     <tr>
       <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+      <td class="num">$0.00120</td>
       <td class="num">$0.00076</td>
-      <td class="num">$0.00071</td>
       <td class="num delta-up">
-        +6.8%
+        +59.4%
       </td>
-      <td class="num delta-flat">
-        +0.0 pp
+      <td class="num delta-up">
+        -23.3 pp
       </td>
     </tr>
     
@@ -219,7 +239,7 @@
       <td class="num">$0.00011</td>
       <td class="num">$0.00011</td>
       <td class="num delta-flat">
-        +0.0%
+        -3.6%
       </td>
       <td class="num delta-flat">
         +0.0 pp
@@ -240,10 +260,10 @@
     
     <tr>
       <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
-      <td class="num">$0.00068</td>
+      <td class="num">$0.00069</td>
       <td class="num">$0.00068</td>
       <td class="num delta-flat">
-        +0.0%
+        +2.6%
       </td>
       <td class="num delta-flat">
         +0.0 pp
@@ -282,12 +302,82 @@
     
     
     <tr>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/meta-llama/llama-4-scout</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>6</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/deepseek/deepseek-chat</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>1</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
       <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
       <td>
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>106</strong>schema_break</span>
+          <span class="fm-pill"><strong>114</strong>schema_break</span>
+          
+          <span class="fm-pill"><strong>2</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>7</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/mistralai/mistral-large</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>3</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td>
+        
+        <span class="fm-list">
           
           <span class="fm-pill"><strong>2</strong>error</span>
           
@@ -303,7 +393,21 @@
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>52</strong>schema_break</span>
+          <span class="fm-pill"><strong>65</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-pro</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>6</strong>schema_break</span>
           
         </span>
         
@@ -317,7 +421,7 @@
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>90</strong>schema_break</span>
+          <span class="fm-pill"><strong>108</strong>schema_break</span>
           
         </span>
         
@@ -331,7 +435,7 @@
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>90</strong>error</span>
+          <span class="fm-pill"><strong>108</strong>error</span>
           
         </span>
         
@@ -345,7 +449,63 @@
         
         <span class="fm-list">
           
-          <span class="fm-pill"><strong>90</strong>schema_break</span>
+          <span class="fm-pill"><strong>108</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/cohere/command-r-plus</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/qwen/qwen-3-235b-a22b</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-reasoning-pro</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    
+    <tr>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-reasoning</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
           
         </span>
         
@@ -359,6 +519,660 @@
 
 <h2>All bench passes (chronological, newest first)</h2>
 
+
+<div class="pass-meta">
+  <strong>Pass 2026-05-08 15:11:05 UTC</strong>
+  <code>46ce0a5</code>
+  
+  <span class="badge badge-clean">clean</span>
+  
+</div>
+
+<div class="leaderboard-wrap">
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Provider / Model</th>
+      <th class="num">Success</th>
+      <th class="num">effective_TCoT</th>
+      <th class="num">Latency p50 / p95</th>
+      <th class="num">Attempts</th>
+      <th>Failure modes (this pass)</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr >
+      <td class="rank">1</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00004
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.45s / 1.58s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">2</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/meta-llama/llama-4-maverick</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00005<span class="cost-std">±$0.00000</span>
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">2.38s / 5.55s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">3</td>
+      <td><span class="prov provider-xai"><span class="prov-swatch"></span>xai/grok-3-mini</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00006
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">7.67s / 8.35s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">4</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/meta-llama/llama-4-scout</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">83.3% (5/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00006<span class="cost-std">±$0.00002</span>
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.17s / 2.18s</td>
+      <td class="num">11 <span style="color: var(--muted); font-size: 0.8em;">(33% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>6</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr class="tied">
+      <td class="rank">5</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/meta-llama/llama-3.3-70b-instruct</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00007<span class="cost-std">±$0.00001</span>
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.25s / 1.86s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr class="tied">
+      <td class="rank">6</td>
+      <td><span class="prov provider-xai"><span class="prov-swatch"></span>xai/grok-4-fast</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00007
+          </span>
+          <div class="cost-bar"><div style="width: 2%"></div></div>
+        </div>
+      </td>
+      <td class="num">2.52s / 3.28s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">7</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/deepseek/deepseek-chat</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00009<span class="cost-std">±$0.00005</span>
+          </span>
+          <div class="cost-bar"><div style="width: 3%"></div></div>
+        </div>
+      </td>
+      <td class="num">2.62s / 10.68s</td>
+      <td class="num">7 <span style="color: var(--muted); font-size: 0.8em;">(83% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>1</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">8</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00011<span class="cost-std">±$0.00003</span>
+          </span>
+          <div class="cost-bar"><div style="width: 3%"></div></div>
+        </div>
+      </td>
+      <td class="num">6.92s / 17.68s</td>
+      <td class="num">14 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>8</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">9</td>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar</span><span class="class-chip class-search">search</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00048<span class="cost-std">±$0.00029</span>
+          </span>
+          <div class="cost-bar"><div style="width: 16%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.92s / 2.73s</td>
+      <td class="num">13 <span style="color: var(--muted); font-size: 0.8em;">(33% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>7</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">10</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00069<span class="cost-std">±$0.00007</span>
+          </span>
+          <div class="cost-bar"><div style="width: 24%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.07s / 2.00s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">11</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/o3-mini</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00074<span class="cost-std">±$0.00014</span>
+          </span>
+          <div class="cost-bar"><div style="width: 25%"></div></div>
+        </div>
+      </td>
+      <td class="num">4.15s / 14.22s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">12</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/o4-mini</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00081<span class="cost-std">±$0.00015</span>
+          </span>
+          <div class="cost-bar"><div style="width: 28%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.73s / 11.97s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">13</td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/o3</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00097<span class="cost-std">±$0.00042</span>
+          </span>
+          <div class="cost-bar"><div style="width: 33%"></div></div>
+        </div>
+      </td>
+      <td class="num">2.04s / 3.10s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr class="tied">
+      <td class="rank">14</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/mistralai/mistral-large</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00098<span class="cost-std">±$0.00044</span>
+          </span>
+          <div class="cost-bar"><div style="width: 34%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.19s / 1.40s</td>
+      <td class="num">9 <span style="color: var(--muted); font-size: 0.8em;">(50% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>3</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr class="tied">
+      <td class="rank">15</td>
+      <td><span class="prov provider-xai"><span class="prov-swatch"></span>xai/grok-3</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00102
+          </span>
+          <div class="cost-bar"><div style="width: 35%"></div></div>
+        </div>
+      </td>
+      <td class="num">15.30s / 46.68s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">16</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00108<span class="cost-std">±$0.00023</span>
+          </span>
+          <div class="cost-bar"><div style="width: 37%"></div></div>
+        </div>
+      </td>
+      <td class="num">8.80s / 26.46s</td>
+      <td class="num">8 <span style="color: var(--muted); font-size: 0.8em;">(83% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>2</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">17</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/deepseek/deepseek-r1</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00114<span class="cost-std">±$0.00048</span>
+          </span>
+          <div class="cost-bar"><div style="width: 40%"></div></div>
+        </div>
+      </td>
+      <td class="num">17.26s / 33.41s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">18</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">50.0% (3/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00120<span class="cost-std">±$0.00015</span>
+          </span>
+          <div class="cost-bar"><div style="width: 42%"></div></div>
+        </div>
+      </td>
+      <td class="num">2.31s / 3.21s</td>
+      <td class="num">16 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>13</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">19</td>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-pro</span><span class="class-chip class-search">search</span></td>
+      <td class="num">83.3% (5/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00257<span class="cost-std">±$0.00139</span>
+          </span>
+          <div class="cost-bar"><div style="width: 89%"></div></div>
+        </div>
+      </td>
+      <td class="num">1.98s / 2.50s</td>
+      <td class="num">11 <span style="color: var(--muted); font-size: 0.8em;">(50% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>6</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">20</td>
+      <td><span class="prov provider-xai"><span class="prov-swatch"></span>xai/grok-4</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">100.0% (6/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            $0.00286
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">6.06s / 6.69s</td>
+      <td class="num">6 <span style="color: var(--muted); font-size: 0.8em;">(100% 1st-try)</span></td>
+      <td>
+        
+        <span style="color: var(--muted); font-size: 0.85rem;">none</span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">21</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.80s / 1.31s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">22</td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.14s / 0.26s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">23</td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">7.03s / 9.84s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">24</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/cohere/command-r-plus</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.02s / 0.08s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">25</td>
+      <td><span class="prov provider-openrouter"><span class="prov-swatch"></span>openrouter/qwen/qwen-3-235b-a22b</span><span class="class-chip class-standard">standard</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.03s / 0.08s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">26</td>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-reasoning-pro</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">4.42s / 6.46s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>schema_break</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+    <tr >
+      <td class="rank">27</td>
+      <td><span class="prov provider-perplexity"><span class="prov-swatch"></span>perplexity/sonar-reasoning</span><span class="class-chip class-reasoning">reasoning</span></td>
+      <td class="num">0.0% (0/6)</td>
+      <td class="num cost-cell">
+        <div class="cost-bar-wrap">
+          <span>
+            infinite
+          </span>
+          <div class="cost-bar"><div style="width: 100%"></div></div>
+        </div>
+      </td>
+      <td class="num">0.07s / 0.16s</td>
+      <td class="num">18 <span style="color: var(--muted); font-size: 0.8em;">(0% 1st-try)</span></td>
+      <td>
+        
+        <span class="fm-list">
+          
+          <span class="fm-pill"><strong>18</strong>error</span>
+          
+        </span>
+        
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
 
 <div class="pass-meta">
   <strong>Pass 2026-05-08 01:46:18 UTC</strong>
@@ -385,7 +1199,7 @@
     
     <tr >
       <td class="rank">1</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -406,7 +1220,7 @@
     
     <tr >
       <td class="rank">2</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -431,7 +1245,7 @@
     
     <tr >
       <td class="rank">3</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -452,7 +1266,7 @@
     
     <tr >
       <td class="rank">4</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">73.3% (11/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -477,7 +1291,7 @@
     
     <tr >
       <td class="rank">5</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -498,7 +1312,7 @@
     
     <tr >
       <td class="rank">6</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -523,7 +1337,7 @@
     
     <tr >
       <td class="rank">7</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -548,7 +1362,7 @@
     
     <tr >
       <td class="rank">8</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -600,7 +1414,7 @@
     
     <tr >
       <td class="rank">1</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o-mini</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -621,7 +1435,7 @@
     
     <tr >
       <td class="rank">2</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -646,7 +1460,7 @@
     
     <tr >
       <td class="rank">3</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -667,7 +1481,7 @@
     
     <tr class="tied">
       <td class="rank">4</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">73.3% (11/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -692,7 +1506,7 @@
     
     <tr >
       <td class="rank">5</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -713,7 +1527,7 @@
     
     <tr >
       <td class="rank">6</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-haiku-4-5</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -738,7 +1552,7 @@
     
     <tr >
       <td class="rank">7</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-opus-4-7</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -763,7 +1577,7 @@
     
     <tr >
       <td class="rank">8</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-pro</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">0.0% (0/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -815,7 +1629,7 @@
     
     <tr >
       <td class="rank">1</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -840,7 +1654,7 @@
     
     <tr >
       <td class="rank">2</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -861,7 +1675,7 @@
     
     <tr >
       <td class="rank">3</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -909,7 +1723,7 @@
     
     <tr class="dirty">
       <td class="rank">1</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">86.7% (13/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -936,7 +1750,7 @@
     
     <tr class="dirty">
       <td class="rank">2</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -957,7 +1771,7 @@
     
     <tr class="dirty">
       <td class="rank">3</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -1005,7 +1819,7 @@
     
     <tr >
       <td class="rank">1</td>
-      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span></td>
+      <td><span class="prov provider-google"><span class="prov-swatch"></span>google/gemini-2.5-flash-lite</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -1030,7 +1844,7 @@
     
     <tr >
       <td class="rank">2</td>
-      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span></td>
+      <td><span class="prov provider-openai"><span class="prov-swatch"></span>openai/gpt-4o</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
@@ -1051,7 +1865,7 @@
     
     <tr >
       <td class="rank">3</td>
-      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span></td>
+      <td><span class="prov provider-anthropic"><span class="prov-swatch"></span>anthropic/claude-sonnet-4-6</span><span class="class-chip class-standard">standard</span></td>
       <td class="num">100.0% (15/15)</td>
       <td class="num cost-cell">
         <div class="cost-bar-wrap">

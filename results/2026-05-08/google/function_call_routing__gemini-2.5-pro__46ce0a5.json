@@ -1,0 +1,438 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.1.1",
+  "git_sha": "46ce0a5d395e6bff63fdaca464cee36761f61573",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "google",
+    "model_id": "gemini-2.5-pro",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "function_call_routing",
+    "dataset_version": "synthetic-fc-routing-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "started_at": "2026-05-08T15:11:05.775869+00:00",
+  "completed_at": "2026-05-08T15:32:46.265499+00:00",
+  "instances": [
+    {
+      "instance_id": "fc-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 253,
+              "output_tokens": 24,
+              "cost_usd": 0.00055625,
+              "latency_seconds": 5.1920378329232335,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 316,
+              "output_tokens": 24,
+              "cost_usd": 0.0006349999999999999,
+              "latency_seconds": 6.301127375103533,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1508,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 380,
+              "output_tokens": 24,
+              "cost_usd": 0.000715,
+              "latency_seconds": 6.20543129183352,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00190625,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 253,
+              "output_tokens": 24,
+              "cost_usd": 0.00055625,
+              "latency_seconds": 5.5441881669685245,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 316,
+              "output_tokens": 24,
+              "cost_usd": 0.0006349999999999999,
+              "latency_seconds": 10.434350874973461,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1508,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 380,
+              "output_tokens": 24,
+              "cost_usd": 0.000715,
+              "latency_seconds": 6.725341208977625,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00190625,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 251,
+              "output_tokens": 23,
+              "cost_usd": 0.00054375,
+              "latency_seconds": 4.769675875082612,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 313,
+              "output_tokens": 23,
+              "cost_usd": 0.0006212500000000001,
+              "latency_seconds": 5.2292802080046386,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1513,
+              "output": "",
+              "input_tokens": 376,
+              "output_tokens": 0,
+              "cost_usd": 0.00047,
+              "latency_seconds": 18.66140712494962,
+              "finish_reason": "length",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "output is empty",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.001635,
+          "failure_modes": [
+            "schema_break",
+            "truncation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 251,
+              "output_tokens": 23,
+              "cost_usd": 0.00054375,
+              "latency_seconds": 5.54534204187803,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}",
+              "input_tokens": 313,
+              "output_tokens": 18,
+              "cost_usd": 0.00057125,
+              "latency_seconds": 7.063589041121304,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.001115,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 255,
+              "output_tokens": 32,
+              "cost_usd": 0.00063875,
+              "latency_seconds": 4.584198250202462,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1285,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 326,
+              "output_tokens": 32,
+              "cost_usd": 0.0007275,
+              "latency_seconds": 7.941424583084881,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1557,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 398,
+              "output_tokens": 32,
+              "cost_usd": 0.0008175,
+              "latency_seconds": 5.624951916979626,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00218375,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 255,
+              "output_tokens": 32,
+              "cost_usd": 0.00063875,
+              "latency_seconds": 4.670743792084977,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1285,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 326,
+              "output_tokens": 32,
+              "cost_usd": 0.0007275,
+              "latency_seconds": 5.015813542064279,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1557,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 398,
+              "output_tokens": 32,
+              "cost_usd": 0.0008175,
+              "latency_seconds": 9.593891667202115,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00218375,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 1,
+    "success_rate": 0.16666666666666666,
+    "mean_tcot_success": 0.001115,
+    "mean_tcot_failure": 0.001963,
+    "effective_tcot": 0.01093,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 5.624951916979626,
+    "mean_latency_p95": 12.079762124968692,
+    "std_tcot_success": 0.0,
+    "std_latency": 3.439654626290827
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.21791151000000003,
+    "tripped": false
+  },
+  "stopped_early": null
+}

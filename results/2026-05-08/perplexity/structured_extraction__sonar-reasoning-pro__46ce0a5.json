@@ -1,0 +1,460 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.1.1",
+  "git_sha": "46ce0a5d395e6bff63fdaca464cee36761f61573",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "perplexity",
+    "model_id": "sonar-reasoning-pro",
+    "model_version_hint": null,
+    "model_class": "reasoning"
+  },
+  "task": {
+    "name": "structured_extraction",
+    "dataset_version": "synthetic-invoice-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "started_at": "2026-05-08T15:11:05.775869+00:00",
+  "completed_at": "2026-05-08T15:25:04.730026+00:00",
+  "instances": [
+    {
+      "instance_id": "INV-1000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as a JSON object. Let me identify the required fields from the invoice:\n\n- invoice_number: \"INV-1000\"\n- date: \"2026-11-04\" (already in YYYY-MM-DD format)\n- vendor: \"Acme Corporation\"\n- total_usd: 7441.35 (the total is $7441.35, so I need to extract just the number)\n\nThe user wants ONLY the JSON object with no prose, code fences, or commentary.\n\n```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```\n\nWait, they said \"Output ONLY the JSON object. No prose, no code fences, no commentary.\" So I shouldn't use code fences. Let me just output the JSON directly.\n</think>\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}",
+              "input_tokens": 104,
+              "output_tokens": 252,
+              "cost_usd": 0.002224,
+              "latency_seconds": 3.661179207963869,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1420,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as a JSON object. Looking at the invoice:\n\nINVOICE\n==================\nNumber: INV-1000\nDate:   2026-11-04\nVendor: Acme Corporation\nTotal:  $7441.35\n==================\n\nRequired fields:\n- invoice_number (string): \"INV-1000\"\n- date (string in YYYY-MM-DD format): \"2026-11-04\"\n- vendor (string): \"Acme Corporation\"\n- total_usd (number): 7441.35\n\nThe user explicitly stated: \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nThe previous response failed validation with \"json parse error at line 1 col 1: Expecting value\" - this suggests the JSON parser couldn't read it. This might be because the code fences (```json and ```) were included, which would prevent the JSON parser from parsing the actual JSON content.\n\nSo I need to output ONLY valid JSON with no markdown code fences, no explanatory text before or after, nothing else.\n\n```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```\n\nActually, wait - the user said \"No prose, no code fences\" - so I should NOT include the ```json markers. I should just output the raw JSON.\n\nLet me output just the JSON object without code fences:\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n\nThat's valid JSON. Let me double-check the values:\n- invoice_number: \"INV-1000\" \u2713\n\n\n- date: \"2026-11-04\" \u2713 (already in YYYY-MM-DD format)\n- vendor: \"Acme Corporation\" \u2713\n- total_usd: 7441.35 \u2713 (number, not string)\n\nThis should be correct.\n</think>\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}",
+              "input_tokens": 394,
+              "output_tokens": 499,
+              "cost_usd": 0.0047799999999999995,
+              "latency_seconds": 6.336883916053921,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 3337,
+              "output": "<think>\nThe user is saying my JSON output failed to parse. The error \"json parse error at line 1 col 1: Expecting value\" suggests that there's an issue with the first character of the output.\n\nLooking at my previous responses, I provided:\n```\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```\n\nThis is valid JSON. The error message is strange. Let me think about what could cause \"Expecting value\" at line 1 col 1...\n\nOne possibility is that there are invisible characters or formatting issues. Another possibility is that the parser is having trouble with the way the JSON is being presented.\n\nWait, I notice in my previous responses I may have included extra whitespace or the think tags might have been interfering. Let me check:\n\nIn the previous attempts, I put the JSON after a `<think>` block. Perhaps the system is having trouble distinguishing the JSON from the thinking process?\n\nOr perhaps there's something about the formatting in the system output that's causing issues.\n\nLet me try outputting the JSON with absolutely no extra characters, no whitespace before it, and in the most basic format possible. I'll make sure it's completely valid JSON with no extraneous content.\n\nThe JSON object should be:\n```json\n{\"invoice_number\":\"INV-1000\",\"date\":\"2026-11-04\",\"vendor\":\"Acme Corporation\",\"total_usd\":7441.35}\n```\n\nOr with formatting:\n```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```\n\nBoth are valid. Let me try the compact format to ensure there are no whitespace issues.\n\nActually, looking back at the instruction: \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\n\nThe instructions are clear\u2014I need to strip away the code fences entirely and deliver just the raw JSON in a single compact line to eliminate any potential whitespace parsing problems.\n</think>\n\n{\"invoice_number\":\"INV-1000\",\"date\":\"2026-11-04\",\"vendor\":\"Acme Corporation\",\"total_usd\":7441.35}",
+              "input_tokens": 930,
+              "output_tokens": 491,
+              "cost_usd": 0.005788,
+              "latency_seconds": 7.163842582842335,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.012792,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "<think>\nThe user is asking me to extract specific fields from an invoice and output them as a JSON object. Let me parse the invoice data:\n\nFrom the invoice:\n- Number: INV-1000\n- Date: 2026-11-04\n- Vendor: Acme Corporation\n- Total: $7441.35\n\nRequired fields:\n- invoice_number (string): \"INV-1000\"\n- date (string in YYYY-MM-DD format): \"2026-11-04\"\n- vendor (string): \"Acme Corporation\"\n- total_usd (number): 7441.35\n\nThe user wants ONLY the JSON object with no prose, code fences, or commentary.\n\n```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```\n\nWait, they said \"Output ONLY the JSON object. No prose, no code fences, no commentary.\" So I should not include the markdown code fence with \"json\". Let me just output the raw JSON object.\n</think>\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}",
+              "input_tokens": 104,
+              "output_tokens": 285,
+              "cost_usd": 0.0024879999999999998,
+              "latency_seconds": 4.017492959043011,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1520,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as JSON. Looking at the invoice provided:\n\nINVOICE\n==================\nNumber: INV-1000\nDate:   2026-11-04\nVendor: Acme Corporation\nTotal:  $7441.35\n==================\n\nRequired fields:\n- invoice_number (string)\n- date (string in YYYY-MM-DD format)\n- vendor (string)\n- total_usd (number)\n\nThe user says \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nThe previous response had a JSON parse error. Let me make sure I output valid JSON only, with no markdown formatting.\n\nThe JSON should be:\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n\nI should output this with no code fences, no prose, no commentary - just the raw JSON object.\n</think>\n\n```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```",
+              "input_tokens": 427,
+              "output_tokens": 267,
+              "cost_usd": 0.00299,
+              "latency_seconds": 4.015262040775269,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 2638,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as a JSON object. They've explicitly stated:\n- \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n- The previous responses had JSON parse errors\n\nLooking at the invoice:\n```\nINVOICE\n==================\nNumber: INV-1000\nDate:   2026-11-04\nVendor: Acme Corporation\nTotal:  $7441.35\n==================\n```\n\nRequired fields:\n- invoice_number (string): \"INV-1000\"\n- date (string in YYYY-MM-DD format): \"2026-11-04\"\n- vendor (string): \"Acme Corporation\"\n- total_usd (number): 7441.35\n\nThe issue with the previous responses appears to be:\n1. One had the markdown code fence ```json ... ``` which made it not valid plain JSON\n2. The validator is trying to parse JSON and encountering the code fence markers\n\nThe instruction says \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nSo I need to output just the raw JSON without any markdown formatting, without any text before or after it, and with no code fences.\n\nLet me output just the valid JSON:\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n\nThat should be valid JSON that a parser can read.\n</think>\n\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}",
+              "input_tokens": 732,
+              "output_tokens": 367,
+              "cost_usd": 0.004399999999999999,
+              "latency_seconds": 5.117039582924917,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.009878,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "<think>\nThe user is asking me to extract specific fields from an invoice and output them as a JSON object. Let me identify the required fields:\n\n1. invoice_number (string) - from \"Number: INV-1001\" \u2192 \"INV-1001\"\n2. date (string in YYYY-MM-DD format) - from \"Date: 2026-04-08\" \u2192 \"2026-04-08\"\n3. vendor (string) - from \"Vendor: Initech LLC\" \u2192 \"Initech LLC\"\n4. total_usd (number) - from \"Total: $7391.07\" \u2192 7391.07\n\nThe user wants ONLY the JSON object with no prose, code fences, or commentary.\n\nSo the output should be:\n```json\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n```\n\nBut wait, they said \"Output ONLY the JSON object. No prose, no code fences, no commentary.\" So I should not include the code fences (the triple backticks and \"json\" label).\n\nLet me output just the JSON object:\n\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n</think>\n\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}",
+              "input_tokens": 104,
+              "output_tokens": 352,
+              "cost_usd": 0.0030239999999999998,
+              "latency_seconds": 4.1228600409813225,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1658,
+              "output": "<think>\nThe user is saying my previous response failed JSON parse validation. Let me look at what I provided:\n\n```\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n```\n\nThe error says \"json parse error at line 1 col 1: Expecting value\" - this typically means the JSON parser encountered something unexpected at the very beginning.\n\nWait, looking at my response in the context - it seems like there might have been extra whitespace or something before the JSON that caused the parsing to fail. Let me make absolutely sure I output ONLY valid JSON with no extra characters, whitespace, or anything else before it.\n\nThe JSON object is valid:\n- \"invoice_number\": \"INV-1001\" (string)\n- \"date\": \"2026-04-08\" (string in YYYY-MM-DD format)\n- \"vendor\": \"Initech LLC\" (string)\n- \"total_usd\": 7391.07 (number)\n\nLet me output it cleanly with no extra characters, indentation issues, or anything else.\n</think>\n\n```json\n{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}\n```",
+              "input_tokens": 494,
+              "output_tokens": 284,
+              "cost_usd": 0.00326,
+              "latency_seconds": 4.5635237919632345,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 2900,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as JSON. They've indicated that my previous attempts failed JSON validation with \"json parse error at line 1 col 1: Expecting value\".\n\nThis error typically occurs when:\n1. There are non-JSON characters before the JSON starts\n2. The parser encounters something other than a valid JSON value at the beginning\n3. There's extra whitespace, formatting, or markdown syntax\n\nThe user was very clear: \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nIn my previous attempt, I apparently included code fences (```json ... ```) which would cause a parse error because the parser would encounter the backticks first instead of the JSON opening brace.\n\nThe correct output should be absolutely minimal - just the raw JSON object with no markdown, no code fences, no extra anything.\n\nLet me extract the fields:\n- invoice_number: \"INV-1001\" (from \"Number: INV-1001\")\n- date: \"2026-04-08\" (from \"Date: 2026-04-08\", already in YYYY-MM-DD format)\n- vendor: \"Initech LLC\" (from \"Vendor: Initech LLC\")\n- total_usd: 7391.07 (from \"Total: $7391.07\")\n\nThe raw JSON object with no formatting, no code fences, no markdown:\n\n{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}\n\nThis is valid JSON. Let me verify:\n- It starts with { (opening brace)\n- All strings are properly quoted\n- The number 7391.07 is unquoted (correct for JSON)\n- All colons and commas are in place\n- It ends with } (closing brace)\n\nThis should parse correctly.\n</think>\n\n{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}",
+              "input_tokens": 816,
+              "output_tokens": 425,
+              "cost_usd": 0.005032,
+              "latency_seconds": 5.793757292209193,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.011316,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "<think>\nThe user is asking me to extract specific fields from an invoice and output them as a JSON object. Let me identify the required information:\n\nFrom the invoice:\n- invoice_number: \"INV-1001\"\n- date: \"2026-04-08\" (already in YYYY-MM-DD format)\n- vendor: \"Initech LLC\"\n- total_usd: 7391.07 (need to remove the $ sign and convert to number)\n\nThe user wants ONLY the JSON object, no prose, no code fences, no commentary.\n\nSo the output should be:\n\n```json\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n```\n\nBut they said \"Output ONLY the JSON object. No prose, no code fences, no commentary.\" - so no markdown code fences. I should just output the raw JSON.\n</think>\n\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}",
+              "input_tokens": 104,
+              "output_tokens": 252,
+              "cost_usd": 0.002224,
+              "latency_seconds": 3.692372875055298,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1421,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as JSON. They've indicated that my previous response failed JSON parsing. Let me look at what they're asking for:\n\nRequired fields:\n- invoice_number (string): \"INV-1001\"\n- date (string in YYYY-MM-DD format): \"2026-04-08\"\n- vendor (string): \"Initech LLC\"\n- total_usd (number): 7391.07\n\nThe user explicitly says \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nThey also say the previous response failed validation with \"json parse error at line 1 col 1: Expecting value\" - this suggests the JSON wasn't valid.\n\nThe issue is likely that I included markdown code fences (```json and ```). The user said no code fences. They want raw JSON only.\n\nLet me output just the valid JSON without any markdown:\n\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n\nThis is valid JSON. No markdown, no prose, just the JSON object.\n</think>\n\n{\"invoice_number\": \"INV-1001\", \"date\": \"2026-04-08\", \"vendor\": \"Initech LLC\", \"total_usd\": 7391.07}",
+              "input_tokens": 394,
+              "output_tokens": 297,
+              "cost_usd": 0.003164,
+              "latency_seconds": 3.764167500194162,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 2687,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice into a JSON object. They've indicated that my previous responses failed JSON validation with \"json parse error at line 1 col 1: Expecting value\".\n\nThis error occurs when the parser expects a JSON value but encounters something else at the beginning. Let me think about what could cause this:\n\n1. Extra whitespace or newlines before the JSON\n2. A thinking tag or other non-JSON content before the JSON\n3. Encoding issues\n4. The parser not being able to read the first character as the start of JSON\n\nLooking at my previous responses, I see that I included `<think>` tags before the JSON. That's the problem! The user wants ONLY the JSON object - no thinking process, no tags, nothing else.\n\nThe invoice data is:\n- invoice_number: \"INV-1001\"\n- date: \"2026-04-08\"\n- vendor: \"Initech LLC\"\n- total_usd: 7391.07\n\nI need to output ONLY valid JSON with no other content whatsoever. No XML tags, no markdown, no prose. Just the raw JSON.\n\nLet me make sure this is valid JSON:\n```\n{\"invoice_number\": \"INV-1001\", \"date\": \"2026-04-08\", \"vendor\": \"Initech LLC\", \"total_usd\": 7391.07}\n```\n\nThis should be valid. The issue with my previous attempts was likely the `<think>` tags included before the JSON.\n</think>\n\n{\"invoice_number\": \"INV-1001\", \"date\": \"2026-04-08\", \"vendor\": \"Initech LLC\", \"total_usd\": 7391.07}",
+              "input_tokens": 728,
+              "output_tokens": 356,
+              "cost_usd": 0.004304,
+              "latency_seconds": 5.213112832978368,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.009692,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "<think>\nThe user is asking me to extract specific fields from an invoice and output them as a JSON object. Let me identify the required fields:\n\n1. invoice_number (string) - from \"Number: INV-1002\" \u2192 \"INV-1002\"\n2. date (string in YYYY-MM-DD format) - from \"Date: 2026-11-24\" \u2192 \"2026-11-24\"\n3. vendor (string) - from \"Vendor: Globex Inc.\" \u2192 \"Globex Inc.\"\n4. total_usd (number) - from \"Total: $5945.88\" \u2192 5945.88\n\nThe user wants ONLY the JSON object with no prose, code fences, or commentary.\n\n```json\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}\n```\n\nWait, the user says \"Output ONLY the JSON object. No prose, no code fences, no commentary.\" - so I should not include the markdown code fence (```json ... ```). I should just provide the raw JSON object.\n</think>\n\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}",
+              "input_tokens": 104,
+              "output_tokens": 301,
+              "cost_usd": 0.002616,
+              "latency_seconds": 3.4163937920238823,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1516,
+              "output": "<think>\nThe user is telling me that my previous response failed JSON parsing. Let me look at what I provided:\n\n```\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}\n```\n\nThe error says \"json parse error at line 1 col 1: Expecting value\" - this suggests the JSON parser is having trouble at the very beginning.\n\nWait, looking back at my previous response - I see I included markdown code fences (```json) but the user explicitly said \"No prose, no code fences, no commentary.\" However, looking at what I actually output, I think I may have included some text before the JSON or something went wrong.\n\nLet me reconsider - the error \"Expecting value\" at line 1 col 1 typically means there's something before the JSON object that's not valid JSON. This could be:\n1. Extra whitespace/newlines before the {\n2. Some text before the JSON\n3. Invalid characters\n\nThe safest approach is to provide just the pure JSON with no extra characters, whitespace before it, or anything else. Let me make sure I start immediately with the opening brace.\n\nActually, re-reading the instructions: \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nI should output literally just:\n```\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}\n```\n\nWith no markdown code fences, no extra text before or after. Let me make absolutely sure there's nothing before the opening brace and nothing after the closing brace.\n</think>\n\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}",
+              "input_tokens": 443,
+              "output_tokens": 427,
+              "cost_usd": 0.004302,
+              "latency_seconds": 5.18540508300066,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 3337,
+              "output": "<think>\nThe user is showing me a conversation where they tried to extract JSON from an invoice, and they got a parsing error twice. Now they're asking me to help correct this.\n\nLooking at the invoice data:\n- Number: INV-1002\n- Date: 2026-11-24\n- Vendor: Globex Inc.\n- Total: $5945.88\n\nThe required fields are:\n- invoice_number (string)\n- date (string in YYYY-MM-DD format)\n- vendor (string)\n- total_usd (number)\n\nThe JSON should be:\n```json\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}\n```\n\nThe error \"json parse error at line 1 col 1: Expecting value\" suggests the parser is encountering invalid characters at the very start. This could happen if:\n1. There's a BOM (byte order mark)\n2. There are extra spaces/newlines before the `{`\n3. There's some other invisible character\n\nThe most likely issue is that there's whitespace or some other character before the JSON starts. I need to make absolutely certain there's nothing before the opening brace.\n\nLet me output just the raw JSON with no extra characters, ensuring it starts immediately with `{` and ends immediately with `}` with no trailing whitespace or characters.\n</think>\n\n```json\n{\"invoice_number\":\"INV-1002\",\"date\":\"2026-11-24\",\"vendor\":\"Globex Inc.\",\"total_usd\":5945.88}\n```",
+              "input_tokens": 907,
+              "output_tokens": 342,
+              "cost_usd": 0.00455,
+              "latency_seconds": 4.433959209127352,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.011468,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "<think>\nThe user is asking me to extract specific fields from an invoice and output them as a JSON object. Let me identify the required fields:\n\n1. invoice_number (string)\n2. date (string in YYYY-MM-DD format)\n3. vendor (string)\n4. total_usd (number)\n\nFrom the invoice provided:\n- Number: INV-1002 \u2192 invoice_number: \"INV-1002\"\n- Date: 2026-11-24 \u2192 date: \"2026-11-24\" (already in the required format)\n- Vendor: Globex Inc. \u2192 vendor: \"Globex Inc.\"\n- Total: $5945.88 \u2192 total_usd: 5945.88\n\nThe user explicitly states: \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nSo I should output just the JSON object without any additional text or code formatting.\n</think>\n\n```json\n{\n  \"invoice_number\": \"INV-1002\",\n  \"date\": \"2026-11-24\",\n  \"vendor\": \"Globex Inc.\",\n  \"total_usd\": 5945.88\n}\n```",
+              "input_tokens": 104,
+              "output_tokens": 239,
+              "cost_usd": 0.00212,
+              "latency_seconds": 3.1696156670805067,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1384,
+              "output": "<think>\nThe user is asking me to extract fields from an invoice and output them as a JSON object. Looking at the previous response, it had ```json and ``` code fences, which is causing the JSON parse error because the user explicitly said \"Output ONLY the JSON object. No prose, no code fences, no commentary.\"\n\nThe invoice details are:\n- Number: INV-1002 \u2192 invoice_number: \"INV-1002\"\n- Date: 2026-11-24 \u2192 date: \"2026-11-24\" (already in YYYY-MM-DD format)\n- Vendor: Globex Inc. \u2192 vendor: \"Globex Inc.\"\n- Total: $5945.88 \u2192 total_usd: 5945.88\n\nI need to output ONLY the JSON object without any code fences or additional text.\n</think>\n\n{\"invoice_number\": \"INV-1002\", \"date\": \"2026-11-24\", \"vendor\": \"Globex Inc.\", \"total_usd\": 5945.88}",
+              "input_tokens": 382,
+              "output_tokens": 212,
+              "cost_usd": 0.00246,
+              "latency_seconds": 4.428098666947335,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 2295,
+              "output": "<think>\nThe user is saying that my JSON output failed validation with the error \"json parse error at line 1 col 1: Expecting value\". This typically means there's something wrong at the very beginning of the JSON string.\n\nLet me look at what I provided:\n```\n{\"invoice_number\": \"INV-1002\", \"date\": \"2026-11-24\", \"vendor\": \"Globex Inc.\", \"total_usd\": 5945.88}\n```\n\nThis looks like valid JSON to me. The error \"Expecting value\" at line 1 col 1 usually means:\n1. Empty input\n2. Leading whitespace or invalid characters before the JSON\n3. The validator is receiving something other than the JSON itself\n\nWait, looking at my previous response more carefully - I see that I included `<think>` tags at the beginning! The validator is probably picking up those tags as part of the response before the JSON. The user asked for ONLY the JSON object, but my response included the thinking tags which aren't valid JSON.\n\nSo the issue is that I'm including the thinking process in my response. The user wants ONLY the JSON object with nothing else.\n\nLet me provide just the JSON object with no thinking tags, no whitespace before it, and nothing after it.\n</think>\n\n{\"invoice_number\": \"INV-1002\", \"date\": \"2026-11-24\", \"vendor\": \"Globex Inc.\", \"total_usd\": 5945.88}",
+              "input_tokens": 631,
+              "output_tokens": 309,
+              "cost_usd": 0.003734,
+              "latency_seconds": 4.412396832834929,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.008314,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.010576666666666667,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 4.420247749891132,
+    "mean_latency_p95": 6.460927716072183,
+    "std_tcot_success": 0.0,
+    "std_latency": 1.0529940736937928
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.15999829999999998,
+    "tripped": false
+  },
+  "stopped_early": null
+}

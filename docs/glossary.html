@@ -159,6 +159,22 @@ intervals.</p>
 ±-value is the population stddev of per-trial cost across the successful
 trials in this pass. Useful for spotting providers whose performance is
 unusually variable; expect 0 when fewer than two successes were observed.</p>
+<h3><code>model_class</code> chip</h3>
+<p>A small uppercase chip next to the model name flagging its architectural
+lineage:</p>
+<ul>
+<li><code>standard</code>: conventional chat completion model (rendered as a low-contrast
+  pill, since this is the default).</li>
+<li><code>reasoning</code>: model with explicit thinking-budget output tokens (OpenAI
+  o-series, DeepSeek R1, Perplexity Sonar Reasoning). Output token costs
+  include thinking tokens, so absolute <code>effective_TCoT</code> runs 5x to 20x
+  higher per task than non-reasoning peers.</li>
+<li><code>search</code>: retrieval-augmented (Perplexity Sonar non-reasoning variants).
+  Knowledge varies per query; per-search costs (~$5 per 1k searches) are
+  not yet captured in TCoT (v0.5 adds search-cost accounting).</li>
+</ul>
+<p>The cross-task ranking matrix groups rows by class so within-class ranking
+is the primary procurement signal. See methodology s2.7.</p>
 <h2>Concepts in the methodology</h2>
 <h3>TCoT (Total Cost of Task)</h3>
 <p>The cost to <em>attempt</em> one task instance end-to-end, including every retry.
