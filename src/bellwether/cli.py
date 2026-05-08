@@ -25,17 +25,47 @@ from bellwether.providers.anthropic import AnthropicAdapter
 from bellwether.providers.google import GoogleAdapter
 from bellwether.providers.openai import OpenAIAdapter
 from bellwether.runner import get_git_state, run_task_for_provider
+from bellwether.tasks.function_call_routing import FunctionCallRoutingTask
 from bellwether.tasks.structured_extraction import StructuredExtractionTask
+from bellwether.tasks.synthetic_rag import SyntheticRagTask
 
-# (provider_name, adapter_class, default_model_id)
-_PROVIDER_REGISTRY: dict[str, tuple[type, str]] = {
-    "anthropic": (AnthropicAdapter, "claude-sonnet-4-6"),
-    "openai": (OpenAIAdapter, "gpt-4o"),
-    "google": (GoogleAdapter, "gemini-2.5-flash-lite"),
+# Each entry: alias -> (adapter_class, provider_id, model_id).
+# The provider-name aliases ('anthropic', 'openai', 'google') resolve to the
+# default model; specific model_ids resolve to that exact model. This lets
+# `--provider all` iterate all distinct (provider, model) entries while
+# `--provider anthropic` keeps the v0.1 ergonomics of "the default Anthropic".
+_PROVIDER_REGISTRY: dict[str, tuple[type, str, str]] = {
+    # Anthropic
+    "anthropic": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6"),
+    "claude-sonnet-4-6": (AnthropicAdapter, "anthropic", "claude-sonnet-4-6"),
+    "claude-haiku-4-5": (AnthropicAdapter, "anthropic", "claude-haiku-4-5"),
+    "claude-opus-4-7": (AnthropicAdapter, "anthropic", "claude-opus-4-7"),
+    # OpenAI
+    "openai": (OpenAIAdapter, "openai", "gpt-4o"),
+    "gpt-4o": (OpenAIAdapter, "openai", "gpt-4o"),
+    "gpt-4o-mini": (OpenAIAdapter, "openai", "gpt-4o-mini"),
+    # Google
+    "google": (GoogleAdapter, "google", "gemini-2.5-flash-lite"),
+    "gemini-2.5-flash-lite": (GoogleAdapter, "google", "gemini-2.5-flash-lite"),
+    "gemini-2.5-flash": (GoogleAdapter, "google", "gemini-2.5-flash"),
+    "gemini-2.5-pro": (GoogleAdapter, "google", "gemini-2.5-pro"),
 }
+
+# Provider-name aliases that should NOT be iterated under `--provider all`
+# (they are duplicates of model-id keys). The remaining keys are the canonical
+# distinct (provider, model) pairs.
+_PROVIDER_ALIAS_NAMES: frozenset[str] = frozenset({"anthropic", "openai", "google"})
+
+
+def _all_distinct_models() -> list[tuple[str, tuple[type, str, str]]]:
+    """Return the registry entries that are NOT provider-name aliases."""
+    return [(k, v) for k, v in _PROVIDER_REGISTRY.items() if k not in _PROVIDER_ALIAS_NAMES]
+
 
 _TASK_REGISTRY: dict[str, type] = {
     "structured_extraction": StructuredExtractionTask,
+    "function_call_routing": FunctionCallRoutingTask,
+    "synthetic_rag": SyntheticRagTask,
 }
 
 
@@ -128,8 +158,9 @@ def _load_dotenv_if_present() -> None:
 
 def _cmd_list(args: argparse.Namespace) -> int:
     if args.kind == "providers":
-        for name, (cls, default_model) in _PROVIDER_REGISTRY.items():
-            print(f"{name}: {cls.__name__} (default model: {default_model})")
+        for name, (cls, prov_id, model_id) in _PROVIDER_REGISTRY.items():
+            tag = " [alias]" if name in _PROVIDER_ALIAS_NAMES else ""
+            print(f"{name}: {cls.__name__} -> {prov_id}/{model_id}{tag}")
     elif args.kind == "tasks":
         for name in _TASK_REGISTRY:
             print(name)
@@ -193,7 +224,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
         return 2
 
     selected_providers = (
-        list(_PROVIDER_REGISTRY.items())
+        _all_distinct_models()
         if args.provider == "all"
         else [(args.provider, _PROVIDER_REGISTRY[args.provider])]
     )
@@ -211,10 +242,10 @@ def _cmd_run(args: argparse.Namespace) -> int:
     print(f"git_sha: {git_sha[:7]} dirty: {git_dirty}", file=sys.stderr)
 
     for task_name, task_cls in selected_tasks:
-        for prov_name, (adapter_cls, default_model) in selected_providers:
+        for prov_name, (adapter_cls, prov_id, model_id) in selected_providers:
             if cost_tracker.tripped:
                 break
-            adapter = adapter_cls(provider_id=prov_name, model_id=default_model)
+            adapter = adapter_cls(provider_id=prov_id, model_id=model_id)
             task = task_cls(n_instances=args.instances, seed=args.seed)
             try:
                 record = run_task_for_provider(

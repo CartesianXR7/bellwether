@@ -55,13 +55,18 @@ def test_lookup_raises_for_missing_entry():
 
 
 def test_pricing_table_has_v0_entries():
-    """v0 ships with one model per provider populated. Verify shape, not values
-    (values themselves need human verification against provider pricing pages
-    before publish; see comment in pricing.py)."""
+    """v0.3 ships with multiple models per provider populated. Verify shape,
+    not values (values are verified against provider pricing pages and
+    LiteLLM's catalog; see comment block at the top of pricing.py)."""
     expected_keys = {
         ("anthropic", "claude-sonnet-4-6"),
+        ("anthropic", "claude-haiku-4-5"),
+        ("anthropic", "claude-opus-4-7"),
         ("openai", "gpt-4o"),
+        ("openai", "gpt-4o-mini"),
         ("google", "gemini-2.5-flash-lite"),
+        ("google", "gemini-2.5-flash"),
+        ("google", "gemini-2.5-pro"),
     }
     assert set(PRICING_TABLE.keys()) == expected_keys
     for key, entry in PRICING_TABLE.items():
@@ -69,3 +74,13 @@ def test_pricing_table_has_v0_entries():
         assert entry.output_per_million_usd > 0, f"{key} output price must be positive"
         assert entry.as_of, f"{key} missing as_of date"
         assert entry.source_url.startswith("http"), f"{key} source_url must be a URL"
+
+
+def test_output_pricing_at_least_input_pricing_for_paid_tier():
+    """Sanity: every modern API charges more for output tokens than input.
+    If a row inverts, that is almost certainly a paste error in the table."""
+    for key, entry in PRICING_TABLE.items():
+        assert entry.output_per_million_usd >= entry.input_per_million_usd, (
+            f"{key}: output ({entry.output_per_million_usd}) cheaper than "
+            f"input ({entry.input_per_million_usd}); paste error?"
+        )

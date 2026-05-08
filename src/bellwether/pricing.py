@@ -44,6 +44,7 @@ PRICING_TABLE: dict[tuple[str, str], Pricing] = {
     # Wrong pricing => wrong effective_TCoT => the leaderboard misranks.
     # source_url + as_of fields are the audit trail per METHODOLOGY s2.6.
     # ============================================================
+    # --- Anthropic ---
     ("anthropic", "claude-sonnet-4-6"): Pricing(
         provider="anthropic",
         model="claude-sonnet-4-6",
@@ -52,6 +53,23 @@ PRICING_TABLE: dict[tuple[str, str], Pricing] = {
         as_of="2026-05-05",
         source_url="https://platform.claude.com/docs/en/docs/about-claude/pricing",
     ),
+    ("anthropic", "claude-haiku-4-5"): Pricing(
+        provider="anthropic",
+        model="claude-haiku-4-5",
+        input_per_million_usd=1.00,
+        output_per_million_usd=5.00,
+        as_of="2026-05-07",
+        source_url="https://platform.claude.com/docs/en/docs/about-claude/pricing",
+    ),
+    ("anthropic", "claude-opus-4-7"): Pricing(
+        provider="anthropic",
+        model="claude-opus-4-7",
+        input_per_million_usd=5.00,
+        output_per_million_usd=25.00,
+        as_of="2026-05-07",
+        source_url="https://platform.claude.com/docs/en/docs/about-claude/pricing",
+    ),
+    # --- OpenAI ---
     ("openai", "gpt-4o"): Pricing(
         provider="openai",
         model="gpt-4o",
@@ -60,12 +78,37 @@ PRICING_TABLE: dict[tuple[str, str], Pricing] = {
         as_of="2026-05-05",
         source_url="https://openai.com/api/pricing/",
     ),
+    ("openai", "gpt-4o-mini"): Pricing(
+        provider="openai",
+        model="gpt-4o-mini",
+        input_per_million_usd=0.15,
+        output_per_million_usd=0.60,
+        as_of="2026-05-07",
+        source_url="https://openai.com/api/pricing/",
+    ),
+    # --- Google ---
     ("google", "gemini-2.5-flash-lite"): Pricing(
         provider="google",
         model="gemini-2.5-flash-lite",
         input_per_million_usd=0.10,
         output_per_million_usd=0.40,
         as_of="2026-05-05",
+        source_url="https://ai.google.dev/pricing",
+    ),
+    ("google", "gemini-2.5-flash"): Pricing(
+        provider="google",
+        model="gemini-2.5-flash",
+        input_per_million_usd=0.30,
+        output_per_million_usd=2.50,
+        as_of="2026-05-07",
+        source_url="https://ai.google.dev/pricing",
+    ),
+    ("google", "gemini-2.5-pro"): Pricing(
+        provider="google",
+        model="gemini-2.5-pro",
+        input_per_million_usd=1.25,
+        output_per_million_usd=10.00,
+        as_of="2026-05-07",
         source_url="https://ai.google.dev/pricing",
     ),
 }
