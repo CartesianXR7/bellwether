@@ -85,10 +85,16 @@ class GoogleAdapter:
         raw_finish = candidate.finish_reason if candidate else None
         finish_name = raw_finish.name if raw_finish is not None else None
         usage = resp.usage_metadata
+        # Gemini 2.5 Pro / Flash thinking models can return None for
+        # candidates_token_count when the entire output budget was spent on
+        # internal thinking and no visible text was produced. Coerce to 0 so
+        # downstream cost arithmetic never sees None.
+        in_tok = (usage.prompt_token_count if usage else 0) or 0
+        out_tok = (usage.candidates_token_count if usage else 0) or 0
         return ProviderResponse(
             output_text=resp.text or "",
-            input_tokens=usage.prompt_token_count if usage else 0,
-            output_tokens=usage.candidates_token_count if usage else 0,
+            input_tokens=in_tok,
+            output_tokens=out_tok,
             finish_reason=_FINISH_MAP.get(finish_name, finish_name) if finish_name else None,
             latency_seconds=latency,
             error=None,

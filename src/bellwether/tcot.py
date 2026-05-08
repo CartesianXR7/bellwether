@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from statistics import mean, median, quantiles
+from statistics import mean, median, quantiles, stdev
 
 from bellwether.taxonomy import FailureMode
 
@@ -72,7 +72,13 @@ class InstanceResult:
 
 @dataclass(frozen=True)
 class AggregateMetrics:
-    """Per (provider x task) aggregates over N instances. METHODOLOGY s2.3."""
+    """Per (provider x task) aggregates over N instances. METHODOLOGY s2.3.
+
+    std fields are population stddev across the per-trial observations.
+    Per s7, mean +/- std reporting acknowledges that T=0 does not guarantee
+    determinism. std == 0.0 when there are fewer than 2 observations of the
+    relevant kind (cannot compute stddev; reported as 0 rather than NaN).
+    """
 
     n_instances: int
     n_successes: int
@@ -82,6 +88,8 @@ class AggregateMetrics:
     effective_tcot: float
     mean_latency_p50: float
     mean_latency_p95: float
+    std_tcot_success: float
+    std_latency: float
 
 
 def effective_tcot(
@@ -113,6 +121,13 @@ def _p95(values: list[float]) -> float:
     return quantiles(values, n=100, method="inclusive")[94]
 
 
+def _std_or_zero(values: list[float]) -> float:
+    """Population stddev; returns 0.0 if fewer than 2 samples (avoids NaN)."""
+    if len(values) < 2:
+        return 0.0
+    return stdev(values)
+
+
 def aggregate(results: list[InstanceResult]) -> AggregateMetrics:
     """Aggregate per-instance results into headline metrics. METHODOLOGY s2.3."""
     if not results:
@@ -124,13 +139,17 @@ def aggregate(results: list[InstanceResult]) -> AggregateMetrics:
     n_succ = len(successes)
     success_rate = n_succ / n
 
-    mean_succ = mean(r.tcot for r in successes) if successes else 0.0
-    mean_fail = mean(r.tcot for r in failures) if failures else 0.0
+    success_costs = [r.tcot for r in successes]
+    failure_costs = [r.tcot for r in failures]
+    mean_succ = mean(success_costs) if success_costs else 0.0
+    mean_fail = mean(failure_costs) if failure_costs else 0.0
+    std_succ = _std_or_zero(success_costs)
     eff = effective_tcot(mean_succ, mean_fail, success_rate)
 
     latencies = [a.latency_seconds for r in results for a in r.attempts]
     p50 = median(latencies) if latencies else 0.0
     p95 = _p95(latencies)
+    std_lat = _std_or_zero(latencies)
 
     return AggregateMetrics(
         n_instances=n,
@@ -141,4 +160,6 @@ def aggregate(results: list[InstanceResult]) -> AggregateMetrics:
         effective_tcot=eff,
         mean_latency_p50=p50,
         mean_latency_p95=p95,
+        std_tcot_success=std_succ,
+        std_latency=std_lat,
     )

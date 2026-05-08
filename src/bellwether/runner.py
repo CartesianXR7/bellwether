@@ -364,9 +364,14 @@ def _build_retry_prompt(base_prompt: str, history: list[dict[str, str]]) -> str:
 
 
 def _compute_cost(response: ProviderResponse, pricing: Pricing) -> float:
+    # Defensive: if an adapter ever returns None for either count (e.g. a
+    # provider SDK returning a usage object with missing fields), coerce to 0
+    # so arithmetic never raises mid-bench.
+    in_tok = response.input_tokens or 0
+    out_tok = response.output_tokens or 0
     return (
-        response.input_tokens / 1_000_000 * pricing.input_per_million_usd
-        + response.output_tokens / 1_000_000 * pricing.output_per_million_usd
+        in_tok / 1_000_000 * pricing.input_per_million_usd
+        + out_tok / 1_000_000 * pricing.output_per_million_usd
     )
 
 
@@ -391,6 +396,8 @@ def _aggregate_to_dict(m: AggregateMetrics) -> dict[str, Any]:
         "effective_tcot_infinite": math.isinf(m.effective_tcot),
         "mean_latency_p50": m.mean_latency_p50,
         "mean_latency_p95": m.mean_latency_p95,
+        "std_tcot_success": m.std_tcot_success,
+        "std_latency": m.std_latency,
     }
 
 

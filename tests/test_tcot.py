@@ -117,6 +117,26 @@ def test_aggregate_all_successes():
     assert m.mean_tcot_success == pytest.approx(0.002)
     assert m.mean_tcot_failure == pytest.approx(0.0)
     assert m.effective_tcot == pytest.approx(0.002)
+    # std of [0.001, 0.002, 0.003] = 0.001
+    assert m.std_tcot_success == pytest.approx(0.001)
+
+
+def test_aggregate_std_zero_for_single_observation():
+    results = [InstanceResult("only", [_attempt(0.001)], True)]
+    m = aggregate(results)
+    assert m.std_tcot_success == 0.0
+    assert m.std_latency == 0.0
+
+
+def test_aggregate_std_latency_computed_across_attempts():
+    """std_latency aggregates ALL attempts, not just trial means."""
+    results = [
+        InstanceResult("a", [Attempt(0, 0, 0.0, 1.0), Attempt(0, 0, 0.0, 2.0)], True),
+        InstanceResult("b", [Attempt(0, 0, 0.0, 3.0)], True),
+    ]
+    m = aggregate(results)
+    # latencies = [1.0, 2.0, 3.0]; population stddev = 1.0
+    assert m.std_latency == pytest.approx(1.0)
 
 
 def test_aggregate_mixed_with_asymmetric_failure_cost():

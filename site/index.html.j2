@@ -14,6 +14,7 @@
     --dirty: #b54708; --dirty-bg: #fff8eb;
     --good: #117a3c; --good-bg: #e8f7ed;
     --bar-bg: #ececec; --bar-fill: #5a93d6;
+    --tied: #888;
     --prov-anthropic: #c9764e;
     --prov-openai: #10a37f;
     --prov-google: #4285f4;
@@ -26,35 +27,29 @@
       --dirty: #f7b955; --dirty-bg: #2a1c08;
       --good: #4ec97a; --good-bg: #0f2316;
       --bar-bg: #2a2a2a; --bar-fill: #4a73a8;
+      --tied: #777;
     }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-    line-height: 1.5; color: var(--fg); background: var(--bg);
-    margin: 0; padding: 1rem;
-  }
-  main, header, footer { max-width: 1080px; margin-left: auto; margin-right: auto; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; line-height: 1.5; color: var(--fg); background: var(--bg); margin: 0; padding: 1rem; }
+  main, header, footer { max-width: 1100px; margin-left: auto; margin-right: auto; }
 
-  /* Header */
   header { padding: 1.5rem 0 1rem 0; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
   h1 { margin: 0; font-size: 1.9rem; letter-spacing: -0.01em; }
   .tagline { color: var(--muted); margin: 0.25rem 0 0.75rem 0; font-size: 1.05rem; }
   nav a { color: var(--accent); text-decoration: none; margin-right: 1.25rem; font-weight: 500; }
   nav a:hover { text-decoration: underline; }
 
-  /* Intro */
   .intro { padding: 1rem 0 0.5rem 0; max-width: 760px; }
   .intro p { margin: 0.5rem 0; }
   .intro code, .intro-code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; background: rgba(127,127,127,0.12); padding: 0.05rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
 
-  /* Section + headings */
   h2 { margin: 2.5rem 0 0.5rem 0; font-size: 1.3rem; padding-bottom: 0.25rem; border-bottom: 1px solid var(--border); }
+  h2 a { color: inherit; text-decoration: none; }
+  h2 .task-link { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-left: 0.75rem; }
   h3 { margin: 1.25rem 0 0.5rem 0; font-size: 1rem; color: var(--muted); font-weight: 600; }
-  h4 { margin: 1rem 0 0.5rem 0; font-size: 0.92rem; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* Pass meta */
   .pass-meta {
     font-size: 0.85rem; color: var(--muted); display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem 1rem;
     margin: 1rem 0 0.5rem 0;
@@ -64,55 +59,51 @@
   .badge-dirty { color: var(--dirty); background: var(--dirty-bg); }
   .badge-clean { color: var(--good); background: var(--good-bg); }
 
-  /* Tables */
   .leaderboard-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
   th, td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  th {
-    font-weight: 600; font-size: 0.78rem; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.5px;
-    background: var(--surface); position: sticky; top: 0;
-  }
+  th { font-weight: 600; font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; background: var(--surface); }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.rank { font-weight: 600; color: var(--accent); width: 2rem; }
+  td.rank { font-weight: 600; color: var(--accent); width: 2.5rem; }
   tbody tr:hover { background: rgba(127,127,127,0.04); }
   tr.dirty { background: var(--dirty-bg); }
   tr.dirty:hover { background: var(--dirty-bg); }
   tr.dirty td.rank { color: var(--dirty); }
   tr.dirty td.rank::before { content: "*"; }
+  tr.tied td.rank::after { content: " ≈"; color: var(--tied); font-weight: normal; }
 
-  /* Provider color hints */
   .prov { display: inline-flex; align-items: center; gap: 0.5rem; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; }
   .prov-swatch { display: inline-block; width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
   .prov.provider-anthropic .prov-swatch { background: var(--prov-anthropic); }
   .prov.provider-openai .prov-swatch { background: var(--prov-openai); }
   .prov.provider-google .prov-swatch { background: var(--prov-google); }
 
-  /* Inline cost bar */
-  .cost-cell { min-width: 9rem; }
+  .cost-cell { min-width: 11rem; }
   .cost-bar-wrap { display: flex; align-items: center; gap: 0.6rem; }
   .cost-bar { flex: 0 0 60px; height: 6px; background: var(--bar-bg); border-radius: 3px; overflow: hidden; }
   .cost-bar > div { height: 100%; background: var(--bar-fill); border-radius: 3px; }
   .cost-value { font-variant-numeric: tabular-nums; }
+  .cost-std { color: var(--muted); font-size: 0.85em; margin-left: 0.15rem; }
 
-  /* Failure mode pills */
   .fm-list { display: flex; flex-wrap: wrap; gap: 0.25rem; }
   .fm-pill { display: inline-block; font-size: 0.72rem; padding: 0.1rem 0.4rem; border-radius: 10px; background: rgba(127,127,127,0.1); color: var(--muted); white-space: nowrap; }
   .fm-pill strong { color: var(--fg); margin-right: 0.2rem; }
 
-  /* Repro table */
-  .repro td.delta-up { color: var(--dirty); }
-  .repro td.delta-down { color: var(--good); }
-  .repro td.delta-flat { color: var(--muted); }
+  /* Cost calculator */
+  .calc { background: var(--accent-soft); border: 1px solid var(--accent); border-radius: 6px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+  .calc h3 { margin: 0 0 0.5rem 0; color: var(--accent); }
+  .calc label { display: block; margin-bottom: 0.5rem; font-size: 0.92rem; }
+  .calc input[type="number"] { font: inherit; padding: 0.3rem 0.5rem; width: 10rem; border: 1px solid var(--border-strong); border-radius: 3px; background: var(--surface); color: var(--fg); }
+  .calc-output { margin-top: 0.5rem; font-size: 0.88rem; color: var(--muted); }
+  .calc table { margin-top: 0.5rem; }
+  .calc th, .calc td { padding: 0.3rem 0.6rem; font-size: 0.85rem; }
 
-  /* Footer */
   footer { margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
   footer a { color: var(--accent); text-decoration: none; }
   footer a:hover { text-decoration: underline; }
 
   .empty { color: var(--muted); font-style: italic; padding: 2.5rem 0; text-align: center; }
 
-  /* Mobile */
   @media (max-width: 640px) {
     body { padding: 0.75rem; }
     h1 { font-size: 1.5rem; }
@@ -130,8 +121,9 @@
   <p class="tagline">The cost-and-failure-mode benchmark for LLM agents.</p>
   <nav>
     <a href="methodology.html">Methodology</a>
+    <a href="glossary.html">Glossary</a>
     <a href="https://github.com/cartesianxr7/bellwether">GitHub</a>
-    <a href="https://github.com/cartesianxr7/bellwether/tree/main/results">Raw results</a>
+    <a href="https://pypi.org/project/bellwether/">PyPI</a>
   </nav>
 </header>
 
@@ -148,10 +140,13 @@
     Validation is machine-checkable (no LLM-as-judge). Failures are classified
     into eight modes (refusal, confabulation, schema break, truncation, partial,
     off-task, timeout, error). One canonical prompt per task across all providers.
-    Temperature 0; N=3 runs per task instance.
+    Temperature 0; N=3 runs per task instance; cost-per-million-token pricing
+    verified per provider.
   </p>
   <p>
-    See the <a href="methodology.html">full methodology</a> for formulas, retry policy, validator contract, and reproducibility caveats.
+    See the <a href="methodology.html">full methodology</a> for formulas, retry
+    policy, validator contract, and reproducibility caveats. New to the metrics?
+    The <a href="glossary.html">glossary</a> defines each term.
   </p>
 </section>
 
@@ -161,57 +156,14 @@
 
 {% for task_name, view in tasks.items() %}
 
-<h2>Task: <code>{{ task_name }}</code></h2>
+<h2>
+  <a href="tasks/{{ task_name }}.html">Task: <code>{{ task_name }}</code></a>
+  <a class="task-link" href="tasks/{{ task_name }}.html">detailed page &rsaquo;</a>
+</h2>
 
-{% if view.reproducibility %}
-<h3>Reproducibility (latest pass vs previous)</h3>
-<div class="leaderboard-wrap">
-<table class="repro">
-  <thead>
-    <tr>
-      <th>Provider / Model</th>
-      <th class="num">Latest eff_TCoT</th>
-      <th class="num">Previous eff_TCoT</th>
-      <th class="num">Δ eff_TCoT</th>
-      <th class="num">Δ success rate</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for r in view.reproducibility %}
-    <tr>
-      <td>
-        <span class="prov provider-{{ r.provider }}">
-          <span class="prov-swatch"></span>{{ r.provider_model }}
-        </span>
-      </td>
-      <td class="num">${{ "%.5f"|format(r.latest_eff) if r.latest_eff is not none else "n/a" }}</td>
-      <td class="num">${{ "%.5f"|format(r.previous_eff) if r.previous_eff is not none else "n/a" }}</td>
-      <td class="num {% if r.delta_eff_pct is none %}delta-flat{% elif r.delta_eff_pct > 5 %}delta-up{% elif r.delta_eff_pct < -5 %}delta-down{% else %}delta-flat{% endif %}">
-        {% if r.delta_eff_pct is none %}n/a{% else %}{{ "%+.1f"|format(r.delta_eff_pct) }}%{% endif %}
-      </td>
-      <td class="num {% if r.delta_success_pp > 1 %}delta-down{% elif r.delta_success_pp < -1 %}delta-up{% else %}delta-flat{% endif %}">
-        {{ "%+.1f"|format(r.delta_success_pp) }} pp
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-</div>
-<p style="font-size: 0.85rem; color: var(--muted); margin-top: 0.5rem;">
-  Δ&nbsp;eff_TCoT colored: red if &gt;+5%, green if &lt;-5%, neutral otherwise. Δ&nbsp;success rate colored: red if dropped &gt;1pp, green if gained &gt;1pp.
-</p>
-{% endif %}
-
-{% for pass_data in view.passes %}
-<div class="pass-meta">
-  <strong>Pass {{ pass_data.started_at[:19].replace('T', ' ') }} UTC</strong>
-  <code>{{ pass_data.git_sha_short }}</code>
-  {% if pass_data.any_dirty %}
-  <span class="badge badge-dirty">dirty tree, s9 non-headline</span>
-  {% else %}
-  <span class="badge badge-clean">clean</span>
-  {% endif %}
-</div>
+{% if view.latest_clean %}
+{% set headline = view.latest_clean %}
+<h3>Latest clean pass &middot; {{ headline.started_at[:19].replace('T', ' ') }} UTC &middot; <code>{{ headline.git_sha_short }}</code></h3>
 
 <div class="leaderboard-wrap">
 <table>
@@ -222,13 +174,14 @@
       <th class="num">Success</th>
       <th class="num">effective_TCoT</th>
       <th class="num">Latency p50 / p95</th>
-      <th class="num">Attempts</th>
-      <th>Failure modes</th>
+      <th class="num">1st-try pass</th>
+      <th>Failure modes (this pass)</th>
     </tr>
   </thead>
   <tbody>
-    {% for entry in pass_data.entries %}
-    <tr {% if entry.git_dirty %}class="dirty"{% endif %}>
+    {% for entry in headline.entries %}
+    <tr {% if entry.git_dirty %}class="dirty"{% elif entry.tied_with_above %}class="tied"{% endif %}
+        data-eff-tcot="{{ entry.effective_tcot if not entry.effective_tcot_infinite else 'Infinity' }}">
       <td class="rank">{{ entry.rank }}</td>
       <td>
         <span class="prov provider-{{ entry.provider }}">
@@ -239,18 +192,13 @@
       <td class="num cost-cell">
         <div class="cost-bar-wrap">
           <span class="cost-value">
-            {% if entry.effective_tcot_infinite %}infinite{% else %}${{ "%.5f"|format(entry.effective_tcot) }}{% endif %}
+            {% if entry.effective_tcot_infinite %}infinite{% else %}${{ "%.5f"|format(entry.effective_tcot) }}{% endif %}{% if entry.std_tcot_success and not entry.effective_tcot_infinite %}<span class="cost-std">±${{ "%.5f"|format(entry.std_tcot_success) }}</span>{% endif %}
           </span>
           <div class="cost-bar"><div style="width: {{ entry.cost_bar_pct }}%"></div></div>
         </div>
       </td>
       <td class="num">{{ "%.2f"|format(entry.p50) }}s / {{ "%.2f"|format(entry.p95) }}s</td>
-      <td class="num">
-        {{ entry.n_attempts_total }}
-        <span style="color: var(--muted); font-size: 0.8em;">
-          ({{ "%.0f"|format(entry.first_attempt_pass_rate * 100) }}% 1st-try)
-        </span>
-      </td>
+      <td class="num">{{ "%.0f"|format(entry.first_attempt_pass_rate * 100) }}% ({{ entry.n_first_attempt_pass }}/{{ entry.n_trials }})</td>
       <td>
         {% if entry.failure_mode_counts %}
         <span class="fm-list">
@@ -267,7 +215,49 @@
   </tbody>
 </table>
 </div>
-{% endfor %}
+
+<p style="font-size: 0.82rem; color: var(--muted); margin: 0.5rem 0;">
+  Rank rows marked with &ldquo;&approx;&rdquo; are within {{ "%.0f"|format(0.05 * 100) }}% of the rank above on <code>effective_TCoT</code> &mdash; treat as tied within bench noise. See <a href="methodology.html#7-stochasticity-and-multi-run">methodology s7</a>.
+</p>
+
+<section class="calc">
+  <h3>Cost calculator</h3>
+  <label>
+    If I run this task
+    <input type="number" min="1" step="1" value="10000" id="calc-{{ task_name }}-n"
+           oninput="updateCalc('{{ task_name }}', this.value)">
+    times per month, monthly cost per provider:
+  </label>
+  <div class="calc-output">
+    <table>
+      <thead>
+        <tr><th>Provider / Model</th><th class="num">Monthly cost (USD)</th></tr>
+      </thead>
+      <tbody>
+        {% for entry in headline.entries %}
+        <tr>
+          <td><span class="prov provider-{{ entry.provider }}"><span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}</span></td>
+          <td class="num" data-calc-task="{{ task_name }}"
+              data-calc-eff="{{ entry.effective_tcot if not entry.effective_tcot_infinite else 'Infinity' }}">
+            {% if entry.effective_tcot_infinite %}n/a{% else %}${{ "%.2f"|format(entry.effective_tcot * 10000) }}{% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p style="margin: 0.5rem 0 0 0; font-size: 0.78rem;">
+      Computed from this pass's <code>effective_TCoT</code>. Real production cost will vary with prompt length, model snapshot drift, and retry distribution on your data.
+    </p>
+  </div>
+</section>
+
+{% endif %}
+
+{% if view.n_passes > 1 %}
+<p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
+  {{ view.n_passes }} bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/{{ task_name }}.html">detailed task page</a>.
+</p>
+{% endif %}
 
 {% endfor %}
 
@@ -282,9 +272,24 @@
   </p>
   <p>
     <a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a>
+    &middot; <a href="https://pypi.org/project/bellwether/">pip install bellwether</a>
     &middot; MIT license
   </p>
 </footer>
+
+<script>
+  function updateCalc(task, n) {
+    const monthly = parseFloat(n) || 0;
+    document.querySelectorAll('td[data-calc-task="' + task + '"]').forEach(function(td) {
+      const eff = parseFloat(td.dataset.calcEff);
+      if (isFinite(eff)) {
+        td.textContent = '$' + (eff * monthly).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      } else {
+        td.textContent = 'n/a';
+      }
+    });
+  }
+</script>
 
 </body>
 </html>
