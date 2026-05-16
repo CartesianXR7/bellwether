@@ -38,6 +38,11 @@
     --class-search-bg: #fef3c7;
     --class-standard-fg: #4a4a4a;
     --class-standard-bg: #f1f1f1;
+    /* Manila-folder tab palette: warm cream active tab tint that visually
+       connects to the panel below it. Inactive tabs read as muted paper. */
+    --tab-active-bg: #fdf8ef;
+    --tab-inactive-bg: rgba(127,127,127,0.06);
+    --tab-inactive-hover-bg: rgba(127,127,127,0.13);
   }
   [data-theme="dark"] {
     --fg: #e8e8e8; --bg: #0f0f0f; --surface: #181818; --muted: #999;
@@ -55,6 +60,9 @@
     --class-search-bg: #3a2a08;
     --class-standard-fg: #aaaaaa;
     --class-standard-bg: #2a2a2a;
+    --tab-active-bg: #1c1916;
+    --tab-inactive-bg: rgba(255,255,255,0.04);
+    --tab-inactive-hover-bg: rgba(255,255,255,0.09);
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -184,7 +192,9 @@
   .critique-on-section h3 { margin: 0 0 0.5rem 0; color: var(--accent); font-size: 1rem; }
   .critique-on-section .meta { font-size: 0.82rem; color: var(--muted); margin: 0 0 0.5rem 0; }
 
-  /* Per-task sections: heavier visual separation, accent stripe, headline color */
+  /* Per-task sections: heavier visual separation, accent stripe, headline color.
+     When nested inside a .tab-panel the panel itself owns the visual frame, so
+     the section-level separators are stripped to avoid double-borders. */
   .task-section { margin-top: 4.5rem; padding-top: 2.5rem; border-top: 2px solid var(--border-strong); position: relative; }
   .task-section::before { content: ""; position: absolute; left: -1rem; top: 2.5rem; bottom: 0; width: 3px; background: var(--purple); opacity: 0.6; }
   .task-section h2 { margin-top: 0; font-size: 1.55rem; font-weight: 700; color: var(--purple); padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
@@ -192,6 +202,84 @@
   .task-section h2 a code { color: var(--purple); background: transparent; padding: 0; }
   .task-section h2 a:hover { text-decoration: underline; }
   .task-section h2 .task-link { color: var(--accent); font-size: 0.85rem; font-weight: 500; margin-left: 0.75rem; }
+  .tab-panel .task-section { margin-top: 0; padding-top: 0; border-top: none; }
+  .tab-panel .task-section::before { display: none; }
+
+  /* Tab strip: manila-folder aesthetic. Active tab visually merges with the
+     panel below (no visible bottom border) so the metaphor is "you're looking
+     into THIS folder". Tab strip and panel share a 1px border at their seam
+     which the active tab overlaps via top:1px + matching bottom color. */
+  .tabs-wrap { margin: 1.5rem 0 0 0; }
+  .tabs-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--border-strong);
+    padding-left: 0.5rem;
+    margin-bottom: 0;
+    list-style: none;
+  }
+  .tab {
+    background: var(--tab-inactive-bg);
+    border: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-strong);
+    border-radius: 8px 8px 0 0;
+    padding: 0.55rem 1.1rem;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.92rem;
+    font-variant-numeric: tabular-nums;
+    position: relative;
+    top: 1px;
+    transition: background 0.15s ease, color 0.15s ease;
+    font: 600 0.92rem 'Montserrat', sans-serif;
+  }
+  .tab:hover { color: var(--fg); background: var(--tab-inactive-hover-bg); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .tab[aria-selected="true"] {
+    background: var(--tab-active-bg);
+    color: var(--purple);
+    border-color: var(--border-strong);
+    border-bottom: 1px solid var(--tab-active-bg);
+    z-index: 2;
+  }
+  .tab code { background: transparent; padding: 0; font-size: 0.92em; }
+  .tab[aria-selected="true"] code { color: var(--purple); }
+  .tab-panel {
+    background: var(--tab-active-bg);
+    border: 1px solid var(--border-strong);
+    border-top: none;
+    padding: 1.75rem 1.5rem 2rem 1.5rem;
+    margin-top: -1px;
+    border-radius: 0 8px 8px 8px;
+  }
+  .tab-panel[hidden] { display: none; }
+  .tab-panel > :first-child { margin-top: 0; }
+  .tab-panel .overview { margin: 0; }
+  .tab-panel .overview h2 { margin-top: 0; }
+
+  /* Roadmap tab: prominent v1 callout for what's coming next, then v0.5
+     items and recently-shipped highlights. OCR gets pole position because
+     it is the v1 procurement-question buyers ask about most often and was
+     deliberately not shipped in v0.5 (see METHODOLOGY s10). */
+  .roadmap-callout {
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    padding: 1rem 1.25rem;
+    margin: 0 0 1.5rem 0;
+  }
+  .roadmap-callout h3 { margin: 0 0 0.4rem 0; color: var(--accent); font-size: 1.05rem; }
+  .roadmap-callout .v-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--accent); background: var(--bg); border: 1px solid var(--accent); padding: 0.1rem 0.45rem; margin-left: 0.4rem; vertical-align: middle; letter-spacing: 0.5px; }
+  .roadmap-callout ul { margin: 0.4rem 0 0 1.25rem; padding: 0; font-size: 0.92rem; }
+  .roadmap-callout p { margin: 0.4rem 0 0 0; font-size: 0.92rem; }
+  .roadmap-section { margin-top: 1.5rem; }
+  .roadmap-section h3 { margin: 0 0 0.5rem 0; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.6px; font-family: 'Montserrat', sans-serif; }
+  .roadmap-section ul { margin: 0 0 0 1.25rem; padding: 0; font-size: 0.92rem; }
+  .roadmap-section li { margin: 0.35rem 0; }
+  .roadmap-section li code { font-size: 0.88em; }
+  .roadmap-footer { margin-top: 1.5rem; font-size: 0.82rem; color: var(--muted); }
 
   /* Theme toggle: minimal, far top right, fixed position */
   #theme-toggle {
@@ -265,10 +353,6 @@
   </p>
 </section>
 
-{% if not tasks %}
-<p class="empty">No bench results yet. Run <code>bellwether run</code> and rebuild the site.</p>
-{% endif %}
-
 {% if stats %}
 <section class="stats" aria-label="Bench summary">
   <div class="stat"><div class="num">{{ stats.n_tasks }}</div><div class="label">tasks benched</div></div>
@@ -278,6 +362,19 @@
 </section>
 {% endif %}
 
+<div class="tabs-wrap">
+<nav class="tabs-list" role="tablist" aria-label="Bench sections">
+  <button class="tab" role="tab" id="tab-overview" data-tab-target="overview" aria-controls="panel-overview" aria-selected="true" tabindex="0">Overview</button>
+  {% for task_name in tasks.keys() %}
+  <button class="tab" role="tab" id="tab-{{ task_name }}" data-tab-target="{{ task_name }}" aria-controls="panel-{{ task_name }}" aria-selected="false" tabindex="-1"><code>{{ task_name }}</code></button>
+  {% endfor %}
+  <button class="tab" role="tab" id="tab-roadmap" data-tab-target="roadmap" aria-controls="panel-roadmap" aria-selected="false" tabindex="-1">Roadmap</button>
+</nav>
+
+<section class="tab-panel" role="tabpanel" id="panel-overview" aria-labelledby="tab-overview">
+{% if not tasks %}
+<p class="empty">No bench results yet. Run <code>bellwether run</code> and rebuild the site.</p>
+{% endif %}
 {% if ranking and ranking.rows %}
 <section class="overview" aria-label="Cross-task ranking matrix">
   <h2>Cross-task ranking</h2>
@@ -315,9 +412,11 @@
   </div>
 </section>
 {% endif %}
+</section>
 
 {% for task_name, view in tasks.items() %}
 
+<section class="tab-panel" role="tabpanel" id="panel-{{ task_name }}" aria-labelledby="tab-{{ task_name }}" hidden>
 <section class="task-section">
 <h2>
   <a href="tasks/{{ task_name }}.html">Task: <code>{{ task_name }}</code></a>
@@ -484,7 +583,49 @@
 {% endif %}
 
 </section>
+</section>
 {% endfor %}
+
+<section class="tab-panel" role="tabpanel" id="panel-roadmap" aria-labelledby="tab-roadmap" hidden>
+  <div class="roadmap-callout">
+    <h3>Coming in v1: <code>document_extraction_ocr</code><span class="v-badge">v1</span></h3>
+    <p>Multimodal document OCR task on a redistribution-compatible open corpus (FUNSD, SROIE, CORD candidates, gated on license verification). Tests the procurement-question stressors that synthetic-render demos miss:</p>
+    <ul>
+      <li>Handwriting tolerance</li>
+      <li>Multi-column and table layouts</li>
+      <li>Scan artifacts: skew, noise, JPEG compression, low resolution</li>
+      <li>Mixed text + graphics; multi-page documents</li>
+    </ul>
+    <p>Same exact-field-match validator as <code>structured_extraction</code> so the delta between text-input and image-input isolates the OCR layer's per-provider contribution. Methodology bump 0.2 to 0.3 lands alongside: image-input pricing in <code>pricing.py</code>, <code>modality</code> field on the Task protocol, attempt-and-classify vision detection (no hardcoded <code>supports_vision</code>). See <a href="methodology.html#10-what-this-benchmark-does-not-measure-in-v0">METHODOLOGY s10</a> for why the synthetic-render shortcut was rejected.</p>
+  </div>
+
+  <div class="roadmap-section">
+    <h3>Coming in v0.5</h3>
+    <ul>
+      <li><strong>Async runner.</strong> Parallelize adapter calls across providers within a task. Cuts wall-clock roughly proportional to provider count.</li>
+      <li><strong>BYO task config.</strong> TOML schema plus a <code>ConfigDrivenTask</code> that loads <code>--task-config PATH</code>. Validator types: <code>json_field_match</code>, <code>exact_match</code>, <code>regex_match</code>, <code>schema_match</code>. Goal: bench your own prompts without writing Python.</li>
+      <li><strong>Plugin loader.</strong> <code>--plugins-dir DIR</code> loads tasks and providers from arbitrary paths. Prerequisite for the v1 hosted-run service.</li>
+      <li><strong>Bootstrap confidence intervals</strong> on <code>effective_TCoT</code> to replace the v0.3 5%-ratio tied-rank heuristic.</li>
+      <li><strong>N=5 default</strong> with bootstrap CI infrastructure in place.</li>
+      <li><strong>Search-cost accounting in TCoT</strong> for Perplexity Sonar entries. Per-search fees (about $5 per 1k) are currently excluded; v0.5 closes the gap.</li>
+      <li><strong>Tuned-prompt track formalization.</strong> Real contract for who tunes, against which split, to what convergence criterion. Renders as a "tuned delta" column.</li>
+      <li><strong>Historical leaderboard with trend lines.</strong> Per-provider <code>effective_TCoT</code> and <code>success_rate</code> across model snapshots, inline SVG sparklines.</li>
+    </ul>
+  </div>
+
+  <div class="roadmap-section">
+    <h3>Recently shipped</h3>
+    <ul>
+      <li><strong>v0.2 (this release):</strong> Critique-Pass evaluation track per <a href="methodology.html#13-critique-pass-evaluation-track-methodology-v02">METHODOLOGY s13</a>. Optional <code>--critique-pass</code> wraps each attempt with a locked single-shot self-revision step; twin-leaderboard reporting with per-model delta columns surfaces the cost-vs-accuracy tradeoff.</li>
+      <li><strong>v0.4:</strong> 27 model coverage across 6 providers, <code>model_class</code> field separating <span class="class-chip class-reasoning">reasoning</span> and <span class="class-chip class-search">search</span> from standard chat, OpenAI-compatible adapter generalization for xAI / Perplexity / OpenRouter.</li>
+      <li><strong>v0.3:</strong> 3 tasks (added <code>function_call_routing</code> and <code>synthetic_rag</code>), mean ± std reporting, tied-rank marker, per-task drill-down pages, cost calculator widget.</li>
+    </ul>
+  </div>
+
+  <p class="roadmap-footer">Full roadmap (including v1 scope, out-of-scope items, contribution guide) lives in <a href="https://github.com/cartesianxr7/bellwether/blob/main/ROADMAP.md"><code>ROADMAP.md</code></a> on GitHub.</p>
+</section>
+
+</div>
 
 </main>
 
@@ -520,6 +661,58 @@
     root.setAttribute('data-theme', next);
     localStorage.setItem('bw-theme', next);
   });
+
+  // Tab strip: ARIA-compliant selection + keyboard nav + URL hash deep-linking.
+  // Hash format is #tab/<id>. On load we honor the hash if present, else default
+  // to the first tab. Tabs degrade gracefully without JS: all panels remain
+  // visible because we don't set hidden until JS runs.
+  (function initTabs() {
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+    if (!tabs.length) return;
+    var panelIds = tabs.map(function(t) { return t.dataset.tabTarget; });
+
+    function activate(targetId, focus) {
+      tabs.forEach(function(t) {
+        var active = t.dataset.tabTarget === targetId;
+        t.setAttribute('aria-selected', active ? 'true' : 'false');
+        t.setAttribute('tabindex', active ? '0' : '-1');
+        if (active && focus) t.focus();
+      });
+      document.querySelectorAll('[role="tabpanel"]').forEach(function(p) {
+        p.hidden = p.id !== 'panel-' + targetId;
+      });
+    }
+
+    function fromHash() {
+      var m = (location.hash || '').match(/^#tab\/(.+)$/);
+      return m && panelIds.indexOf(m[1]) >= 0 ? m[1] : panelIds[0];
+    }
+
+    activate(fromHash(), false);
+
+    tabs.forEach(function(t, idx) {
+      t.addEventListener('click', function() {
+        var id = t.dataset.tabTarget;
+        activate(id, false);
+        history.replaceState(null, '', '#tab/' + id);
+      });
+      t.addEventListener('keydown', function(e) {
+        var dir = 0;
+        if (e.key === 'ArrowRight') dir = 1;
+        else if (e.key === 'ArrowLeft') dir = -1;
+        else if (e.key === 'Home') { activate(panelIds[0], true); history.replaceState(null, '', '#tab/' + panelIds[0]); e.preventDefault(); return; }
+        else if (e.key === 'End') { var last = panelIds[panelIds.length - 1]; activate(last, true); history.replaceState(null, '', '#tab/' + last); e.preventDefault(); return; }
+        if (!dir) return;
+        var next = (idx + dir + tabs.length) % tabs.length;
+        var id = tabs[next].dataset.tabTarget;
+        activate(id, true);
+        history.replaceState(null, '', '#tab/' + id);
+        e.preventDefault();
+      });
+    });
+
+    window.addEventListener('hashchange', function() { activate(fromHash(), false); });
+  })();
 </script>
 
 </body>
