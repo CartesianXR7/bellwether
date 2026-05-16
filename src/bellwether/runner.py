@@ -21,6 +21,7 @@ from pathlib import Path
 from typing import Any
 
 from bellwether import __methodology_version__, __version__
+from bellwether.critique import build_critique_followup_prompt
 from bellwether.guardrail import CostTracker
 from bellwether.pricing import PRICING_VERSION, Pricing, lookup
 from bellwether.protocols import Example, ProviderAdapter, ProviderResponse, Task, ValidationResult
@@ -97,6 +98,7 @@ def run_task_for_provider(
     output_dir: Path,
     timestamp_iso: str | None = None,
     call_delay_seconds: float = 0.0,
+    critique_pass: bool = False,
 ) -> dict[str, Any]:
     """Run one task across all instances against one provider, N runs each.
 
@@ -153,6 +155,7 @@ def run_task_for_provider(
                 pricing=pricing,
                 cost_tracker=cost_tracker,
                 rate_limit_fn=_rate_limit,
+                critique_pass=critique_pass,
             )
             instance_runs.append(run_record)
             if maybe_result is not None:
@@ -184,6 +187,7 @@ def run_task_for_provider(
             "pass_threshold": task.pass_threshold,
         },
         "n_runs_per_instance": n_runs,
+        "critique_pass": critique_pass,
         "started_at": started_at,
         "completed_at": completed_at,
         "instances": instance_records,
@@ -212,12 +216,18 @@ def _run_single_attempt_loop(
     pricing: Pricing,
     cost_tracker: CostTracker,
     rate_limit_fn: Callable[[], None] | None = None,
+    critique_pass: bool = False,
 ) -> tuple[dict[str, Any], InstanceResult | None]:
     """Run one (instance, run) up to max_attempts with retries per s3.
 
     Returns (run_json_record, instance_result_or_none). When the cost tracker
     trips before any attempt, instance_result is None (skipped) and the JSON
     record carries skipped_reason so the leaderboard is honest about gaps.
+
+    When critique_pass is True, each attempt has two adapter calls: leg A
+    produces an initial answer; leg B reviews and (per the canonical critique
+    prompt, s13.2) either repeats or corrects. Validator runs on leg B.
+    Cost, tokens, and latency are summed across both legs per s13.1.
     """
     base_prompt = task.canonical_prompt_template.format(**example.prompt_inputs)
     conversation_messages: list[dict[str, str]] = []
@@ -234,20 +244,50 @@ def _run_single_attempt_loop(
             rate_limit_fn()
 
         prompt = _build_retry_prompt(base_prompt, conversation_messages)
-        response = adapter.call(prompt, max_tokens=2048)
-        cost_usd = _compute_cost(response, pricing)
-        cost_tracker.charge(cost_usd)
+        leg_a = adapter.call(prompt, max_tokens=2048)
+        cost_a = _compute_cost(leg_a, pricing)
+        cost_tracker.charge(cost_a)
 
-        if response.error:
+        leg_b: ProviderResponse | None = None
+        cost_b = 0.0
+        if critique_pass and not leg_a.error and not cost_tracker.tripped:
+            if rate_limit_fn is not None:
+                rate_limit_fn()
+            critique_prompt = build_critique_followup_prompt(prompt, leg_a.output_text)
+            leg_b = adapter.call(critique_prompt, max_tokens=2048)
+            cost_b = _compute_cost(leg_b, pricing)
+            cost_tracker.charge(cost_b)
+
+        # The "effective" response is leg B when critique_pass produced one;
+        # otherwise leg A. Validator runs on this response. Token counts /
+        # cost / latency aggregate across both legs per s13.1.
+        if leg_b is not None:
+            effective_output = leg_b.output_text
+            effective_finish_reason = leg_b.finish_reason
+            effective_error = leg_a.error or leg_b.error
+        else:
+            effective_output = leg_a.output_text
+            effective_finish_reason = leg_a.finish_reason
+            effective_error = leg_a.error
+        total_input_tokens = (leg_a.input_tokens or 0) + (
+            (leg_b.input_tokens or 0) if leg_b else 0
+        )
+        total_output_tokens = (leg_a.output_tokens or 0) + (
+            (leg_b.output_tokens or 0) if leg_b else 0
+        )
+        total_cost = cost_a + cost_b
+        total_latency = leg_a.latency_seconds + (leg_b.latency_seconds if leg_b else 0.0)
+
+        if effective_error:
             validation = ValidationResult(
                 passed=False,
                 score=0.0,
-                failure_reason=f"provider error: {response.error[:120]}",
+                failure_reason=f"provider error: {effective_error[:120]}",
                 failure_modes=[FailureMode.ERROR],
             )
         else:
             try:
-                validation = task.validator(response.output_text, example.ground_truth)
+                validation = task.validator(effective_output, example.ground_truth)
             except Exception as exc:
                 validation = ValidationResult(
                     passed=False,
@@ -256,31 +296,51 @@ def _run_single_attempt_loop(
                     failure_modes=[FailureMode.ERROR],
                 )
 
-        attempt_records.append(
-            {
-                "attempt": attempt_idx + 1,
-                "prompt_chars": len(prompt),
-                "output": response.output_text,
-                "input_tokens": response.input_tokens,
-                "output_tokens": response.output_tokens,
-                "cost_usd": cost_usd,
-                "latency_seconds": response.latency_seconds,
-                "finish_reason": response.finish_reason,
-                "error": response.error,
-                "validation": {
-                    "passed": validation.passed,
-                    "score": validation.score,
-                    "failure_reason": validation.failure_reason,
-                    "failure_modes": [m.value for m in validation.failure_modes],
-                },
+        attempt_record: dict[str, Any] = {
+            "attempt": attempt_idx + 1,
+            "prompt_chars": len(prompt),
+            "output": effective_output,
+            "input_tokens": total_input_tokens,
+            "output_tokens": total_output_tokens,
+            "cost_usd": total_cost,
+            "latency_seconds": total_latency,
+            "finish_reason": effective_finish_reason,
+            "error": effective_error,
+            "validation": {
+                "passed": validation.passed,
+                "score": validation.score,
+                "failure_reason": validation.failure_reason,
+                "failure_modes": [m.value for m in validation.failure_modes],
+            },
+        }
+        if critique_pass:
+            attempt_record["critique"] = {
+                "pre_critique_output": leg_a.output_text,
+                "pre_critique_input_tokens": leg_a.input_tokens,
+                "pre_critique_output_tokens": leg_a.output_tokens,
+                "pre_critique_cost_usd": cost_a,
+                "pre_critique_latency_seconds": leg_a.latency_seconds,
+                "pre_critique_finish_reason": leg_a.finish_reason,
+                "pre_critique_error": leg_a.error,
+                "post_critique_input_tokens": leg_b.input_tokens if leg_b else None,
+                "post_critique_output_tokens": leg_b.output_tokens if leg_b else None,
+                "post_critique_cost_usd": cost_b if leg_b else None,
+                "post_critique_latency_seconds": (
+                    leg_b.latency_seconds if leg_b else None
+                ),
+                "post_critique_finish_reason": leg_b.finish_reason if leg_b else None,
+                "post_critique_error": leg_b.error if leg_b else None,
+                "critique_skipped_reason": (
+                    None if leg_b is not None else "leg_a_error_or_cost_guardrail"
+                ),
             }
-        )
+        attempt_records.append(attempt_record)
         attempts_for_metrics.append(
             Attempt(
-                input_tokens=response.input_tokens,
-                output_tokens=response.output_tokens,
-                cost_usd=cost_usd,
-                latency_seconds=response.latency_seconds,
+                input_tokens=total_input_tokens,
+                output_tokens=total_output_tokens,
+                cost_usd=total_cost,
+                latency_seconds=total_latency,
             )
         )
 
@@ -289,24 +349,28 @@ def _run_single_attempt_loop(
             if validation.passed
             else f"FAIL[{','.join(m.value for m in validation.failure_modes) or 'unknown'}]"
         )
+        critique_tag = " critique=on" if critique_pass else ""
         logger.info(
             f"  [{adapter.provider_id}/{adapter.model_id}] {task.name} {example.instance_id} "
-            f"run={run_idx} attempt={attempt_idx + 1} {outcome} "
-            f"({response.latency_seconds:.2f}s, ${cost_usd:.4f})"
+            f"run={run_idx} attempt={attempt_idx + 1}{critique_tag} {outcome} "
+            f"({total_latency:.2f}s, ${total_cost:.4f})"
         )
 
         final_validation = validation
-        final_response = response
+        # final_response carries the response used for downstream failure-mode
+        # derivation. When critique_pass is on, that is leg B (the validated
+        # output) when available; else leg A.
+        final_response = leg_b if leg_b is not None else leg_a
 
         if validation.passed:
             break
 
-        # Retry feedback per s3: schema/format level only. The validator's
-        # failure_reason is what we echo; if a validator emits content-level
-        # reasons that's a validator bug, not a runner concern.
+        # Retry feedback per s3: schema/format level only. Echo the effective
+        # output (post-critique when critique_pass is on, since that's what
+        # the validator saw).
         conversation_messages.append(
             {
-                "previous_output": response.output_text,
+                "previous_output": effective_output,
                 "failure_reason": validation.failure_reason or "validation failed",
             }
         )

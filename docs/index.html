@@ -173,6 +173,17 @@
   [data-theme="dark"] .ranking-matrix td.rank-2 { background: rgba(167, 139, 250, 0.13); }
   [data-theme="dark"] .ranking-matrix td.rank-3 { background: rgba(167, 139, 250, 0.06); }
 
+  /* Critique-Pass delta column on the critique-on leaderboard.
+     Positive = critique made it more expensive / better; negative = cheaper / worse.
+     Color follows the procurement reading: green when improving (success up,
+     cost down); red when degrading. Methodology s13.3. */
+  .delta-pos { color: var(--dirty); }
+  .delta-neg { color: var(--good); }
+  .delta-flat { color: var(--muted); }
+  .critique-on-section { margin: 2rem 0 0 0; padding: 1rem 1.25rem; background: var(--accent-soft); border: 1px solid var(--accent); }
+  .critique-on-section h3 { margin: 0 0 0.5rem 0; color: var(--accent); font-size: 1rem; }
+  .critique-on-section .meta { font-size: 0.82rem; color: var(--muted); margin: 0 0 0.5rem 0; }
+
   /* Per-task sections: heavier visual separation, accent stripe, headline color */
   .task-section { margin-top: 4.5rem; padding-top: 2.5rem; border-top: 2px solid var(--border-strong); position: relative; }
   .task-section::before { content: ""; position: absolute; left: -1rem; top: 2.5rem; bottom: 0; width: 3px; background: var(--purple); opacity: 0.6; }
@@ -1953,6 +1964,8 @@
 
 
 
+
+
 <p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
   6 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/structured_extraction.html">detailed task page</a>.
 </p>
@@ -3005,6 +3018,8 @@
     </p>
   </div>
 </section>
+
+
 
 
 
@@ -4125,6 +4140,8 @@
     </p>
   </div>
 </section>
+
+
 
 
 

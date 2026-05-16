@@ -113,6 +113,9 @@ def _entry_from_result(r: dict[str, Any]) -> dict[str, Any]:
         "std_latency": agg.get("std_latency", 0.0),
         "git_dirty": r["git_dirty"],
         "git_sha": r["git_sha"],
+        # critique_pass missing on pre-v0.2 result files; treat as False
+        # so legacy results stay in the critique-off track without re-run.
+        "critique_pass": bool(r.get("critique_pass", False)),
         "n_trials": attempt_m["n_trials"],
         "n_successes": agg["n_successes"],
         "n_attempts_total": attempt_m["n_attempts_total"],
@@ -154,22 +157,36 @@ def _annotate_pass(entries: list[dict[str, Any]]) -> None:
 
 
 def _passes_by_task(results: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
-    """Group results by (task_name, pass identified by started_at), ranked + annotated."""
-    grouped: dict[str, dict[str, list[dict[str, Any]]]] = defaultdict(lambda: defaultdict(list))
+    """Group results by (task_name, pass identified by (started_at, critique_pass)).
+
+    Pass-key includes `critique_pass` per METHODOLOGY s13.3 so the critique-off
+    baseline and critique-on track stay distinct even when a user runs both in
+    quick succession. Legacy result files (pre-v0.2) lack the field and default
+    to critique_pass=False, keeping the v0.1.x track byte-equivalent.
+    """
+    grouped: dict[str, dict[tuple[str, bool], list[dict[str, Any]]]] = defaultdict(
+        lambda: defaultdict(list)
+    )
     for r in results:
         if r.get("aggregate") is None:
             continue
-        grouped[r["task"]["name"]][r["started_at"]].append(_entry_from_result(r))
+        key = (r["started_at"], bool(r.get("critique_pass", False)))
+        grouped[r["task"]["name"]][key].append(_entry_from_result(r))
 
     output: dict[str, list[dict[str, Any]]] = {}
     for task_name, passes in grouped.items():
         sorted_passes = []
-        for started_at in sorted(passes.keys(), reverse=True):
-            entries = passes[started_at]
+        # Sort by started_at descending; within identical started_at, critique-off
+        # before critique-on for stable ordering (extremely rare tie).
+        for started_at, critique_pass in sorted(
+            passes.keys(), key=lambda k: (k[0], k[1]), reverse=True
+        ):
+            entries = passes[(started_at, critique_pass)]
             _annotate_pass(entries)
             sorted_passes.append(
                 {
                     "started_at": started_at,
+                    "critique_pass": critique_pass,
                     "git_sha_short": entries[0]["git_sha"][:7] if entries[0]["git_sha"] else "?",
                     "any_dirty": any(e["git_dirty"] for e in entries),
                     "entries": entries,
@@ -221,6 +238,54 @@ def _latest_clean_pass(passes: list[dict[str, Any]]) -> dict[str, Any] | None:
         if not p["any_dirty"]:
             return p
     return None
+
+
+def _critique_delta_rows(
+    off_pass: dict[str, Any] | None,
+    on_pass: dict[str, Any] | None,
+) -> list[dict[str, Any]]:
+    """Pair off and on entries by (provider, model). Compute per-model
+    `effective_TCoT` and `success_rate` deltas per METHODOLOGY s13.3.
+
+    Returns empty list when either pass is missing. Models present in only
+    one pass are excluded; the delta is meaningful only for paired observations.
+    A negative `delta_success_pp` is honestly reported per s13.3 (a model that
+    degrades correct answers under critique is the procurement signal).
+    """
+    if off_pass is None or on_pass is None:
+        return []
+    by_off = {(e["provider"], e["model"]): e for e in off_pass["entries"]}
+    by_on = {(e["provider"], e["model"]): e for e in on_pass["entries"]}
+    rows = []
+    for key in sorted(by_off.keys()):
+        if key not in by_on:
+            continue
+        off = by_off[key]
+        on = by_on[key]
+        if off["effective_tcot_infinite"] or on["effective_tcot_infinite"]:
+            delta_eff_pct = None
+        elif off["effective_tcot"] in (None, 0):
+            delta_eff_pct = None
+        else:
+            delta_eff_pct = (
+                (on["effective_tcot"] - off["effective_tcot"]) / off["effective_tcot"] * 100
+            )
+        rows.append(
+            {
+                "provider": off["provider"],
+                "model": off["model"],
+                "model_class": off["model_class"],
+                "off_effective_tcot": off["effective_tcot"],
+                "off_effective_tcot_infinite": off["effective_tcot_infinite"],
+                "off_success_rate": off["success_rate"],
+                "on_effective_tcot": on["effective_tcot"],
+                "on_effective_tcot_infinite": on["effective_tcot_infinite"],
+                "on_success_rate": on["success_rate"],
+                "delta_eff_pct": delta_eff_pct,
+                "delta_success_pp": (on["success_rate"] - off["success_rate"]) * 100,
+            }
+        )
+    return rows
 
 
 def _summary_stats(
@@ -332,10 +397,24 @@ def main() -> None:
 
     task_views: dict[str, dict[str, Any]] = {}
     for task_name, passes in tasks.items():
+        # Split passes by critique mode so the v0.1.x headline (critique-off)
+        # stays the procurement baseline per METHODOLOGY s13.3 and the
+        # critique-on track renders as an additional section with its own
+        # ranking plus a per-model delta pairing.
+        passes_off = [p for p in passes if not p["critique_pass"]]
+        passes_on = [p for p in passes if p["critique_pass"]]
+        latest_off = _latest_clean_pass(passes_off)
+        latest_on = _latest_clean_pass(passes_on)
         task_views[task_name] = {
             "passes": passes,
-            "latest_clean": _latest_clean_pass(passes),
-            "reproducibility": _reproducibility(passes),
+            "passes_off": passes_off,
+            "passes_on": passes_on,
+            "latest_clean": latest_off,
+            "latest_clean_critique_on": latest_on,
+            "critique_delta_rows": _critique_delta_rows(latest_off, latest_on),
+            # Reproducibility deltas are within-track only: comparing critique-off
+            # to critique-on is what `critique_delta_rows` does, not s9 repro.
+            "reproducibility": _reproducibility(passes_off),
             "failure_modes_aggregated": _aggregate_failure_modes_per_provider(passes),
             "n_passes": len(passes),
         }

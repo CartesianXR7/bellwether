@@ -221,6 +221,16 @@ def _build_parser() -> argparse.ArgumentParser:
         default=200,
         help="Minimum ms between API calls per (task, provider) for rate limiting. Default: 200.",
     )
+    run_p.add_argument(
+        "--critique-pass",
+        action="store_true",
+        help=(
+            "Enable the Critique-Pass evaluation track (METHODOLOGY s13). Each "
+            "attempt wraps a single self-revision step using the locked canonical "
+            "critique prompt; the post-critique output is what the validator "
+            "scores. Both legs count toward TCoT."
+        ),
+    )
 
     return parser
 
@@ -323,6 +333,8 @@ def _cmd_run(args: argparse.Namespace) -> int:
 
     print(f"Cost guardrail: ${cost_tracker.max_usd:.2f}", file=sys.stderr)
     print(f"git_sha: {git_sha[:7]} dirty: {git_dirty}", file=sys.stderr)
+    if args.critique_pass:
+        print("Critique-Pass: ON (METHODOLOGY s13)", file=sys.stderr)
 
     for task_name, task_cls in selected_tasks:
         for prov_name, (adapter_cls, prov_id, model_id, adapter_kwargs) in selected_providers:
@@ -342,6 +354,7 @@ def _cmd_run(args: argparse.Namespace) -> int:
                     output_dir=Path(args.output),
                     timestamp_iso=timestamp,
                     call_delay_seconds=args.call_delay_ms / 1000.0,
+                    critique_pass=args.critique_pass,
                 )
                 all_records.append(record)
             except Exception as exc:
@@ -369,13 +382,16 @@ def _print_leaderboard(records: list[dict[str, Any]]) -> None:
     ranking. Passes within each task are ordered newest-first. Dirty-tree
     passes are flagged so the reader knows to discount them per s9.
     """
-    by_task: dict[str, dict[str, list[dict[str, Any]]]] = {}
+    by_task: dict[str, dict[tuple[str, bool], list[dict[str, Any]]]] = {}
     for r in records:
         if r.get("aggregate") is None:
             continue
         task = r["task"]["name"]
-        started = r["started_at"]
-        by_task.setdefault(task, {}).setdefault(started, []).append(r)
+        # Pass-key includes critique_pass so a single report invocation that
+        # loads both off and on results doesn't accidentally co-rank them.
+        # critique_pass defaults to False for legacy result files (pre-v0.2).
+        pass_key = (r["started_at"], bool(r.get("critique_pass", False)))
+        by_task.setdefault(task, {}).setdefault(pass_key, []).append(r)
 
     header = (
         f"{'rank':<5} {'provider/model':<42} {'success':>9} "
@@ -385,8 +401,9 @@ def _print_leaderboard(records: list[dict[str, Any]]) -> None:
     for task_name, passes in by_task.items():
         print()
         print(f"=== Leaderboard: {task_name} ===")
-        for started_at in sorted(passes.keys(), reverse=True):
-            entries = passes[started_at]
+        for pass_key in sorted(passes.keys(), key=lambda k: (k[0], k[1]), reverse=True):
+            started_at, critique_on = pass_key
+            entries = passes[pass_key]
             entries.sort(
                 key=lambda r: (
                     1 if r["aggregate"]["effective_tcot_infinite"] else 0,
@@ -396,8 +413,12 @@ def _print_leaderboard(records: list[dict[str, Any]]) -> None:
             sha7 = entries[0]["git_sha"][:7] if entries[0]["git_sha"] else "UNKNOWN"
             dirty = any(e["git_dirty"] for e in entries)
             dirty_tag = " [dirty tree, s9 non-headline]" if dirty else ""
+            critique_tag = " [critique-pass, s13]" if critique_on else ""
             print()
-            print(f"-- pass {started_at[:19].replace('T', ' ')} UTC  sha {sha7}{dirty_tag}")
+            print(
+                f"-- pass {started_at[:19].replace('T', ' ')} UTC  sha {sha7}"
+                f"{dirty_tag}{critique_tag}"
+            )
             print(header)
             print("-" * len(header))
             for rank, r in enumerate(entries, 1):

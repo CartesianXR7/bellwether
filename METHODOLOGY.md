@@ -1,8 +1,8 @@
 # Bellwether Methodology
 
 **Status:** Locked v0 draft. Update via PR plus version bump.
-**Methodology version:** 0.1.1
-**Last updated:** 2026-05-08
+**Methodology version:** 0.2
+**Last updated:** 2026-05-16
 
 > The methodology is Bellwether's primary contribution. The leaderboard is its proof of work. Anyone disagreeing with the numbers must engage with this doc, not the table.
 
@@ -205,6 +205,7 @@ Re-running with the same versions produces results within stochasticity bounds. 
 - **Adversarial robustness / jailbreaks**
 - **Bias / fairness** (separate evaluation domain, not our remit)
 - **Cost at scale** (we measure unit cost; users extrapolate)
+- **Real-world document OCR** (handwriting, multi-column or table layouts, scan artifacts, JPEG compression, mixed text and graphics, multi-page documents). v0.x ships no OCR task at all. v1 will add a multimodal `document_extraction_ocr` task using a redistribution-compatible open corpus, with image-input pricing added to `pricing.py` at the same time. The synthetic-render shortcut was explicitly rejected: a clean methodology demo on synthetic PNGs does not answer the procurement question buyers actually have, which is about real-document stressors.
 
 We say so explicitly to prevent over-claims.
 
@@ -226,3 +227,57 @@ We say so explicitly to prevent over-claims.
 - [ ] "Where each provider wins" section is honest: no rigging the categorization.
 - [ ] Ranks within 1 std visually marked as tied (see s7); small leaderboard gaps at N=3 are noise, not signal.
 - [ ] Any results from a dirty git tree (`git_dirty: true`) flagged and excluded from headline aggregates (see s9).
+
+## 13. Critique-Pass evaluation track (methodology v0.2)
+
+> Optional dimension toggled by `--critique-pass`. Measures the cost-vs-accuracy tradeoff of asking the model to review its own output before submission to the validator. Reported per (provider, task) as a delta against the critique-off baseline.
+
+The critique-off track IS the v0.1.x baseline. v0.1.x results remain comparable under v0.2 semantics; nothing existing is invalidated.
+
+### 13.1 Protocol
+
+For each attempt under `--critique-pass`:
+
+1. Model produces output A from the canonical prompt.
+2. Model is shown output A and the CANONICAL critique prompt below.
+3. Output B is what goes to the validator.
+4. TCoT counts both legs per s2.1: `cost(A) + cost(B)`. The critique pass is part of the workflow; its tokens are not free.
+
+Single-shot only. Iterative-until-stable is excluded from v0.2 because iteration count varies per model, which destroys cross-provider comparability.
+
+### 13.2 Canonical critique prompt
+
+```
+Review your previous answer for correctness and adherence to the requested format.
+If it is already correct, repeat it exactly.
+If not, output the corrected version.
+Output only the final answer with no commentary.
+```
+
+Three deliberate design choices:
+
+- "Repeat it exactly" frames no-change as a valid first-class outcome, reducing sycophancy pressure toward unnecessary revision.
+- "No commentary" preserves the existing parser contract from `structured_extraction` and friends. Output B is parsed identically to a no-critique attempt.
+- Zero rubric, zero validator hints, zero per-provider tuning. Same canonical prompt across all providers per s6.
+
+This prompt is locked once shipped. Changes require a methodology version bump and a re-run, the same as the canonical task prompts.
+
+### 13.3 Reporting
+
+Each task page renders two leaderboards: critique-off (the v0.1.x default) and critique-on. A `critique_delta` column shows the per-model change in `effective_TCoT` and `success_rate`. The procurement reading is: "for this provider on this task, the critique pass costs +X% TCoT for +Y percentage-point success rate." A negative success delta is honestly reported, not suppressed; if a model degrades correct answers under critique, that IS the procurement signal.
+
+The result JSON gains an optional top-level field `critique_pass: bool` (default `false`). Two passes against the same task, same instances, same provider, with `critique_pass` set differently constitute a delta pair.
+
+### 13.4 What this does NOT measure
+
+- **Iterative refinement quality.** Single critique pass only. Multi-round refinement varies cost across models in ways that defeat comparability.
+- **Provider-specific reflection features.** Extended thinking, system-level CoT, hidden scratchpads: the critique-on track uses the same model in the same API mode as critique-off. Only the prompt loop differs.
+- **Rubric-aware self-critique.** The critique prompt is intentionally blind. Giving the model a checklist would leak the validator and invalidate the run per s3.
+
+### 13.5 Naming and prior art
+
+This track is intentionally NOT a reimplementation of Self-Refine (Madaan et al. 2023) or related capability-research protocols. Those typically use iterative, task-specific feedback prompts designed to maximize model capability under the protocol; bellwether's variant is single-shot with a blind canonical prompt, designed for procurement-relevant cross-provider comparability. Cited as related work; not equivalent.
+
+### 13.6 Versioning
+
+Methodology v0.2, MINOR bump per s11. New evaluation track is additive: the critique-off path is byte-identical to v0.1.x semantics, so v0.1.x results need no re-run and remain comparable. Formulas (s2) and taxonomy (s5) are unchanged.

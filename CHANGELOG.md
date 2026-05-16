@@ -4,6 +4,63 @@ All notable changes are recorded here. Format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); methodology
 versioning per METHODOLOGY.md s11.
 
+## [Unreleased]
+
+Methodology v0.1.1 to v0.2 MINOR bump introducing the **Critique-Pass
+evaluation track** as an additive dimension. The critique-off track is
+byte-identical to v0.1.x semantics, so existing v0.4 results remain
+comparable without re-run.
+
+### Methodology (v0.1.1 to v0.2, MINOR bump)
+
+- **New section 13: Critique-Pass evaluation track.** Optional dimension
+  toggled by `--critique-pass`. Each attempt is wrapped with a single
+  self-revision step using a locked canonical critique prompt; output
+  of the critique pass is what reaches the validator. TCoT counts both
+  legs per s2.1, so the critique pass is honestly billed.
+- **Locked canonical critique prompt** (s13.2). Three deliberate
+  choices: explicit "repeat exactly" path frames no-change as a valid
+  first-class outcome to reduce sycophancy pressure; "no commentary"
+  preserves the existing parser contract from the v0.1 tasks; zero
+  rubric, zero validator hints, zero per-provider tuning per s6
+  portability. Prompt locks once shipped.
+- **Single-shot only.** Iterative-until-stable is excluded from v0.2
+  because iteration count varies per model, which destroys
+  cross-provider comparability (s13.1).
+- **Twin-leaderboard reporting** (s13.3). Each task page renders
+  critique-off (v0.1.x baseline) and critique-on side by side, plus a
+  `critique_delta` column for `effective_TCoT` and `success_rate`.
+  Negative success deltas are honestly reported (a model that degrades
+  correct answers under critique IS the procurement signal).
+- **Naming note** (s13.5). Track is intentionally not a reimplementation
+  of Self-Refine (Madaan et al. 2023) or related capability-research
+  protocols; cited as related work, designed for procurement
+  comparability not capability maximization.
+- **s10 update.** Real-world document OCR explicitly added to the
+  "what this benchmark does NOT measure" list, deferred to v1. The
+  synthetic-render shortcut was considered and rejected: a clean
+  methodology demo on synthetic PNGs does not answer the procurement
+  question buyers actually have. The v1 `document_extraction_ocr`
+  task will use a redistribution-compatible open corpus and ship
+  alongside image-input pricing in `pricing.py`.
+
+### Roadmap
+
+- v0.5 "Next" gains Critique-Pass as the headline methodology item.
+- v1 gains `document_extraction_ocr` with image-input pricing, a
+  `modality` field on the Task protocol, and attempt-and-classify
+  vision capability detection (no hardcoded `supports_vision`).
+
+### Not yet implemented in this version
+
+This is a methodology-and-roadmap-only change. Runner support for
+`--critique-pass`, twin-leaderboard rendering, and the result-JSON
+`critique_pass` field land in a follow-up code PR before v0.5 ships.
+v0.4 results remain the headline numbers until that PR lands and a
+fresh bench pass runs.
+
+---
+
 ## [v0.4.0] - 2026-05-08
 
 Provider-coverage expansion plus a small methodology PATCH (0.1 to 0.1.1)

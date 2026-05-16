@@ -173,6 +173,17 @@
   [data-theme="dark"] .ranking-matrix td.rank-2 { background: rgba(167, 139, 250, 0.13); }
   [data-theme="dark"] .ranking-matrix td.rank-3 { background: rgba(167, 139, 250, 0.06); }
 
+  /* Critique-Pass delta column on the critique-on leaderboard.
+     Positive = critique made it more expensive / better; negative = cheaper / worse.
+     Color follows the procurement reading: green when improving (success up,
+     cost down); red when degrading. Methodology s13.3. */
+  .delta-pos { color: var(--dirty); }
+  .delta-neg { color: var(--good); }
+  .delta-flat { color: var(--muted); }
+  .critique-on-section { margin: 2rem 0 0 0; padding: 1rem 1.25rem; background: var(--accent-soft); border: 1px solid var(--accent); }
+  .critique-on-section h3 { margin: 0 0 0.5rem 0; color: var(--accent); font-size: 1rem; }
+  .critique-on-section .meta { font-size: 0.82rem; color: var(--muted); margin: 0 0 0.5rem 0; }
+
   /* Per-task sections: heavier visual separation, accent stripe, headline color */
   .task-section { margin-top: 4.5rem; padding-top: 2.5rem; border-top: 2px solid var(--border-strong); position: relative; }
   .task-section::before { content: ""; position: absolute; left: -1rem; top: 2.5rem; bottom: 0; width: 3px; background: var(--purple); opacity: 0.6; }
@@ -404,6 +415,66 @@
   </div>
 </section>
 
+{% endif %}
+
+{% if view.latest_clean_critique_on %}
+{% set critique_pass = view.latest_clean_critique_on %}
+<section class="critique-on-section" aria-label="Critique-Pass leaderboard">
+  <h3>Critique-Pass track (METHODOLOGY <a href="methodology.html#13-critique-pass-evaluation-track-methodology-v02">s13</a>)</h3>
+  <p class="meta">
+    Latest clean critique-on pass &middot; {{ critique_pass.started_at[:19].replace('T', ' ') }} UTC &middot; <code>{{ critique_pass.git_sha_short }}</code>.
+    Each attempt wraps a single self-revision step using the locked canonical critique prompt; both legs count toward <code>effective_TCoT</code>.
+    Delta columns compare against the critique-off headline above. Positive cost delta means critique made it more expensive; positive success delta means critique improved accuracy.
+  </p>
+  <div class="leaderboard-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provider / Model</th>
+        <th class="num">Success</th>
+        <th class="num">effective_TCoT</th>
+        {% if view.critique_delta_rows %}
+        <th class="num">Δ TCoT</th>
+        <th class="num">Δ success</th>
+        {% endif %}
+        <th class="num">Latency p50 / p95</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% set delta_by_model = {} %}
+      {% for row in view.critique_delta_rows %}
+        {% set _ = delta_by_model.update({row.provider + "/" + row.model: row}) %}
+      {% endfor %}
+      {% for entry in critique_pass.entries %}
+      {% set delta = delta_by_model.get(entry.provider + "/" + entry.model) %}
+      <tr {% if entry.git_dirty %}class="dirty"{% elif entry.tied_with_above %}class="tied"{% endif %}>
+        <td class="rank">{{ entry.rank }}</td>
+        <td>
+          <span class="prov provider-{{ entry.provider }}">
+            <span class="prov-swatch"></span>{{ entry.provider }}/{{ entry.model }}
+          </span>
+          <span class="class-chip class-{{ entry.model_class }}">{{ entry.model_class }}</span>
+        </td>
+        <td class="num">{{ "%.1f"|format(entry.success_rate * 100) }}% ({{ entry.n_successes }}/{{ entry.n_trials }})</td>
+        <td class="num">
+          {% if entry.effective_tcot_infinite %}infinite{% else %}${{ "%.5f"|format(entry.effective_tcot) }}{% endif %}
+        </td>
+        {% if view.critique_delta_rows %}
+        <td class="num {% if delta and delta.delta_eff_pct is not none and delta.delta_eff_pct > 1 %}delta-pos{% elif delta and delta.delta_eff_pct is not none and delta.delta_eff_pct < -1 %}delta-neg{% else %}delta-flat{% endif %}">
+          {% if delta is none or delta.delta_eff_pct is none %}n/a{% else %}{{ "%+.1f"|format(delta.delta_eff_pct) }}%{% endif %}
+        </td>
+        <td class="num {% if delta and delta.delta_success_pp > 1 %}delta-neg{% elif delta and delta.delta_success_pp < -1 %}delta-pos{% else %}delta-flat{% endif %}">
+          {% if delta is none %}n/a{% else %}{{ "%+.1f"|format(delta.delta_success_pp) }} pp{% endif %}
+        </td>
+        {% endif %}
+        <td class="num">{{ "%.2f"|format(entry.p50) }}s / {{ "%.2f"|format(entry.p95) }}s</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
 {% endif %}
 
 {% if view.n_passes > 1 %}

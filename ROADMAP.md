@@ -42,9 +42,17 @@ per [METHODOLOGY.md s11](METHODOLOGY.md#11-versioning).
 
 ## Next (v0.5)
 
-Theme: developer ergonomics + statistical rigor (deferred from v0.4 in
-favor of provider-coverage expansion).
+Theme: developer ergonomics, statistical rigor, plus the v0.2 methodology
+track (Critique-Pass).
 
+- **Critique-Pass evaluation track** (methodology v0.2, see METHODOLOGY s13).
+  New `--critique-pass` runner flag wraps each attempt with a single-shot
+  self-revision step using the locked canonical critique prompt. TCoT counts
+  both legs per s2.1. Twin leaderboards per task page (critique-off,
+  critique-on) plus a `critique_delta` column showing per-model change in
+  `effective_TCoT` and `success_rate`. Procurement reading: "for this
+  provider on this task, the critique pass costs +X% TCoT for +Y pp
+  success rate." Negative deltas honestly reported.
 - **Async runner.** Parallelize adapter calls across providers within a task;
   cuts wall-clock roughly proportional to provider count. Per-provider rate
   limiter stays per-provider; cost guardrail becomes thread-safe.
@@ -84,6 +92,28 @@ Theme: real datasets, open-weights, larger surface.
 - **Code-generation task with sandboxing.** HumanEval+ or LiveCodeBench
   tier-easy. Requires Docker / firejail / seatbelt isolation; sandboxing
   IS the v1 work, not the task plumbing.
+- **Multimodal `document_extraction_ocr` task.** Real-world document OCR
+  on a redistribution-compatible open corpus (candidates: FUNSD, SROIE,
+  CORD, or a curated public-domain receipts set; license check is the
+  gating work). Tests handwriting, multi-column / table layouts, scan
+  artifacts, JPEG compression, mixed text and graphics, multi-page.
+  Validator reuses the `structured_extraction` exact-field-match
+  contract so the delta between text-input and image-input isolates the
+  OCR layer's contribution per provider. Methodology bump 0.2 to 0.3:
+  - `pricing.py` gains image-input pricing per provider (OpenAI tiles,
+    Anthropic per-image, Google per-pixel-class) with safe-default
+    `None` for non-vision entries. Pricing schema extension is
+    additive (PATCH-shaped data, bundled into the v1 minor for the
+    new task).
+  - New `modality: "text" | "image" | "text+image"` field on the Task
+    protocol so the leaderboard filters cleanly.
+  - Vision capability detected by attempt-and-classify, not a
+    hardcoded `supports_vision` flag: non-vision providers error
+    cleanly, recorded as `ERROR` failure mode, excluded from the OCR
+    leaderboard without silent omission.
+  Synthetic-render OCR was explicitly considered and rejected for v0.x
+  per METHODOLOGY s10: clean methodology demo on synthetic PNGs does
+  not answer the procurement question buyers actually have.
 - **Real-dataset replacements** for the synthetic v0.x tasks:
   - BFCL pinned to a specific release commit
   - FinanceBench / NaturalQuestions-open / HotpotQA distractor (RAG)

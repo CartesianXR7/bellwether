@@ -117,6 +117,14 @@
   .repro td.delta-down { color: var(--good); }
   .repro td.delta-flat { color: var(--muted); }
 
+  /* Critique-Pass delta colors: positive cost delta = critique made it more
+     expensive (red); positive success delta = critique improved accuracy (green).
+     Methodology s13.3. */
+  .critique td.delta-pos { color: var(--dirty); }
+  .critique td.delta-neg { color: var(--good); }
+  .critique td.delta-flat { color: var(--muted); }
+  .critique-badge { background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent); }
+
   footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.85rem; }
   footer a { color: var(--accent); text-decoration: none; }
 
@@ -170,6 +178,8 @@
 </header>
 
 <main>
+
+
 
 
 <h2>Reproducibility (latest pass vs previous)</h2>
@@ -525,6 +535,7 @@
   <code>46ce0a5</code>
   
   <span class="badge badge-clean">clean</span>
+  
   
 </div>
 
@@ -1180,6 +1191,7 @@
   
   <span class="badge badge-clean">clean</span>
   
+  
 </div>
 
 <div class="leaderboard-wrap">
@@ -1394,6 +1406,7 @@
   <code>d95fbc2</code>
   
   <span class="badge badge-clean">clean</span>
+  
   
 </div>
 
@@ -1610,6 +1623,7 @@
   
   <span class="badge badge-clean">clean</span>
   
+  
 </div>
 
 <div class="leaderboard-wrap">
@@ -1703,6 +1717,7 @@
   <code>423a52c</code>
   
   <span class="badge badge-dirty">dirty tree, s9 non-headline</span>
+  
   
 </div>
 
@@ -1799,6 +1814,7 @@
   <code>423a52c</code>
   
   <span class="badge badge-clean">clean</span>
+  
   
 </div>
 

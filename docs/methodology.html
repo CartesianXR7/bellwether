@@ -141,6 +141,15 @@
 <li><a href="#10-what-this-benchmark-does-not-measure-in-v0">10. What this benchmark does NOT measure (in v0)</a></li>
 <li><a href="#11-versioning">11. Versioning</a></li>
 <li><a href="#12-honest-reporting-checklist-every-results-page">12. Honest reporting checklist (every results page)</a></li>
+<li><a href="#13-critique-pass-evaluation-track-methodology-v02">13. Critique-Pass evaluation track (methodology v0.2)</a><ul>
+<li><a href="#131-protocol">13.1 Protocol</a></li>
+<li><a href="#132-canonical-critique-prompt">13.2 Canonical critique prompt</a></li>
+<li><a href="#133-reporting">13.3 Reporting</a></li>
+<li><a href="#134-what-this-does-not-measure">13.4 What this does NOT measure</a></li>
+<li><a href="#135-naming-and-prior-art">13.5 Naming and prior art</a></li>
+<li><a href="#136-versioning">13.6 Versioning</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -150,8 +159,8 @@
   <main>
     <h1 id="bellwether-methodology">Bellwether Methodology</h1>
 <p><strong>Status:</strong> Locked v0 draft. Update via PR plus version bump.
-<strong>Methodology version:</strong> 0.1.1
-<strong>Last updated:</strong> 2026-05-08</p>
+<strong>Methodology version:</strong> 0.2
+<strong>Last updated:</strong> 2026-05-16</p>
 <blockquote>
 <p>The methodology is Bellwether's primary contribution. The leaderboard is its proof of work. Anyone disagreeing with the numbers must engage with this doc, not the table.</p>
 </blockquote>
@@ -393,6 +402,7 @@ class ValidationResult:
 <li><strong>Adversarial robustness / jailbreaks</strong></li>
 <li><strong>Bias / fairness</strong> (separate evaluation domain, not our remit)</li>
 <li><strong>Cost at scale</strong> (we measure unit cost; users extrapolate)</li>
+<li><strong>Real-world document OCR</strong> (handwriting, multi-column or table layouts, scan artifacts, JPEG compression, mixed text and graphics, multi-page documents). v0.x ships no OCR task at all. v1 will add a multimodal <code>document_extraction_ocr</code> task using a redistribution-compatible open corpus, with image-input pricing added to <code>pricing.py</code> at the same time. The synthetic-render shortcut was explicitly rejected: a clean methodology demo on synthetic PNGs does not answer the procurement question buyers actually have, which is about real-document stressors.</li>
 </ul>
 <p>We say so explicitly to prevent over-claims.</p>
 <h2 id="11-versioning">11. Versioning</h2>
@@ -414,6 +424,46 @@ class ValidationResult:
 <li>[ ] Ranks within 1 std visually marked as tied (see s7); small leaderboard gaps at N=3 are noise, not signal.</li>
 <li>[ ] Any results from a dirty git tree (<code>git_dirty: true</code>) flagged and excluded from headline aggregates (see s9).</li>
 </ul>
+<h2 id="13-critique-pass-evaluation-track-methodology-v02">13. Critique-Pass evaluation track (methodology v0.2)</h2>
+<blockquote>
+<p>Optional dimension toggled by <code>--critique-pass</code>. Measures the cost-vs-accuracy tradeoff of asking the model to review its own output before submission to the validator. Reported per (provider, task) as a delta against the critique-off baseline.</p>
+</blockquote>
+<p>The critique-off track IS the v0.1.x baseline. v0.1.x results remain comparable under v0.2 semantics; nothing existing is invalidated.</p>
+<h3 id="131-protocol">13.1 Protocol</h3>
+<p>For each attempt under <code>--critique-pass</code>:</p>
+<ol>
+<li>Model produces output A from the canonical prompt.</li>
+<li>Model is shown output A and the CANONICAL critique prompt below.</li>
+<li>Output B is what goes to the validator.</li>
+<li>TCoT counts both legs per s2.1: <code>cost(A) + cost(B)</code>. The critique pass is part of the workflow; its tokens are not free.</li>
+</ol>
+<p>Single-shot only. Iterative-until-stable is excluded from v0.2 because iteration count varies per model, which destroys cross-provider comparability.</p>
+<h3 id="132-canonical-critique-prompt">13.2 Canonical critique prompt</h3>
+<pre><code>Review your previous answer for correctness and adherence to the requested format.
+If it is already correct, repeat it exactly.
+If not, output the corrected version.
+Output only the final answer with no commentary.
+</code></pre>
+<p>Three deliberate design choices:</p>
+<ul>
+<li>"Repeat it exactly" frames no-change as a valid first-class outcome, reducing sycophancy pressure toward unnecessary revision.</li>
+<li>"No commentary" preserves the existing parser contract from <code>structured_extraction</code> and friends. Output B is parsed identically to a no-critique attempt.</li>
+<li>Zero rubric, zero validator hints, zero per-provider tuning. Same canonical prompt across all providers per s6.</li>
+</ul>
+<p>This prompt is locked once shipped. Changes require a methodology version bump and a re-run, the same as the canonical task prompts.</p>
+<h3 id="133-reporting">13.3 Reporting</h3>
+<p>Each task page renders two leaderboards: critique-off (the v0.1.x default) and critique-on. A <code>critique_delta</code> column shows the per-model change in <code>effective_TCoT</code> and <code>success_rate</code>. The procurement reading is: "for this provider on this task, the critique pass costs +X% TCoT for +Y percentage-point success rate." A negative success delta is honestly reported, not suppressed; if a model degrades correct answers under critique, that IS the procurement signal.</p>
+<p>The result JSON gains an optional top-level field <code>critique_pass: bool</code> (default <code>false</code>). Two passes against the same task, same instances, same provider, with <code>critique_pass</code> set differently constitute a delta pair.</p>
+<h3 id="134-what-this-does-not-measure">13.4 What this does NOT measure</h3>
+<ul>
+<li><strong>Iterative refinement quality.</strong> Single critique pass only. Multi-round refinement varies cost across models in ways that defeat comparability.</li>
+<li><strong>Provider-specific reflection features.</strong> Extended thinking, system-level CoT, hidden scratchpads: the critique-on track uses the same model in the same API mode as critique-off. Only the prompt loop differs.</li>
+<li><strong>Rubric-aware self-critique.</strong> The critique prompt is intentionally blind. Giving the model a checklist would leak the validator and invalidate the run per s3.</li>
+</ul>
+<h3 id="135-naming-and-prior-art">13.5 Naming and prior art</h3>
+<p>This track is intentionally NOT a reimplementation of Self-Refine (Madaan et al. 2023) or related capability-research protocols. Those typically use iterative, task-specific feedback prompts designed to maximize model capability under the protocol; bellwether's variant is single-shot with a blind canonical prompt, designed for procurement-relevant cross-provider comparability. Cited as related work; not equivalent.</p>
+<h3 id="136-versioning">13.6 Versioning</h3>
+<p>Methodology v0.2, MINOR bump per s11. New evaluation track is additive: the critique-off path is byte-identical to v0.1.x semantics, so v0.1.x results need no re-run and remain comparable. Formulas (s2) and taxonomy (s5) are unchanged.</p>
   </main>
 </div>
 
