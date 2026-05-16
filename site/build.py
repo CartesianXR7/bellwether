@@ -420,8 +420,17 @@ def main() -> None:
         }
 
     latest_bench = max((r["completed_at"] for r in results), default="never")
-    bellwether_version = results[0]["bellwether_version"] if results else "0.1.0"
-    methodology_version = results[0]["methodology_version"] if results else "0.1"
+    # Footer should advertise the LATEST methodology/package version so visitors
+    # see what semantics the most recent bench follows. results[0] used to be
+    # the path-sorted first file, which silently pinned the footer to the
+    # OLDEST version (e.g. v0.1 when a v0.2 bench had just landed).
+    if results:
+        latest_result = max(results, key=lambda r: r["completed_at"])
+        bellwether_version = latest_result["bellwether_version"]
+        methodology_version = latest_result["methodology_version"]
+    else:
+        bellwether_version = "0.1.0"
+        methodology_version = "0.1"
 
     methodology_body, methodology_toc = _render_md(METHODOLOGY_MD, with_toc=True)
     glossary_body = ""
