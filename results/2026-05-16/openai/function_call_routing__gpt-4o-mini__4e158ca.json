@@ -1,0 +1,305 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "openai",
+    "model_id": "gpt-4o-mini",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "function_call_routing",
+    "dataset_version": "synthetic-fc-routing-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:05:58.297579+00:00",
+  "instances": [
+    {
+      "instance_id": "fc-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}",
+              "input_tokens": 520,
+              "output_tokens": 36,
+              "cost_usd": 9.960000000000001e-05,
+              "latency_seconds": 1.445947750005871,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}",
+                "pre_critique_input_tokens": 229,
+                "pre_critique_output_tokens": 18,
+                "pre_critique_cost_usd": 4.515e-05,
+                "pre_critique_latency_seconds": 0.7871333330404013,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 291,
+                "post_critique_output_tokens": 18,
+                "post_critique_cost_usd": 5.445e-05,
+                "post_critique_latency_seconds": 0.6588144169654697,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 9.960000000000001e-05,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}",
+              "input_tokens": 520,
+              "output_tokens": 36,
+              "cost_usd": 9.960000000000001e-05,
+              "latency_seconds": 1.3766199591336772,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}",
+                "pre_critique_input_tokens": 229,
+                "pre_critique_output_tokens": 18,
+                "pre_critique_cost_usd": 4.515e-05,
+                "pre_critique_latency_seconds": 0.603736084070988,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 291,
+                "post_critique_output_tokens": 18,
+                "post_critique_cost_usd": 5.445e-05,
+                "post_critique_latency_seconds": 0.7728838750626892,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 9.960000000000001e-05,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}",
+              "input_tokens": 515,
+              "output_tokens": 34,
+              "cost_usd": 9.764999999999999e-05,
+              "latency_seconds": 1.103116000071168,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}",
+                "pre_critique_input_tokens": 227,
+                "pre_critique_output_tokens": 17,
+                "pre_critique_cost_usd": 4.424999999999999e-05,
+                "pre_critique_latency_seconds": 0.516049167024903,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 288,
+                "post_critique_output_tokens": 17,
+                "post_critique_cost_usd": 5.34e-05,
+                "post_critique_latency_seconds": 0.587066833046265,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 9.764999999999999e-05,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}",
+              "input_tokens": 515,
+              "output_tokens": 34,
+              "cost_usd": 9.764999999999999e-05,
+              "latency_seconds": 1.2210813340498134,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}",
+                "pre_critique_input_tokens": 227,
+                "pre_critique_output_tokens": 17,
+                "pre_critique_cost_usd": 4.424999999999999e-05,
+                "pre_critique_latency_seconds": 0.6302485840860754,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 288,
+                "post_critique_output_tokens": 17,
+                "post_critique_cost_usd": 5.34e-05,
+                "post_critique_latency_seconds": 0.590832749963738,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 9.764999999999999e-05,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}",
+              "input_tokens": 530,
+              "output_tokens": 50,
+              "cost_usd": 0.0001095,
+              "latency_seconds": 1.3553249159594998,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}",
+                "pre_critique_input_tokens": 231,
+                "pre_critique_output_tokens": 25,
+                "pre_critique_cost_usd": 4.965e-05,
+                "pre_critique_latency_seconds": 0.6280368329025805,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 299,
+                "post_critique_output_tokens": 25,
+                "post_critique_cost_usd": 5.985e-05,
+                "post_critique_latency_seconds": 0.7272880830569193,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.0001095,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}",
+              "input_tokens": 530,
+              "output_tokens": 50,
+              "cost_usd": 0.0001095,
+              "latency_seconds": 2.13830962497741,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}",
+                "pre_critique_input_tokens": 231,
+                "pre_critique_output_tokens": 25,
+                "pre_critique_cost_usd": 4.965e-05,
+                "pre_critique_latency_seconds": 1.3807416249765083,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 299,
+                "post_critique_output_tokens": 25,
+                "post_critique_cost_usd": 5.985e-05,
+                "post_critique_latency_seconds": 0.7575680000009015,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.0001095,
+          "failure_modes": []
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 6,
+    "success_rate": 1.0,
+    "mean_tcot_success": 0.00010225,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": 0.00010225,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 1.3659724375465885,
+    "mean_latency_p95": 1.9652191562345251,
+    "std_tcot_success": 5.6831329387935366e-06,
+    "std_latency": 0.36339366879512613
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.2551717499999998,
+    "tripped": false
+  },
+  "stopped_early": null
+}

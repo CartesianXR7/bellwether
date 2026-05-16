@@ -1,0 +1,749 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "anthropic",
+    "model_id": "claude-opus-4-7",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "synthetic_rag",
+    "dataset_version": "synthetic-rag-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:29:45.462831+00:00",
+  "instances": [
+    {
+      "instance_id": "rag-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.1378390829777345,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJPc5kSz1GGgbtiY47'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.1378390829777345,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJPc5kSz1GGgbtiY47'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 721,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10856908396817744,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJQLF73w2v4ADVPdyp'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10856908396817744,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJQLF73w2v4ADVPdyp'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 986,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10493679204955697,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJRA6xZv9DBH7w1MBP'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10493679204955697,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJRA6xZv9DBH7w1MBP'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.21399691700935364,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJS897kzEfM6DH7MYw'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.21399691700935364,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJS897kzEfM6DH7MYw'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 721,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.7381862920010462,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJSxVmS3ALbCuzTJrz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.7381862920010462,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJSxVmS3ALbCuzTJrz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 986,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10198258305899799,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJW8zd88yRR4NLtYYR'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10198258305899799,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJW8zd88yRR4NLtYYR'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.1103512910194695,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJWyqYV2S2j8aAPBRc'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.1103512910194695,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJWyqYV2S2j8aAPBRc'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 763,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10614116594661027,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJXtudSArAnxfgBQ9M'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10614116594661027,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJXtudSArAnxfgBQ9M'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1028,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.09823308303020895,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJYmzVTMUdhgzK7fbo'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.09823308303020895,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJYmzVTMUdhgzK7fbo'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.098133165971376,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJZdqMZU725nzQbRzJ'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.098133165971376,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJZdqMZU725nzQbRzJ'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 763,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.09701629204209894,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJaXfA64isfuhuTvho'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.09701629204209894,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJaXfA64isfuhuTvho'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1028,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10098058299627155,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJbQzdRrLKvaPstCEK'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10098058299627155,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJbQzdRrLKvaPstCEK'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.180659250007011,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJcYTZuya87ov1bVns'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.180659250007011,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJcYTZuya87ov1bVns'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 749,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10468129196669906,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJdCeLoFxApXAnYtje'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10468129196669906,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJdCeLoFxApXAnYtje'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1014,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.23608649999368936,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJe5EM6aodVe8ZxXdw'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.23608649999368936,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJe5EM6aodVe8ZxXdw'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.09409933304414153,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJf5kjx4tNxveyW82u'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.09409933304414153,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJf5kjx4tNxveyW82u'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 749,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.11141799995675683,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJfzphL5qrLSobD4d4'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.11141799995675683,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJfzphL5qrLSobD4d4'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1014,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.1019469159655273,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJgseo94RudQetwhPV'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.1019469159655273,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': '`temperature` is deprecated for this model.'}, 'request_id': 'req_011Cb6eJgseo94RudQetwhPV'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 0.10553897899808362,
+    "mean_latency_p95": 0.3114014687947929,
+    "std_tcot_success": 0.0,
+    "std_latency": 0.15078037673259673
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.4066430999999999,
+    "tripped": false
+  },
+  "stopped_early": null
+}

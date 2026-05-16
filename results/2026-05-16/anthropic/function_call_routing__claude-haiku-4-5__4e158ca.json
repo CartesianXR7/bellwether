@@ -1,0 +1,749 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "anthropic",
+    "model_id": "claude-haiku-4-5",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "function_call_routing",
+    "dataset_version": "synthetic-fc-routing-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:05:35.901140+00:00",
+  "instances": [
+    {
+      "instance_id": "fc-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 609,
+              "output_tokens": 62,
+              "cost_usd": 0.000919,
+              "latency_seconds": 1.3496505001094192,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 266,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.00042100000000000004,
+                "pre_critique_latency_seconds": 0.723056917078793,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 343,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000498,
+                "post_critique_latency_seconds": 0.6265935830306262,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 747,
+              "output_tokens": 62,
+              "cost_usd": 0.001057,
+              "latency_seconds": 1.4090479590231553,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 335,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.00049,
+                "pre_critique_latency_seconds": 0.7235372919822112,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 412,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000567,
+                "post_critique_latency_seconds": 0.6855106670409441,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1508,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 885,
+              "output_tokens": 62,
+              "cost_usd": 0.0011949999999999999,
+              "latency_seconds": 2.09863266593311,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 404,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.000559,
+                "pre_critique_latency_seconds": 1.3640574580058455,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 481,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000636,
+                "post_critique_latency_seconds": 0.7345752079272643,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0031709999999999998,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 609,
+              "output_tokens": 62,
+              "cost_usd": 0.000919,
+              "latency_seconds": 1.39236816810444,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 266,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.00042100000000000004,
+                "pre_critique_latency_seconds": 0.6714325840584934,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 343,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000498,
+                "post_critique_latency_seconds": 0.7209355840459466,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 747,
+              "output_tokens": 62,
+              "cost_usd": 0.001057,
+              "latency_seconds": 1.256927666021511,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 335,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.00049,
+                "pre_critique_latency_seconds": 0.7041637500515208,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 412,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000567,
+                "post_critique_latency_seconds": 0.5527639159699902,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1508,
+              "output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+              "input_tokens": 885,
+              "output_tokens": 62,
+              "cost_usd": 0.0011949999999999999,
+              "latency_seconds": 1.5880118340719491,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_stock_price\", \"arguments\": {\"ticker\": \"AAPL\"}}\n```",
+                "pre_critique_input_tokens": 404,
+                "pre_critique_output_tokens": 31,
+                "pre_critique_cost_usd": 0.000559,
+                "pre_critique_latency_seconds": 0.8360944170271978,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 481,
+                "post_critique_output_tokens": 31,
+                "post_critique_cost_usd": 0.000636,
+                "post_critique_latency_seconds": 0.7519174170447513,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0031709999999999998,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 597,
+              "output_tokens": 54,
+              "cost_usd": 0.000867,
+              "latency_seconds": 1.2448776670498773,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 262,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.000397,
+                "pre_critique_latency_seconds": 0.5978410000680014,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 335,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.00047000000000000004,
+                "post_critique_latency_seconds": 0.6470366669818759,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 727,
+              "output_tokens": 54,
+              "cost_usd": 0.000997,
+              "latency_seconds": 2.112255000974983,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 327,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.00046199999999999995,
+                "pre_critique_latency_seconds": 1.4431254590163007,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 400,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.000535,
+                "post_critique_latency_seconds": 0.6691295419586822,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1513,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 857,
+              "output_tokens": 54,
+              "cost_usd": 0.001127,
+              "latency_seconds": 1.3914849160937592,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 392,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.000527,
+                "pre_critique_latency_seconds": 0.5893125000875443,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 465,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.0006000000000000001,
+                "post_critique_latency_seconds": 0.8021724160062149,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.002991,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 597,
+              "output_tokens": 54,
+              "cost_usd": 0.000867,
+              "latency_seconds": 1.2768040001392365,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 262,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.000397,
+                "pre_critique_latency_seconds": 0.6954169580712914,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 335,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.00047000000000000004,
+                "post_critique_latency_seconds": 0.581387042067945,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1258,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 727,
+              "output_tokens": 54,
+              "cost_usd": 0.000997,
+              "latency_seconds": 1.5020287920488045,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 327,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.00046199999999999995,
+                "pre_critique_latency_seconds": 0.7180027080466971,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 400,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.000535,
+                "post_critique_latency_seconds": 0.7840260840021074,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1513,
+              "output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+              "input_tokens": 857,
+              "output_tokens": 54,
+              "cost_usd": 0.001127,
+              "latency_seconds": 1.134070166037418,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"get_weather\", \"arguments\": {\"location\": \"Mexico City\"}}\n```",
+                "pre_critique_input_tokens": 392,
+                "pre_critique_output_tokens": 27,
+                "pre_critique_cost_usd": 0.000527,
+                "pre_critique_latency_seconds": 0.5256337500177324,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 465,
+                "post_critique_output_tokens": 27,
+                "post_critique_cost_usd": 0.0006000000000000001,
+                "post_critique_latency_seconds": 0.6084364160196856,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.002991,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 618,
+              "output_tokens": 72,
+              "cost_usd": 0.0009780000000000001,
+              "latency_seconds": 1.2937648749211803,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 268,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.00044800000000000005,
+                "pre_critique_latency_seconds": 0.6593216250184923,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 350,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.00053,
+                "post_critique_latency_seconds": 0.634443249902688,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1285,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 766,
+              "output_tokens": 72,
+              "cost_usd": 0.001126,
+              "latency_seconds": 1.3269587489776313,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 342,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.000522,
+                "pre_critique_latency_seconds": 0.7178299580700696,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 424,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.000604,
+                "post_critique_latency_seconds": 0.6091287909075618,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1557,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 914,
+              "output_tokens": 72,
+              "cost_usd": 0.001274,
+              "latency_seconds": 1.8413112501148134,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 416,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.000596,
+                "pre_critique_latency_seconds": 1.2318198750726879,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 498,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.000678,
+                "post_critique_latency_seconds": 0.6094913750421256,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.003378,
+          "failure_modes": [
+            "schema_break"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 618,
+              "output_tokens": 72,
+              "cost_usd": 0.0009780000000000001,
+              "latency_seconds": 1.2767566250404343,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 268,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.00044800000000000005,
+                "pre_critique_latency_seconds": 0.6971255000680685,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 350,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.00053,
+                "post_critique_latency_seconds": 0.5796311249723658,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1285,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 766,
+              "output_tokens": 72,
+              "cost_usd": 0.001126,
+              "latency_seconds": 1.3163998329546303,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 342,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.000522,
+                "pre_critique_latency_seconds": 0.66938300000038,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 424,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.000604,
+                "post_critique_latency_seconds": 0.6470168329542503,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1557,
+              "output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+              "input_tokens": 914,
+              "output_tokens": 72,
+              "cost_usd": 0.001274,
+              "latency_seconds": 1.8064532079733908,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "json parse error at line 1 col 1: Expecting value",
+                "failure_modes": [
+                  "schema_break"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\"tool\": \"search_web\", \"arguments\": {\"query\": \"llm benchmarks\", \"num_results\": 3}}\n```",
+                "pre_critique_input_tokens": 416,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 0.000596,
+                "pre_critique_latency_seconds": 0.7846263749524951,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 498,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 0.000678,
+                "post_critique_latency_seconds": 1.0218268330208957,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.003378,
+          "failure_modes": [
+            "schema_break"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.00318,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 1.3705677081015892,
+    "mean_latency_p95": 2.1006760161893907,
+    "std_tcot_success": 0.0,
+    "std_latency": 0.29319859224088857
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.24433324999999995,
+    "tripped": false
+  },
+  "stopped_early": null
+}

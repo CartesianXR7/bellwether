@@ -1,0 +1,749 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "openrouter",
+    "model_id": "qwen/qwen-3-235b-a22b",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "structured_extraction",
+    "dataset_version": "synthetic-invoice-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:04:55.629912+00:00",
+  "instances": [
+    {
+      "instance_id": "INV-1000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.08939600002486259,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.08939600002486259,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 670,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06745366693940014,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06745366693940014,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 935,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02292183309327811,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.02292183309327811,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.023097250028513372,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.023097250028513372,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 670,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.025782334036193788,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.025782334036193788,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 935,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.021492791012860835,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.021492791012860835,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.0925083749461919,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.0925083749461919,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 665,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02109895902685821,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.02109895902685821,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 930,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02223708399105817,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.02223708399105817,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.023687500040978193,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.023687500040978193,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 665,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.021646332927048206,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.021646332927048206,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 930,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10821258299984038,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10821258299984038,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.023479667026549578,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.023479667026549578,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 665,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.021483124932274222,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.021483124932274222,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 930,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.02058529097121209,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.02058529097121209,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.030876082950271666,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.030876082950271666,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 665,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.10249550000298768,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.10249550000298768,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 930,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.028695084038190544,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, ",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.028695084038190544,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': 'qwen/qwen-3-235b-a22b is not a valid model ID', 'code': 400}, 'user_id': 'user_3DRa2Be5ylI6DqoX217va2S6iuz'}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 0.023583583533763885,
+    "mean_latency_p95": 0.10335306245251559,
+    "std_tcot_success": 0.0,
+    "std_latency": 0.03252823473027282
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.20965924999999996,
+    "tripped": false
+  },
+  "stopped_early": null
+}

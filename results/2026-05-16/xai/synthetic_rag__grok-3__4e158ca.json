@@ -1,0 +1,455 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "xai",
+    "model_id": "grok-3",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "synthetic_rag",
+    "dataset_version": "synthetic-rag-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:41:48.548249+00:00",
+  "instances": [
+    {
+      "instance_id": "rag-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 528,
+              "output_tokens": 4,
+              "cost_usd": 0.001644,
+              "latency_seconds": 3.8441472080303356,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "Alice Walker",
+                "pre_critique_input_tokens": 241,
+                "pre_critique_output_tokens": 2,
+                "pre_critique_cost_usd": 0.000753,
+                "pre_critique_latency_seconds": 2.5735429170308635,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 287,
+                "post_critique_output_tokens": 2,
+                "post_critique_cost_usd": 0.000891,
+                "post_critique_latency_seconds": 1.2706042909994721,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.001644,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 528,
+              "output_tokens": 4,
+              "cost_usd": 0.001644,
+              "latency_seconds": 3.389493376016617,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "Alice Walker",
+                "pre_critique_input_tokens": 241,
+                "pre_critique_output_tokens": 2,
+                "pre_critique_cost_usd": 0.000753,
+                "pre_critique_latency_seconds": 1.8882815840188414,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 287,
+                "post_critique_output_tokens": 2,
+                "post_critique_cost_usd": 0.000891,
+                "post_critique_latency_seconds": 1.5012117919977754,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.001644,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 520,
+              "output_tokens": 4,
+              "cost_usd": 0.00162,
+              "latency_seconds": 8.456999000045471,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "1962",
+                "pre_critique_input_tokens": 237,
+                "pre_critique_output_tokens": 2,
+                "pre_critique_cost_usd": 0.0007409999999999999,
+                "pre_critique_latency_seconds": 2.299890458001755,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 283,
+                "post_critique_output_tokens": 2,
+                "post_critique_cost_usd": 0.0008789999999999999,
+                "post_critique_latency_seconds": 6.157108542043716,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00162,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 520,
+              "output_tokens": 4,
+              "cost_usd": 0.00162,
+              "latency_seconds": 4.200281374971382,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "1962",
+                "pre_critique_input_tokens": 237,
+                "pre_critique_output_tokens": 2,
+                "pre_critique_cost_usd": 0.0007409999999999999,
+                "pre_critique_latency_seconds": 2.339353624964133,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 283,
+                "post_critique_output_tokens": 2,
+                "post_critique_cost_usd": 0.0008789999999999999,
+                "post_critique_latency_seconds": 1.8609277500072494,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00162,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 516,
+              "output_tokens": 16,
+              "cost_usd": 0.001788,
+              "latency_seconds": 5.817047500051558,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "Massive Dynamic operates in the energy industry",
+                "pre_critique_input_tokens": 232,
+                "pre_critique_output_tokens": 8,
+                "pre_critique_cost_usd": 0.000816,
+                "pre_critique_latency_seconds": 4.263466208009049,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 284,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.0009720000000000001,
+                "post_critique_latency_seconds": 1.5535812920425087,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 724,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 598,
+              "output_tokens": 16,
+              "cost_usd": 0.0020340000000000002,
+              "latency_seconds": 8.791778042097576,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "Massive Dynamic operates in the energy industry",
+                "pre_critique_input_tokens": 273,
+                "pre_critique_output_tokens": 8,
+                "pre_critique_cost_usd": 0.0009390000000000001,
+                "pre_critique_latency_seconds": 5.113825375097804,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 325,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.001095,
+                "post_critique_latency_seconds": 3.677952666999772,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 964,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 680,
+              "output_tokens": 16,
+              "cost_usd": 0.00228,
+              "latency_seconds": 15.043062207987532,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "Massive Dynamic operates in the energy industry",
+                "pre_critique_input_tokens": 314,
+                "pre_critique_output_tokens": 8,
+                "pre_critique_cost_usd": 0.001062,
+                "pre_critique_latency_seconds": 11.28911070805043,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 366,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.001218,
+                "post_critique_latency_seconds": 3.753951499937102,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.006102,
+          "failure_modes": [
+            "confabulation",
+            "truncation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 516,
+              "output_tokens": 16,
+              "cost_usd": 0.001788,
+              "latency_seconds": 4.515516374958679,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "Massive Dynamic operates in the energy industry",
+                "pre_critique_input_tokens": 232,
+                "pre_critique_output_tokens": 8,
+                "pre_critique_cost_usd": 0.000816,
+                "pre_critique_latency_seconds": 2.770338666974567,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 284,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.0009720000000000001,
+                "post_critique_latency_seconds": 1.7451777079841122,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 724,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 598,
+              "output_tokens": 16,
+              "cost_usd": 0.0020340000000000002,
+              "latency_seconds": 8.95214416703675,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "Massive Dynamic operates in the energy industry",
+                "pre_critique_input_tokens": 273,
+                "pre_critique_output_tokens": 8,
+                "pre_critique_cost_usd": 0.0009390000000000001,
+                "pre_critique_latency_seconds": 4.452850959030911,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 325,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.001095,
+                "post_critique_latency_seconds": 4.499293208005838,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 964,
+              "output": "Massive Dynamic operates in the energy industry",
+              "input_tokens": 687,
+              "output_tokens": 24,
+              "cost_usd": 0.002421,
+              "latency_seconds": 17.207362749963067,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "{\n  \"answer\": \"Massive Dynamic operates in the energy industry\"\n}",
+                "pre_critique_input_tokens": 314,
+                "pre_critique_output_tokens": 16,
+                "pre_critique_cost_usd": 0.0011819999999999999,
+                "pre_critique_latency_seconds": 8.350993291009218,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 373,
+                "post_critique_output_tokens": 8,
+                "post_critique_cost_usd": 0.001239,
+                "post_critique_latency_seconds": 8.85636945895385,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.006243,
+          "failure_modes": [
+            "confabulation",
+            "truncation"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 4,
+    "success_rate": 0.6666666666666666,
+    "mean_tcot_success": 0.001632,
+    "mean_tcot_failure": 0.0061725,
+    "effective_tcot": 0.00471825,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 7.1370232500485145,
+    "mean_latency_p95": 16.233427506074076,
+    "std_tcot_success": 1.3856406460551105e-05,
+    "std_latency": 4.784123061447308
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.5650919999999999,
+    "tripped": false
+  },
+  "stopped_early": null
+}

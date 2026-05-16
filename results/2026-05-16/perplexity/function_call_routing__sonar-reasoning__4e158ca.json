@@ -1,0 +1,749 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "perplexity",
+    "model_id": "sonar-reasoning",
+    "model_version_hint": null,
+    "model_class": "reasoning"
+  },
+  "task": {
+    "name": "function_call_routing",
+    "dataset_version": "synthetic-fc-routing-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:13:52.009401+00:00",
+  "instances": [
+    {
+      "instance_id": "fc-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.11414345900993794,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.11414345900993794,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1273,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06418787501752377,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06418787501752377,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1538,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06841537507716566,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06841537507716566,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1008,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.12364124995656312,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.12364124995656312,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1273,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06448745797388256,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06448745797388256,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1538,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06813220796175301,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06813220796175301,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.09588995901867747,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.09588995901867747,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1268,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06287620903458446,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06287620903458446,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1533,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06146620796062052,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06146620796062052,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1003,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06559933302924037,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06559933302924037,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1268,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06673270906321704,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06673270906321704,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1533,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.13655258307699114,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.13655258307699114,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    },
+    {
+      "instance_id": "fc-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06754087493754923,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06754087493754923,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1278,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06375987501814961,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06375987501814961,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1543,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06758849998004735,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06758849998004735,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 1013,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06958795804530382,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06958795804530382,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 1278,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.14612079202197492,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.14612079202197492,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 1543,
+              "output": "",
+              "input_tokens": 0,
+              "output_tokens": 0,
+              "cost_usd": 0.0,
+              "latency_seconds": 0.06522616592701524,
+              "finish_reason": null,
+              "error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "provider error: BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no long",
+                "failure_modes": [
+                  "error"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "",
+                "pre_critique_input_tokens": 0,
+                "pre_critique_output_tokens": 0,
+                "pre_critique_cost_usd": 0.0,
+                "pre_critique_latency_seconds": 0.06522616592701524,
+                "pre_critique_finish_reason": null,
+                "pre_critique_error": "BadRequestError: Error code: 400 - {'error': {'message': \"The 'sonar-reasoning' model has been deprecated and is no longer available. Please refer to https://docs.perplexity.ai/docs/getting-started/models for supported models.\", 'type': 'invalid_model', 'code': 400}}",
+                "post_critique_input_tokens": null,
+                "post_critique_output_tokens": null,
+                "post_critique_cost_usd": null,
+                "post_critique_latency_seconds": null,
+                "post_critique_finish_reason": null,
+                "post_critique_error": null,
+                "critique_skipped_reason": "leg_a_error_or_cost_guardrail"
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.0,
+          "failure_modes": [
+            "error"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 0,
+    "success_rate": 0.0,
+    "mean_tcot_success": 0.0,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": null,
+    "effective_tcot_infinite": true,
+    "mean_latency_p50": 0.06756468745879829,
+    "mean_latency_p95": 0.1379878144187387,
+    "std_tcot_success": 0.0,
+    "std_latency": 0.028202838674998586
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.36156774999999997,
+    "tripped": false
+  },
+  "stopped_early": null
+}

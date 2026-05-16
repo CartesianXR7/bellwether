@@ -271,8 +271,8 @@
 <section class="stats" aria-label="Bench summary">
   <div class="stat"><div class="num">3</div><div class="label">tasks benched</div></div>
   <div class="stat"><div class="num">27</div><div class="label">distinct models</div></div>
-  <div class="stat"><div class="num">12</div><div class="label">bench passes</div></div>
-  <div class="stat"><div class="num">$26.85</div><div class="label">total bench spend</div></div>
+  <div class="stat"><div class="num">15</div><div class="label">bench passes</div></div>
+  <div class="stat"><div class="num">$53.66</div><div class="label">total bench spend</div></div>
 </section>
 
 
@@ -1965,9 +1965,743 @@
 
 
 
+<section class="critique-on-section" aria-label="Critique-Pass leaderboard">
+  <h3>Critique-Pass track (METHODOLOGY <a href="methodology.html#13-critique-pass-evaluation-track-methodology-v02">s13</a>)</h3>
+  <p class="meta">
+    Latest clean critique-on pass &middot; 2026-05-16 16:31:49 UTC &middot; <code>4e158ca</code>.
+    Each attempt wraps a single self-revision step using the locked canonical critique prompt; both legs count toward <code>effective_TCoT</code>.
+    Delta columns compare against the critique-off headline above. Positive cost delta means critique made it more expensive; positive success delta means critique improved accuracy.
+  </p>
+  <div class="leaderboard-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provider / Model</th>
+        <th class="num">Success</th>
+        <th class="num">effective_TCoT</th>
+        
+        <th class="num">Δ TCoT</th>
+        <th class="num">Δ success</th>
+        
+        <th class="num">Latency p50 / p95</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+      <tr >
+        <td class="rank">1</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00010
+        </td>
+        
+        <td class="num delta-pos">
+          +130.2%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.21s / 7.87s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">2</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-maverick
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00010
+        </td>
+        
+        <td class="num delta-pos">
+          +123.5%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">4.77s / 5.84s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">3</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-scout
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00012
+        </td>
+        
+        <td class="num delta-pos">
+          +79.7%
+        </td>
+        <td class="num delta-neg">
+          +16.7 pp
+        </td>
+        
+        <td class="num">1.92s / 2.27s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">4</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4-fast
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00016
+        </td>
+        
+        <td class="num delta-pos">
+          +130.2%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">7.33s / 10.07s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">5</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-3.3-70b-instruct
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00016
+        </td>
+        
+        <td class="num delta-pos">
+          +137.3%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.07s / 7.90s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">6</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-chat
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00017
+        </td>
+        
+        <td class="num delta-pos">
+          +91.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">4.52s / 6.01s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">7</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00021
+        </td>
+        
+        <td class="num delta-pos">
+          +280.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">7.14s / 178.48s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">8</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00034
+        </td>
+        
+        <td class="num delta-pos">
+          +225.3%
+        </td>
+        <td class="num delta-pos">
+          -33.3 pp
+        </td>
+        
+        <td class="num">7.81s / 22.92s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">9</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00036
+        </td>
+        
+        <td class="num delta-neg">
+          -24.9%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">4.25s / 4.91s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">10</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning-pro
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00110
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-neg">
+          +100.0 pp
+        </td>
+        
+        <td class="num">5.38s / 6.08s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">11</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00132
+        </td>
+        
+        <td class="num delta-pos">
+          +79.5%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.15s / 3.60s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">12</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/mistralai/mistral-large
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00136
+        </td>
+        
+        <td class="num delta-pos">
+          +39.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.47s / 3.18s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">13</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00150
+        </td>
+        
+        <td class="num delta-pos">
+          +116.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.41s / 5.04s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">14</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">83.3% (5/6)</td>
+        <td class="num">
+          $0.00154
+        </td>
+        
+        <td class="num delta-pos">
+          +27.5%
+        </td>
+        <td class="num delta-neg">
+          +33.3 pp
+        </td>
+        
+        <td class="num">5.39s / 7.06s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">15</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-pro
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00193
+        </td>
+        
+        <td class="num delta-neg">
+          -24.9%
+        </td>
+        <td class="num delta-neg">
+          +16.7 pp
+        </td>
+        
+        <td class="num">4.30s / 4.77s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">16</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o4-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00199
+        </td>
+        
+        <td class="num delta-pos">
+          +144.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.14s / 3.42s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">17</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-r1
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00214
+        </td>
+        
+        <td class="num delta-pos">
+          +87.5%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">26.19s / 193.73s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">18</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00223
+        </td>
+        
+        <td class="num delta-pos">
+          +106.5%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.47s / 2.55s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">19</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00277
+        </td>
+        
+        <td class="num delta-pos">
+          +186.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">4.36s / 5.01s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">20</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00305
+        </td>
+        
+        <td class="num delta-pos">
+          +199.7%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">5.82s / 145.38s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">21</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00305
+        </td>
+        
+        <td class="num delta-pos">
+          +6.7%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">11.97s / 70.09s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">22</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.41s / 2.13s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">23</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.12s / 0.17s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">24</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-pro
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">14.60s / 17.72s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">25</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/cohere/command-r-plus
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.03s / 0.09s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">26</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/qwen/qwen-3-235b-a22b
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.02s / 0.10s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">27</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.06s / 0.13s</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+</section>
+
+
 
 <p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
-  6 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/structured_extraction.html">detailed task page</a>.
+  7 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/structured_extraction.html">detailed task page</a>.
 </p>
 
 
@@ -3023,9 +3757,743 @@
 
 
 
+<section class="critique-on-section" aria-label="Critique-Pass leaderboard">
+  <h3>Critique-Pass track (METHODOLOGY <a href="methodology.html#13-critique-pass-evaluation-track-methodology-v02">s13</a>)</h3>
+  <p class="meta">
+    Latest clean critique-on pass &middot; 2026-05-16 16:31:49 UTC &middot; <code>4e158ca</code>.
+    Each attempt wraps a single self-revision step using the locked canonical critique prompt; both legs count toward <code>effective_TCoT</code>.
+    Delta columns compare against the critique-off headline above. Positive cost delta means critique made it more expensive; positive success delta means critique improved accuracy.
+  </p>
+  <div class="leaderboard-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provider / Model</th>
+        <th class="num">Success</th>
+        <th class="num">effective_TCoT</th>
+        
+        <th class="num">Δ TCoT</th>
+        <th class="num">Δ success</th>
+        
+        <th class="num">Latency p50 / p95</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+      <tr >
+        <td class="rank">1</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-scout
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00007
+        </td>
+        
+        <td class="num delta-pos">
+          +122.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.84s / 1.01s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">2</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00007
+        </td>
+        
+        <td class="num delta-pos">
+          +113.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.47s / 1.92s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">3</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00010
+        </td>
+        
+        <td class="num delta-pos">
+          +120.6%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.37s / 1.97s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">4</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-maverick
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00012
+        </td>
+        
+        <td class="num delta-pos">
+          +122.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.50s / 1.75s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">5</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4-fast
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00017
+        </td>
+        
+        <td class="num delta-pos">
+          +102.7%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">4.63s / 6.42s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">6</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-chat
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00020
+        </td>
+        
+        <td class="num delta-pos">
+          +85.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.81s / 4.94s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">7</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-3.3-70b-instruct
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00023
+        </td>
+        
+        <td class="num delta-pos">
+          +127.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.82s / 2.36s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">8</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00025
+        </td>
+        
+        <td class="num delta-pos">
+          +218.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">5.48s / 10.55s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">9</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00028
+        </td>
+        
+        <td class="num delta-pos">
+          +115.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.98s / 2.40s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">10</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00054
+        </td>
+        
+        <td class="num delta-pos">
+          +55.7%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.36s / 5.11s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">11</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-r1
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00129
+        </td>
+        
+        <td class="num delta-pos">
+          +170.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">130.54s / 264.24s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">12</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00129
+        </td>
+        
+        <td class="num delta-pos">
+          +163.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.39s / 3.09s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">13</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/mistralai/mistral-large
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00132
+        </td>
+        
+        <td class="num delta-pos">
+          +121.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.46s / 1.76s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">14</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning-pro
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00134
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-neg">
+          +100.0 pp
+        </td>
+        
+        <td class="num">4.42s / 6.06s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">15</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o4-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00154
+        </td>
+        
+        <td class="num delta-pos">
+          +177.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.39s / 5.52s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">16</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00170
+        </td>
+        
+        <td class="num delta-pos">
+          +120.6%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.64s / 2.54s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">17</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00198
+        </td>
+        
+        <td class="num delta-pos">
+          +160.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.79s / 3.19s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">18</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-pro
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00209
+        </td>
+        
+        <td class="num delta-pos">
+          +25.1%
+        </td>
+        <td class="num delta-neg">
+          +16.7 pp
+        </td>
+        
+        <td class="num">3.47s / 3.79s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">19</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00260
+        </td>
+        
+        <td class="num delta-pos">
+          +118.2%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.15s / 2.66s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">20</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00290
+        </td>
+        
+        <td class="num delta-pos">
+          +195.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">5.31s / 6.40s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">21</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">100.0% (6/6)</td>
+        <td class="num">
+          $0.00290
+        </td>
+        
+        <td class="num delta-neg">
+          -3.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">5.12s / 6.54s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">22</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-pro
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">33.3% (2/6)</td>
+        <td class="num">
+          $0.01114
+        </td>
+        
+        <td class="num delta-pos">
+          +1.9%
+        </td>
+        <td class="num delta-neg">
+          +16.7 pp
+        </td>
+        
+        <td class="num">12.43s / 22.54s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">23</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.37s / 2.10s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">24</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.12s / 0.24s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">25</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/cohere/command-r-plus
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.03s / 0.10s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">26</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/qwen/qwen-3-235b-a22b
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.03s / 0.14s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">27</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.07s / 0.14s</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+</section>
+
+
 
 <p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
-  3 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/function_call_routing.html">detailed task page</a>.
+  4 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/function_call_routing.html">detailed task page</a>.
 </p>
 
 
@@ -4145,9 +5613,743 @@
 
 
 
+<section class="critique-on-section" aria-label="Critique-Pass leaderboard">
+  <h3>Critique-Pass track (METHODOLOGY <a href="methodology.html#13-critique-pass-evaluation-track-methodology-v02">s13</a>)</h3>
+  <p class="meta">
+    Latest clean critique-on pass &middot; 2026-05-16 16:31:49 UTC &middot; <code>4e158ca</code>.
+    Each attempt wraps a single self-revision step using the locked canonical critique prompt; both legs count toward <code>effective_TCoT</code>.
+    Delta columns compare against the critique-off headline above. Positive cost delta means critique made it more expensive; positive success delta means critique improved accuracy.
+  </p>
+  <div class="leaderboard-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Provider / Model</th>
+        <th class="num">Success</th>
+        <th class="num">effective_TCoT</th>
+        
+        <th class="num">Δ TCoT</th>
+        <th class="num">Δ success</th>
+        
+        <th class="num">Latency p50 / p95</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+      
+      
+      <tr >
+        <td class="rank">1</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash-lite
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00009
+        </td>
+        
+        <td class="num delta-pos">
+          +123.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.99s / 1.23s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">2</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-scout
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00009
+        </td>
+        
+        <td class="num delta-pos">
+          +91.0%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.43s / 0.77s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">3</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00013
+        </td>
+        
+        <td class="num delta-pos">
+          +125.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.13s / 1.66s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">4</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-4-maverick
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00016
+        </td>
+        
+        <td class="num delta-pos">
+          +123.6%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.07s / 2.01s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">5</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-chat
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00024
+        </td>
+        
+        <td class="num delta-pos">
+          +128.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.54s / 8.29s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">6</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-flash
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00028
+        </td>
+        
+        <td class="num delta-pos">
+          +130.3%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.02s / 19.72s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">7</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4-fast
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00030
+        </td>
+        
+        <td class="num delta-pos">
+          +102.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">6.05s / 20.94s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">8</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3-mini
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00043
+        </td>
+        
+        <td class="num delta-pos">
+          +297.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">6.21s / 11.95s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">9</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/meta-llama/llama-3.3-70b-instruct
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">50.0% (3/6)</td>
+        <td class="num">
+          $0.00058
+        </td>
+        
+        <td class="num delta-pos">
+          +288.8%
+        </td>
+        <td class="num delta-pos">
+          -16.7 pp
+        </td>
+        
+        <td class="num">1.17s / 8.35s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">10</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00079
+        </td>
+        
+        <td class="num delta-pos">
+          +136.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.74s / 3.96s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">11</td>
+        <td>
+          <span class="prov provider-google">
+            <span class="prov-swatch"></span>google/gemini-2.5-pro
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00114
+        </td>
+        
+        <td class="num delta-pos">
+          +148.2%
+        </td>
+        <td class="num delta-pos">
+          -16.7 pp
+        </td>
+        
+        <td class="num">9.77s / 31.75s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">12</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-haiku-4-5
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00120
+        </td>
+        
+        <td class="num delta-pos">
+          +127.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.25s / 1.34s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">13</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning-pro
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00168
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-neg">
+          +66.7 pp
+        </td>
+        
+        <td class="num">4.62s / 7.54s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">14</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/mistralai/mistral-large
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00169
+        </td>
+        
+        <td class="num delta-pos">
+          +190.6%
+        </td>
+        <td class="num delta-pos">
+          -16.7 pp
+        </td>
+        
+        <td class="num">1.09s / 1.46s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">15</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/gpt-4o
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00208
+        </td>
+        
+        <td class="num delta-pos">
+          +131.8%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">1.10s / 6.71s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">16</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-pro
+          </span>
+          <span class="class-chip class-search">search</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00252
+        </td>
+        
+        <td class="num delta-pos">
+          +69.6%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.92s / 5.44s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">17</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-sonnet-4-6
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00323
+        </td>
+        
+        <td class="num delta-pos">
+          +128.3%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.12s / 2.40s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">18</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-4
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00454
+        </td>
+        
+        <td class="num delta-neg">
+          -27.9%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">5.73s / 15.56s</td>
+      </tr>
+      
+      
+      <tr class="tied">
+        <td class="rank">19</td>
+        <td>
+          <span class="prov provider-xai">
+            <span class="prov-swatch"></span>xai/grok-3
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00472
+        </td>
+        
+        <td class="num delta-pos">
+          +1182.1%
+        </td>
+        <td class="num delta-pos">
+          -33.3 pp
+        </td>
+        
+        <td class="num">7.14s / 16.23s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">20</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00506
+        </td>
+        
+        <td class="num delta-pos">
+          +75.4%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.92s / 14.39s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">21</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/deepseek/deepseek-r1
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00613
+        </td>
+        
+        <td class="num delta-pos">
+          +130.2%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">25.88s / 167.43s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">22</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o4-mini
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.00720
+        </td>
+        
+        <td class="num delta-pos">
+          +128.9%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">3.53s / 8.92s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">23</td>
+        <td>
+          <span class="prov provider-openai">
+            <span class="prov-swatch"></span>openai/o3
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">66.7% (4/6)</td>
+        <td class="num">
+          $0.01409
+        </td>
+        
+        <td class="num delta-pos">
+          +113.1%
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">2.39s / 17.25s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">24</td>
+        <td>
+          <span class="prov provider-anthropic">
+            <span class="prov-swatch"></span>anthropic/claude-opus-4-7
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.11s / 0.31s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">25</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/cohere/command-r-plus
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.03s / 0.10s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">26</td>
+        <td>
+          <span class="prov provider-openrouter">
+            <span class="prov-swatch"></span>openrouter/qwen/qwen-3-235b-a22b
+          </span>
+          <span class="class-chip class-standard">standard</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.04s / 0.11s</td>
+      </tr>
+      
+      
+      <tr >
+        <td class="rank">27</td>
+        <td>
+          <span class="prov provider-perplexity">
+            <span class="prov-swatch"></span>perplexity/sonar-reasoning
+          </span>
+          <span class="class-chip class-reasoning">reasoning</span>
+        </td>
+        <td class="num">0.0% (0/6)</td>
+        <td class="num">
+          infinite
+        </td>
+        
+        <td class="num delta-flat">
+          n/a
+        </td>
+        <td class="num delta-flat">
+          +0.0 pp
+        </td>
+        
+        <td class="num">0.07s / 0.15s</td>
+      </tr>
+      
+    </tbody>
+  </table>
+  </div>
+</section>
+
+
 
 <p style="font-size: 0.85rem; color: var(--muted); margin: 0.75rem 0;">
-  3 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/synthetic_rag.html">detailed task page</a>.
+  4 bench passes recorded for this task. Full pass-by-pass breakdown, reproducibility deltas, and per-provider failure-mode aggregates are on the <a href="tasks/synthetic_rag.html">detailed task page</a>.
 </p>
 
 
@@ -4160,8 +6362,8 @@
   <p>
     methodology version 0.1
     &middot; bellwether 0.1.0
-    &middot; last bench 2026-05-08 15:58:46 UTC
-    &middot; 135 result files loaded
+    &middot; last bench 2026-05-16 17:58:11 UTC
+    &middot; 216 result files loaded
   </p>
   <p>
     <a href="https://github.com/cartesianxr7/bellwether">github.com/cartesianxr7/bellwether</a>

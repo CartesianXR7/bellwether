@@ -1,0 +1,305 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "openrouter",
+    "model_id": "deepseek/deepseek-chat",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "structured_extraction",
+    "dataset_version": "synthetic-invoice-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T16:58:13.384006+00:00",
+  "instances": [
+    {
+      "instance_id": "INV-1000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "{\"invoice_number\":\"INV-1000\",\"date\":\"2026-11-04\",\"vendor\":\"Acme Corporation\",\"total_usd\":7441.35}",
+              "input_tokens": 302,
+              "output_tokens": 70,
+              "cost_usd": 0.00016156000000000002,
+              "latency_seconds": 5.019405875005759,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"invoice_number\":\"INV-1000\",\"date\":\"2026-11-04\",\"vendor\":\"Acme Corporation\",\"total_usd\":7441.35}",
+                "pre_critique_input_tokens": 112,
+                "pre_critique_output_tokens": 35,
+                "pre_critique_cost_usd": 6.986000000000001e-05,
+                "pre_critique_latency_seconds": 3.4301122500328347,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 190,
+                "post_critique_output_tokens": 35,
+                "post_critique_cost_usd": 9.17e-05,
+                "post_critique_latency_seconds": 1.5892936249729246,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00016156000000000002,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 405,
+              "output": "{\"invoice_number\":\"INV-1000\",\"date\":\"2026-11-04\",\"vendor\":\"Acme Corporation\",\"total_usd\":7441.35}",
+              "input_tokens": 319,
+              "output_tokens": 87,
+              "cost_usd": 0.00018502000000000001,
+              "latency_seconds": 3.9899831251241267,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\n  \"invoice_number\": \"INV-1000\",\n  \"date\": \"2026-11-04\",\n  \"vendor\": \"Acme Corporation\",\n  \"total_usd\": 7441.35\n}\n```",
+                "pre_critique_input_tokens": 112,
+                "pre_critique_output_tokens": 52,
+                "pre_critique_cost_usd": 8.856e-05,
+                "pre_critique_latency_seconds": 2.456178375054151,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 207,
+                "post_critique_output_tokens": 35,
+                "post_critique_cost_usd": 9.646000000000001e-05,
+                "post_critique_latency_seconds": 1.5338047500699759,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00018502000000000001,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}",
+              "input_tokens": 305,
+              "output_tokens": 71,
+              "cost_usd": 0.00016350000000000002,
+              "latency_seconds": 4.902909083059058,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}",
+                "pre_critique_input_tokens": 113,
+                "pre_critique_output_tokens": 36,
+                "pre_critique_cost_usd": 7.124e-05,
+                "pre_critique_latency_seconds": 2.8190034580184147,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 192,
+                "post_critique_output_tokens": 35,
+                "post_critique_cost_usd": 9.226000000000001e-05,
+                "post_critique_latency_seconds": 2.083905625040643,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00016350000000000002,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "{\"invoice_number\":\"INV-1001\",\"date\":\"2026-04-08\",\"vendor\":\"Initech LLC\",\"total_usd\":7391.07}",
+              "input_tokens": 322,
+              "output_tokens": 90,
+              "cost_usd": 0.00018916,
+              "latency_seconds": 6.342655833112076,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\n  \"invoice_number\": \"INV-1001\",\n  \"date\": \"2026-04-08\",\n  \"vendor\": \"Initech LLC\",\n  \"total_usd\": 7391.07\n}\n```",
+                "pre_critique_input_tokens": 113,
+                "pre_critique_output_tokens": 54,
+                "pre_critique_cost_usd": 9.104e-05,
+                "pre_critique_latency_seconds": 2.4406718329992145,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 209,
+                "post_critique_output_tokens": 36,
+                "post_critique_cost_usd": 9.812000000000002e-05,
+                "post_critique_latency_seconds": 3.9019840001128614,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00018916,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "INV-1002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "{\"invoice_number\":\"INV-1002\",\"date\":\"2026-11-24\",\"vendor\":\"Globex Inc.\",\"total_usd\":5945.88}",
+              "input_tokens": 304,
+              "output_tokens": 74,
+              "cost_usd": 0.00016652000000000003,
+              "latency_seconds": 4.145127417170443,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"invoice_number\":\"INV-1002\",\"date\":\"2026-11-24\",\"vendor\":\"Globex Inc.\",\"total_usd\":5945.88}",
+                "pre_critique_input_tokens": 112,
+                "pre_critique_output_tokens": 37,
+                "pre_critique_cost_usd": 7.206000000000001e-05,
+                "pre_critique_latency_seconds": 2.042396792094223,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 192,
+                "post_critique_output_tokens": 37,
+                "post_critique_cost_usd": 9.446000000000001e-05,
+                "post_critique_latency_seconds": 2.1027306250762194,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00016652000000000003,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 400,
+              "output": "{\"invoice_number\":\"INV-1002\",\"date\":\"2026-11-24\",\"vendor\":\"Globex Inc.\",\"total_usd\":5945.88}",
+              "input_tokens": 304,
+              "output_tokens": 74,
+              "cost_usd": 0.00016652000000000003,
+              "latency_seconds": 3.6655515839811414,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "{\"invoice_number\":\"INV-1002\",\"date\":\"2026-11-24\",\"vendor\":\"Globex Inc.\",\"total_usd\":5945.88}",
+                "pre_critique_input_tokens": 112,
+                "pre_critique_output_tokens": 37,
+                "pre_critique_cost_usd": 7.206000000000001e-05,
+                "pre_critique_latency_seconds": 1.5692247089464217,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 192,
+                "post_critique_output_tokens": 37,
+                "post_critique_cost_usd": 9.446000000000001e-05,
+                "post_critique_latency_seconds": 2.0963268750347197,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 0.00016652000000000003,
+          "failure_modes": []
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 6,
+    "success_rate": 1.0,
+    "mean_tcot_success": 0.0001720466666666667,
+    "mean_tcot_failure": 0.0,
+    "effective_tcot": 0.0001720466666666667,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 4.52401825011475,
+    "mean_latency_p95": 6.011843343585497,
+    "std_tcot_success": 1.187667742538571e-05,
+    "std_latency": 0.9716575920295014
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.18862023999999994,
+    "tripped": false
+  },
+  "stopped_early": null
+}

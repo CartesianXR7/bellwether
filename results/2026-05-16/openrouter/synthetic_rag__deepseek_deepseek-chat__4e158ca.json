@@ -1,0 +1,455 @@
+{
+  "bellwether_version": "0.4.0",
+  "methodology_version": "0.2",
+  "git_sha": "4e158ca39e06b0b8ede5e8e183b74bb6541b2a08",
+  "git_dirty": false,
+  "pricing_version": "2026-05-05",
+  "provider": {
+    "id": "openrouter",
+    "model_id": "deepseek/deepseek-chat",
+    "model_version_hint": null,
+    "model_class": "standard"
+  },
+  "task": {
+    "name": "synthetic_rag",
+    "dataset_version": "synthetic-rag-v1-seed42-n3",
+    "max_attempts": 3,
+    "pass_threshold": 1.0
+  },
+  "n_runs_per_instance": 2,
+  "critique_pass": true,
+  "started_at": "2026-05-16T16:31:49.480696+00:00",
+  "completed_at": "2026-05-16T17:46:49.244235+00:00",
+  "instances": [
+    {
+      "instance_id": "rag-0000",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 278,
+              "output_tokens": 6,
+              "cost_usd": 8.444e-05,
+              "latency_seconds": 2.6291174170328304,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "Alice Walker",
+                "pre_critique_input_tokens": 116,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 3.578e-05,
+                "pre_critique_latency_seconds": 1.3879238750087097,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 162,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 4.8660000000000005e-05,
+                "post_critique_latency_seconds": 1.2411935420241207,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 8.444e-05,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 456,
+              "output": "Alice Walker",
+              "input_tokens": 278,
+              "output_tokens": 6,
+              "cost_usd": 8.444e-05,
+              "latency_seconds": 2.3029632080579177,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "Alice Walker",
+                "pre_critique_input_tokens": 116,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 3.578e-05,
+                "pre_critique_latency_seconds": 1.1998880410101265,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 162,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 4.8660000000000005e-05,
+                "post_critique_latency_seconds": 1.1030751670477912,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 8.444e-05,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0001",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 268,
+              "output_tokens": 6,
+              "cost_usd": 8.164e-05,
+              "latency_seconds": 1.4705603749025613,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "1962",
+                "pre_critique_input_tokens": 111,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 3.438e-05,
+                "pre_critique_latency_seconds": 1.0293252499541268,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 157,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 4.726e-05,
+                "post_critique_latency_seconds": 0.44123512494843453,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 8.164e-05,
+          "failure_modes": []
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 498,
+              "output": "1962",
+              "input_tokens": 268,
+              "output_tokens": 6,
+              "cost_usd": 8.164e-05,
+              "latency_seconds": 2.21055645798333,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": true,
+                "score": 1.0,
+                "failure_reason": null,
+                "failure_modes": []
+              },
+              "critique": {
+                "pre_critique_output": "1962",
+                "pre_critique_input_tokens": 111,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 3.438e-05,
+                "pre_critique_latency_seconds": 0.4682567910058424,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 157,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 4.726e-05,
+                "post_critique_latency_seconds": 1.7422996669774875,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": true,
+          "tcot_usd": 8.164e-05,
+          "failure_modes": []
+        }
+      ]
+    },
+    {
+      "instance_id": "rag-0002",
+      "runs": [
+        {
+          "run_idx": 0,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 259,
+              "output_tokens": 7,
+              "cost_usd": 8.022000000000001e-05,
+              "latency_seconds": 9.581959374947473,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "the energy industry",
+                "pre_critique_input_tokens": 106,
+                "pre_critique_output_tokens": 4,
+                "pre_critique_cost_usd": 3.4080000000000006e-05,
+                "pre_critique_latency_seconds": 2.8402557919034734,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 153,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 4.614e-05,
+                "post_critique_latency_seconds": 6.741703583044,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "the energy industry",
+              "input_tokens": 335,
+              "output_tokens": 6,
+              "cost_usd": 0.00010040000000000001,
+              "latency_seconds": 2.7498659170232713,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "the energy industry",
+                "pre_critique_input_tokens": 144,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 4.3620000000000006e-05,
+                "pre_critique_latency_seconds": 1.619149083038792,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 191,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 5.678000000000001e-05,
+                "post_critique_latency_seconds": 1.1307168339844793,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 908,
+              "output": "the energy industry",
+              "input_tokens": 411,
+              "output_tokens": 6,
+              "cost_usd": 0.00012168000000000001,
+              "latency_seconds": 2.459869083017111,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "the energy industry",
+                "pre_critique_input_tokens": 182,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 5.4260000000000006e-05,
+                "pre_critique_latency_seconds": 1.2172870420617983,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 229,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 6.742e-05,
+                "post_critique_latency_seconds": 1.2425820409553126,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00030230000000000003,
+          "failure_modes": [
+            "confabulation",
+            "truncation"
+          ]
+        },
+        {
+          "run_idx": 1,
+          "attempts": [
+            {
+              "attempt": 1,
+              "prompt_chars": 484,
+              "output": "the energy industry",
+              "input_tokens": 259,
+              "output_tokens": 8,
+              "cost_usd": 8.132000000000001e-05,
+              "latency_seconds": 6.681300375028513,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "the energy industry",
+                "pre_critique_input_tokens": 106,
+                "pre_critique_output_tokens": 4,
+                "pre_critique_cost_usd": 3.4080000000000006e-05,
+                "pre_critique_latency_seconds": 3.9692764580249786,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 153,
+                "post_critique_output_tokens": 4,
+                "post_critique_cost_usd": 4.724e-05,
+                "post_critique_latency_seconds": 2.7120239170035347,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 2,
+              "prompt_chars": 696,
+              "output": "the energy industry",
+              "input_tokens": 335,
+              "output_tokens": 6,
+              "cost_usd": 0.00010040000000000001,
+              "latency_seconds": 1.7042286260984838,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "the energy industry",
+                "pre_critique_input_tokens": 144,
+                "pre_critique_output_tokens": 3,
+                "pre_critique_cost_usd": 4.3620000000000006e-05,
+                "pre_critique_latency_seconds": 0.7457646670518443,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 191,
+                "post_critique_output_tokens": 3,
+                "post_critique_cost_usd": 5.678000000000001e-05,
+                "post_critique_latency_seconds": 0.9584639590466395,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            },
+            {
+              "attempt": 3,
+              "prompt_chars": 908,
+              "output": "the energy industry",
+              "input_tokens": 422,
+              "output_tokens": 19,
+              "cost_usd": 0.00013906000000000001,
+              "latency_seconds": 6.705981416977011,
+              "finish_reason": "stop",
+              "error": null,
+              "validation": {
+                "passed": false,
+                "score": 0.0,
+                "failure_reason": "answer text did not match expected (case-insensitive normalized)",
+                "failure_modes": [
+                  "confabulation"
+                ]
+              },
+              "critique": {
+                "pre_critique_output": "```json\n{\n  \"answer\": \"the energy industry\"\n}\n```",
+                "pre_critique_input_tokens": 182,
+                "pre_critique_output_tokens": 15,
+                "pre_critique_cost_usd": 6.746000000000001e-05,
+                "pre_critique_latency_seconds": 1.6445332498988137,
+                "pre_critique_finish_reason": "stop",
+                "pre_critique_error": null,
+                "post_critique_input_tokens": 240,
+                "post_critique_output_tokens": 4,
+                "post_critique_cost_usd": 7.16e-05,
+                "post_critique_latency_seconds": 5.061448167078197,
+                "post_critique_finish_reason": "stop",
+                "post_critique_error": null,
+                "critique_skipped_reason": null
+              }
+            }
+          ],
+          "succeeded": false,
+          "tcot_usd": 0.00032078000000000006,
+          "failure_modes": [
+            "confabulation",
+            "truncation"
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "n_instances": 6,
+    "n_successes": 4,
+    "success_rate": 0.6666666666666666,
+    "mean_tcot_success": 8.303999999999999e-05,
+    "mean_tcot_failure": 0.00031154,
+    "effective_tcot": 0.00023881000000000003,
+    "effective_tcot_infinite": false,
+    "mean_latency_p50": 2.5444932500249706,
+    "mean_latency_p95": 8.287769293860766,
+    "std_tcot_success": 1.6165807537309522e-06,
+    "std_latency": 2.7690497282825723
+  },
+  "cost_guardrail": {
+    "max_usd": 8.0,
+    "spent_usd": 0.59042291,
+    "tripped": false
+  },
+  "stopped_early": null
+}
